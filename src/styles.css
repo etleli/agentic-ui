@@ -1,3 +1,22 @@
+@media (min-width: 1081px) {
+  html,
+  body {
+    height: 100%;
+    /* The workshop owns scrolling through its individual panels. Clipping the
+       document root keeps focus restoration inside its viewport-sized shell. */
+    overflow: clip;
+    overscroll-behavior: none;
+  }
+
+  #root {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: clip;
+  }
+}
+
 .library-shell {
   display: grid;
   grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);

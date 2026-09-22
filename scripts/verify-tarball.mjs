@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
+import { JSDOM } from 'jsdom';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
@@ -23,6 +24,35 @@ function npm(args, cwd) {
 
 function write(name, contents) {
   writeFileSync(join(temporary, name), contents);
+}
+
+function assertConsumerDocumentScrolling(css, label) {
+  const dom = new JSDOM('<!doctype html><html><head></head><body><div id="root"></div></body></html>');
+  try {
+    const style = dom.window.document.createElement('style');
+    style.textContent = css;
+    dom.window.document.head.append(style);
+    assert.ok(style.sheet, `${label} must parse as CSS.`);
+    const roots = [...dom.window.document.querySelectorAll('html, body, #root')];
+    function inspect(rules) {
+      for (const rule of rules) {
+        // Inspect every media/supports branch, including desktop-only rules.
+        if (rule.cssRules) inspect(rule.cssRules);
+        if (!rule.selectorText) continue;
+        const locksScroll = ['overflow', 'overflow-x', 'overflow-y'].some((property) => /hidden|clip/.test(rule.style.getPropertyValue(property)));
+        const fixesRoot = rule.style.getPropertyValue('position') === 'fixed';
+        // Color-only vendor pseudo-element rules cannot affect document scrolling.
+        if ((!locksScroll && !fixesRoot) || !roots.some((root) => root.matches(rule.selectorText))) continue;
+        for (const property of ['overflow', 'overflow-x', 'overflow-y']) {
+          assert.doesNotMatch(rule.style.getPropertyValue(property), /hidden|clip/, `${label}: ${rule.selectorText} must not lock consumer scrolling.`);
+        }
+        assert.notEqual(rule.style.getPropertyValue('position'), 'fixed', `${label}: ${rule.selectorText} must not fix the consumer root to the viewport.`);
+      }
+    }
+    inspect(style.sheet.cssRules);
+  } finally {
+    dom.window.close();
+  }
 }
 
 try {
@@ -67,6 +97,10 @@ try {
   assert.match(readFileSync(join(installed, 'dist-library/agent-guides', guides.globalRulebook), 'utf8'), /Generation Rulebook/);
   assert.match(readFileSync(join(installed, 'dist-library/agentic-ui.css'), 'utf8'), /--color-foreground/);
   assert.match(readFileSync(join(installed, 'src/theme/theme.css'), 'utf8'), /--color-foreground/);
+  for (const cssPath of ['dist-library/agentic-ui.css', 'src/theme/theme.css']) {
+    assertConsumerDocumentScrolling(readFileSync(join(installed, cssPath), 'utf8'), cssPath);
+  }
+  console.log('Both packaged CSS exports preserve consumer document scrolling.');
 
   write('runtime.mjs', `
 import assert from 'node:assert/strict';
