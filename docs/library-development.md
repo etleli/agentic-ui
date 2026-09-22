@@ -28,8 +28,10 @@ types, `style.css`, `theme.css`, and `agent-guides/`. Keep examples in the works
 registration alone never makes a component public. React and React DOM are peers;
 CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
 
-The package identity `@alphatraderone/agentic-ui@0.3.2` is temporary local staging
-metadata. It is not a release of this repository. See [release status](release-status.md).
+The personal candidate is `@etleli/agentic-ui@0.1.0-beta.1`. It is unpublished
+and remains `private: true`; the custom LICENSE is owner-approved and finalized.
+See [release status](release-status.md) and [licensing](licensing.md). Publication
+still requires separate owner authorization and release activation.
 
 For manual inspection, choose an empty directory outside the repository:
 
@@ -39,10 +41,15 @@ npm pack --pack-destination /path/to/temporary-directory
 ```
 
 Install that exact `.tgz` in a separate React consumer. Import the root API, a
-public prop type, and `@alphatraderone/agentic-ui/style.css`. The stylesheet already
+public prop type, and `@etleli/agentic-ui/style.css`. The stylesheet already
 includes tokens; `theme.css` is available when only tokens are needed. Inspect
 the manifest, JavaScript, CSS, declarations/maps, and guides. Delete temporary
-archives after inspection. Never commit generated output or credentials.
+archives after inspection. The archive must contain the exact root LICENSE and
+THIRD_PARTY_NOTICES.md, and retain the bundled DOMPurify attribution. The tarball
+test compares both files byte for byte with the repository, preserves public
+import/type checks, and rejects document scroll locking in either CSS export.
+Never commit generated output or credentials. Tests verify packaging, not legal
+approval. Future registry installation is described in [publishing](publishing.md).
 
 ## Adding or fixing components
 

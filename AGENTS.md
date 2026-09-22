@@ -41,9 +41,18 @@ preview resizing, and browser errors. Inspect package output after export change
 
 Keep dependency versions and the lockfile stable unless the task requires a
 specific change. Avoid unrelated refactors, formatting, and framework changes.
-Keep `private: true` and `UNLICENSED`; no publishing, deployment, releases, tags,
-credentials, or npm identity changes without a separate explicit task. The
-current package name/version are temporary local staging metadata only.
+The local release candidate is `@etleli/agentic-ui@0.1.0-beta.1`, authored by
+Elias Etl. Keep `private: true` and `license: "SEE LICENSE IN LICENSE"`.
+The custom personal noncommercial LICENSE is owner-approved and finalized.
+Its strict individual-only permission remains; commercial and organizational use
+require prior written authorization, which does not by itself imply a fee.
+Further substantive license changes require explicit owner approval. Technical
+validation is not independent legal certification. Preserve third-party notices.
+No publishing, staging, deployment, releases, tags, credentials, or trust/account
+changes are authorized by candidate preparation. Future publication requires a
+separate owner-authorized task and a reviewed, committed change to the private
+flag and its tests; never patch that flag only in CI. See `docs/licensing.md`,
+`docs/release-status.md`, and `docs/publishing.md`.
 
 Report verified results separately from assumptions, including pre-existing
 failures and unverified browser or CI checks. Keep private provenance and

@@ -117,7 +117,7 @@ exports are useful for the workshop, but they should stay clearly named as
 examples.
 
 `src/index.ts` is the package entrypoint. Keep it focused on reusable components
-and public types that consuming apps should import from `@alphatraderone/agentic-ui`.
+and public types that consuming apps should import from `@etleli/agentic-ui`.
 Do not rely on the workbench registry as proof that a component is available to
 the package.
 

@@ -142,7 +142,7 @@ import {
   getNodeCanvasFitView,
   getNodeCanvasLogicalPoint,
   getNodeCanvasRenderedNodes,
-} from '@alphatraderone/agentic-ui';
+} from '@etleli/agentic-ui';
 ```
 
 `getNodeCanvasFitView` returns an apply-ready transform and `scrollX` /
@@ -237,6 +237,6 @@ authorization, execution, and product copy in the consuming application.
 
 ## Validation
 
-Run `npm run validate`. Current package identity is temporary staging metadata;
+Run `npm run validate`. The personal package candidate is unpublished;
 see [release status](release-status.md). Changes to these sizing and interaction
 contracts require deliberate compatibility review and regression coverage.
