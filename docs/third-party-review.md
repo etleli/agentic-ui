@@ -64,8 +64,9 @@ for other operating systems were not installed or individually audited on Window
 
 No specific unresolved redistribution conflict was identified in the inspected
 library tarball under the selected DOMPurify license and the retained notices.
-This is not legal approval of the custom license, nor a complete dependency
-security clearance. [Dependency remediation](dependency-advisories.md) and fresh
-release-time audits remain separate from legal approval. Tests compare the packed LICENSE and notice file with the
+This bounded review is not independent legal certification or a complete dependency
+security clearance. The separate owner approval is recorded in [licensing](licensing.md).
+[Dependency remediation](dependency-advisories.md) and fresh release-time audits
+remain separate safeguards. Tests compare the packed LICENSE and notice file with the
 reviewed repository bytes and check the full bundled dependency license/header.
 Re-run this review whenever dependencies, assets, or build externals change.

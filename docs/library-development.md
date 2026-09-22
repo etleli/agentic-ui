@@ -29,8 +29,9 @@ registration alone never makes a component public. React and React DOM are peers
 CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
 
 The personal candidate is `@etleli/agentic-ui@0.1.0-beta.1`. It is unpublished
-and remains `private: true`; the custom LICENSE requires owner review before
-merge. See [release status](release-status.md) and [licensing](licensing.md).
+and remains `private: true`; the custom LICENSE is owner-approved and finalized.
+See [release status](release-status.md) and [licensing](licensing.md). Publication
+still requires separate owner authorization and release activation.
 
 For manual inspection, choose an empty directory outside the repository:
 

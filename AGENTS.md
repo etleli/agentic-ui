@@ -43,9 +43,11 @@ Keep dependency versions and the lockfile stable unless the task requires a
 specific change. Avoid unrelated refactors, formatting, and framework changes.
 The local release candidate is `@etleli/agentic-ui@0.1.0-beta.1`, authored by
 Elias Etl. Keep `private: true` and `license: "SEE LICENSE IN LICENSE"`.
-The custom personal noncommercial LICENSE is a draft requiring owner review;
-passing validation is not legal approval. Do not merge the release-preparation
-PR before that review. Preserve third-party license texts and attribution.
+The custom personal noncommercial LICENSE is owner-approved and finalized.
+Its strict individual-only permission remains; commercial and organizational use
+require prior written authorization, which does not by itself imply a fee.
+Further substantive license changes require explicit owner approval. Technical
+validation is not independent legal certification. Preserve third-party notices.
 No publishing, staging, deployment, releases, tags, credentials, or trust/account
 changes are authorized by candidate preparation. Future publication requires a
 separate owner-authorized task and a reviewed, committed change to the private

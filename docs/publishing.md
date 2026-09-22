@@ -1,7 +1,7 @@
 # Publication procedure — future owner-authorized task
 
 **Do not execute publication from this preparation PR.** It keeps `private: true`,
-a draft license, and read-only validation CI. No npm trust, publishing workflow,
+the owner-approved license, and read-only validation CI. No npm trust, publishing workflow,
 credentials, package staging, or account changes have been configured.
 
 Checked against official npm documentation on **2026-09-22**. Recheck it before
@@ -11,9 +11,9 @@ execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
 
 ### Owner decisions and a release commit
 
-1. Review and approve the actual LICENSE, especially its modification/sharing,
-   termination/cure, warranty, and liability terms. Resolve the draft status in
-   a reviewed commit; technical checks do not approve legal wording.
+1. Confirm the release artifact retains the owner-approved LICENSE documented in
+   [licensing](licensing.md). Finalization is complete; any further substantive
+   change needs explicit owner approval. This does not authorize publication.
 2. Review the [release blockers](release-status.md) and the completed dependency
    remediation evidence. Re-run current audits before authorizing publication.
 3. Recheck the exact package and version on the registry. Stop on a collision;
@@ -28,8 +28,8 @@ execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
 5. Prepare a separate reviewed release commit removing the publication block
    (`private: false` or removal of that field), and update the corresponding
    assertions in `scripts/package-workflow-contract.test.mjs` and
-   `scripts/verify-tarball.mjs`. Replace the draft-license assertion with a check
-   of the owner-approved status. Preserve all other package, consumer, CSS,
+   `scripts/verify-tarball.mjs`. Retain the finalized-license state and content
+   assertions. Preserve all other package, consumer, CSS,
    security, identity, and notice checks. Never patch the private flag only in CI.
 
 The candidate values are name `@etleli/agentic-ui`, version `0.1.0-beta.1`,

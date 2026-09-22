@@ -29,8 +29,23 @@ test('personal candidate metadata blocks publication and preserves package contr
   assert.deepEqual(manifest.files, ['dist-library', 'src/theme/theme.css', 'README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md']);
   assert.deepEqual(manifest.sideEffects, ['**/*.css']);
   const license = await readFile(new URL('LICENSE', root), 'utf8');
-  assert.match(license, /DRAFT FOR OWNER REVIEW/);
+  const licenseText = license.replace(/\s+/g, ' ');
+  assert.match(license, /^Agentic UI Personal Noncommercial License\r?\n/);
+  assert.doesNotMatch(license, /DRAFT FOR OWNER REVIEW|NOT APPROVED FOR RELEASE|Review status:|proposed/i);
   assert.match(license, /Copyright \(c\) 2026 Elias Etl/);
+  assert.match(license, /^3\. Modification and sharing permission\r?$/m);
+  assert.match(license, /^6\. Termination and cure\r?$/m);
+  for (const requiredTerm of [
+    'Use for an employer, client, business, or other organization does not qualify, even when performed by an individual, without payment, or for an organization described as nonprofit.',
+    'Commercial Use requires prior written authorization from Elias Etl.',
+    'Any use outside the personal permission, including organizational use, also requires prior written authorization.',
+    'Authorization may be granted free of charge or subject to separately agreed terms. Requiring authorization does not, by itself, imply a fee.',
+    'There is no revenue threshold or automatic exemption based on size, legal form, or nonprofit status.',
+    'It does not require visible branding in a consuming user interface.',
+    '30 calendar days after you discover it or receive notice of it, whichever occurs first.',
+  ]) {
+    assert.ok(licenseText.includes(requiredTerm), `Final license must retain: ${requiredTerm}`);
+  }
   const notices = (await readFile(new URL('THIRD_PARTY_NOTICES.md', root), 'utf8')).replaceAll('\r\n', '\n');
   const bundledLicense = (await readFile(new URL('node_modules/dompurify/LICENSE', root), 'utf8')).replaceAll('\r\n', '\n').trim();
   assert.ok(notices.includes(bundledLicense), 'Preserve the complete bundled DOMPurify Apache license.');

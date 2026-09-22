@@ -1,12 +1,6 @@
 Agentic UI Personal Noncommercial License
-DRAFT FOR OWNER REVIEW — NOT APPROVED FOR RELEASE
 
 Copyright (c) 2026 Elias Etl.
-
-Review status: This entire document is a proposed license. It grants no new
-permission unless and until Elias Etl approves it for release. Section 3 and
-the warranty, liability, and termination provisions are drafting proposals,
-not previously confirmed owner decisions. Technical validation is not approval.
 
 1. Scope and definitions
 
@@ -42,11 +36,14 @@ prior written authorization. Prices, payment, support, and additional or
 commercial rights, if any, are determined only by a separate written agreement
 with Elias Etl. This license promises no commercial agreement or support.
 
+Authorization may be granted free of charge or subject to separately
+agreed terms. Requiring authorization does not, by itself, imply a fee.
+
 For initial contact, open an issue at https://github.com/etleli/agentic-ui/issues
 requesting contact with Elias Etl. Do not post confidential business information.
 Opening an issue, silence, or an informal discussion is not written authorization.
 
-3. Proposed modification and sharing permission — requires owner approval
+3. Modification and sharing permission
 
 Individuals may modify the Software for Personal Noncommercial Use and share
 original or modified Software, in source or compiled form, without charge,
@@ -91,7 +88,7 @@ of the legal theory and even if advised of the possibility. These exclusions
 do not limit liability or rights that applicable law does not allow to be
 excluded or limited.
 
-6. Termination and proposed cure
+6. Termination and cure
 
 The permissions granted by this license terminate automatically upon a
 material breach. You must stop the activities for which permission has ended.

@@ -9,11 +9,12 @@ The local candidate is **`@etleli/agentic-ui@0.1.0-beta.1`**, by
 [Elias Etl](https://github.com/etleli). It is **not a published npm release**.
 Publication remains disabled with `private: true`.
 
-The proposed license is source-available with free personal noncommercial use
+The owner-approved license is source-available with free personal noncommercial use
 by individuals; commercial and organizational use requires prior written
-authorization. This is **not OSI-approved open source**. The [LICENSE](LICENSE)
-is a draft awaiting owner review, not an approved grant. See the
-[licensing explanation and review choices](docs/licensing.md),
+authorization. Authorization may be free or subject to separately agreed terms;
+requiring it does not, by itself, imply a fee or guarantee permission.
+This is **not OSI-approved open source**. The finalized [LICENSE](LICENSE)
+controls the terms. See the [licensing explanation](docs/licensing.md),
 [third-party notices](THIRD_PARTY_NOTICES.md), and [release status](docs/release-status.md).
 
 ## Develop locally

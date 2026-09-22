@@ -15,8 +15,9 @@ Full validation and the separate tarball consumer pass after the updates.
 
 The current full and production audits both report **zero findings**. This is
 a dated registry result, not a complete security guarantee or approval to publish.
-The draft LICENSE remains unchanged and unapproved; release activation and actual
-publication remain separate owner-authorized steps.
+The LICENSE was subsequently owner-approved and finalized as recorded in
+[licensing](licensing.md); release activation and actual publication remain
+separate owner-authorized steps.
 
 ## Exact updates and compatibility
 
@@ -70,12 +71,14 @@ ordinary CSS, and explicitly trusted `map.prev` callbacks retain their behavior.
 Only synthetic map contents in newly created temporary directories were used.
 No real secret files were read and no repository-level disclosure was demonstrated.
 
-Before/after SHA-256 comparison found no byte changes in the 929 generated
+During dependency remediation, before/after SHA-256 comparison found no byte changes in the 929 generated
 workshop/library files, or in LICENSE, THIRD_PARTY_NOTICES.md, and package.json
 (932 comparisons total). The actual 927-file tarball retains 155 runtime exports,
 603 declared value/type exports, 456 declaration maps, five component guides,
 exact license/notices, CSS/security checks, and document-scrolling protection.
 These content comparisons and consumer execution supplement the file count.
+They describe the remediation artifact. Subsequent license finalization changes
+package bytes and requires a new tarball inspection and integrity record.
 
 The built workshop loaded in Chromium. Button activation, the disabled parameter
 via keyboard, label editing, accent-token editing/restoration, catalog search,
@@ -193,7 +196,8 @@ configuration, or replace review of release inputs and artifact exposure. Keep
 validation read-only and release jobs limited to separately reviewed commits.
 The 20-minute CI timeout is not a security sandbox. Re-run audits before publication.
 
-License approval, release activation, and actual publication are still outstanding.
-This remediation changes no license text or draft status and is not risk acceptance.
+Release activation and actual publication are still outstanding. Dependency
+remediation did not change or approve license terms and was not risk acceptance;
+the subsequent owner approval is recorded separately in [licensing](licensing.md).
 The four deferred component-behavior findings stay with the planned component
 audit; they are not dependency remediation and are not classified as fixed.
