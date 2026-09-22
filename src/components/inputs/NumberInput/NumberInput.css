@@ -1,0 +1,105 @@
+.number-input .input-field__control {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--space-2);
+  padding: 0 var(--space-1) 0 var(--space-3);
+}
+
+.number-input .input-field__native {
+  appearance: textfield;
+  transform-origin: center;
+}
+
+.number-input .input-field__native[data-step-direction='up'] {
+  animation: number-input-slide-up var(--motion-duration-counter) var(--motion-easing-counter) both;
+}
+
+.number-input .input-field__native[data-step-direction='down'] {
+  animation: number-input-slide-down var(--motion-duration-counter) var(--motion-easing-counter) both;
+}
+
+.number-input .input-field__native::-webkit-inner-spin-button,
+.number-input .input-field__native::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.number-input__suffix {
+  color: var(--color-muted);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-semibold);
+}
+
+.number-input__steppers-tooltip {
+  display: inline-flex;
+}
+
+.number-input__steppers {
+  display: grid;
+  grid-template-rows: repeat(2, 16px);
+  align-self: center;
+  width: 28px;
+  min-width: 28px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  background: color-mix(in srgb, var(--color-surface-muted) 42%, transparent);
+}
+
+.number-input__stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.number-input__stepper + .number-input__stepper {
+  border-top: 1px solid var(--color-border);
+}
+
+.number-input__stepper:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-foreground);
+}
+
+.number-input__stepper:focus-visible {
+  outline: 1px solid var(--color-focus);
+  outline-offset: -1px;
+}
+
+.number-input__stepper:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+@keyframes number-input-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(-72%) scaleY(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes number-input-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(72%) scaleY(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}

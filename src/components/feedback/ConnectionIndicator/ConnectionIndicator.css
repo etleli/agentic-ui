@@ -1,0 +1,148 @@
+.connection-indicator {
+  --connection-indicator-color: var(--color-trading-positive);
+  --connection-indicator-height: 34px;
+  --connection-indicator-padding: 0 var(--space-3);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: var(--connection-indicator-height);
+  padding: var(--connection-indicator-padding);
+  border: 1px solid color-mix(in srgb, var(--connection-indicator-color) 32%, var(--color-border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--connection-indicator-color) 10%, var(--color-surface-raised));
+  color: var(--connection-indicator-color);
+}
+
+.connection-indicator[data-size='compact'] {
+  --connection-indicator-height: 28px;
+  --connection-indicator-padding: 0 var(--space-2);
+}
+
+.connection-indicator[data-size='spacious'] {
+  --connection-indicator-height: 48px;
+  --connection-indicator-padding: var(--space-2) var(--space-4);
+}
+
+.connection-indicator[data-status='delayed'],
+.connection-indicator[data-status='reconnecting'] {
+  --connection-indicator-color: var(--color-trading-warning);
+}
+
+.connection-indicator[data-status='offline'] {
+  --connection-indicator-color: var(--color-trading-neutral);
+}
+
+.connection-indicator[data-status='error'] {
+  --connection-indicator-color: var(--color-trading-negative);
+}
+
+.connection-indicator[data-variant='inline'] {
+  min-height: 0;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+}
+
+.connection-indicator[data-variant='card'] {
+  align-items: flex-start;
+  min-height: 64px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.connection-indicator__signal {
+  display: inline-flex;
+  align-items: end;
+  gap: 3px;
+  flex: 0 0 auto;
+  height: 16px;
+  color: currentColor;
+}
+
+.connection-indicator__signal span {
+  display: block;
+  width: 4px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  opacity: 0.36;
+}
+
+.connection-indicator__signal span:nth-child(1) {
+  height: 6px;
+}
+
+.connection-indicator__signal span:nth-child(2) {
+  height: 10px;
+}
+
+.connection-indicator__signal span:nth-child(3) {
+  height: 14px;
+}
+
+.connection-indicator[data-status='live'] .connection-indicator__signal span,
+.connection-indicator[data-status='delayed'] .connection-indicator__signal span,
+.connection-indicator[data-status='reconnecting'] .connection-indicator__signal span {
+  opacity: 1;
+}
+
+.connection-indicator[data-status='offline'] .connection-indicator__signal span:nth-child(2),
+.connection-indicator[data-status='offline'] .connection-indicator__signal span:nth-child(3) {
+  opacity: 0.18;
+}
+
+.connection-indicator[data-animated='true'][data-status='reconnecting'] .connection-indicator__signal span {
+  animation: connection-indicator-reconnect var(--motion-duration-indicator) var(--motion-easing-standard) infinite;
+}
+
+.connection-indicator[data-animated='true'][data-status='reconnecting'] .connection-indicator__signal span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.connection-indicator[data-animated='true'][data-status='reconnecting'] .connection-indicator__signal span:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.connection-indicator__content {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.connection-indicator__label,
+.connection-indicator__detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-indicator__label {
+  color: var(--color-foreground);
+  font-size: var(--type-label-medium-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--type-label-medium-line-height);
+}
+
+.connection-indicator__detail {
+  color: var(--color-muted);
+  font-size: var(--type-label-small-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--type-label-small-line-height);
+}
+
+@keyframes connection-indicator-reconnect {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scaleY(0.72);
+  }
+
+  45% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}

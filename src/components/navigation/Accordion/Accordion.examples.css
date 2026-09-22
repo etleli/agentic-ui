@@ -1,0 +1,9 @@
+.accordion-example {
+  display: grid;
+  width: min(760px, 100%);
+  min-width: 0;
+}
+
+.accordion-example .navigation-accordion {
+  width: 100%;
+}

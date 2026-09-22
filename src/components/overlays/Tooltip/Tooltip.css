@@ -1,0 +1,100 @@
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.tooltip__trigger {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+.tooltip__bubble {
+  position: fixed;
+  top: var(--tooltip-top);
+  left: var(--tooltip-left);
+  z-index: var(--z-overlay, 2147483000);
+  max-width: min(280px, 80vw);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface-raised) 94%, var(--color-background));
+  box-shadow: var(--shadow-md);
+  color: var(--color-foreground);
+  font-size: var(--type-label-medium-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--type-label-medium-line-height);
+  opacity: 0;
+  pointer-events: none;
+  white-space: normal;
+  animation: tooltip-enter var(--motion-duration-popup) var(--motion-easing-standard) both;
+}
+
+.tooltip__bubble[data-state='closed'] {
+  animation-name: tooltip-exit;
+}
+
+.tooltip__bubble[data-size='compact'] {
+  max-width: 220px;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--type-label-small-size);
+  line-height: var(--type-label-small-line-height);
+}
+
+.tooltip__bubble[data-tone='accent'] {
+  border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface-raised));
+}
+
+.tooltip__bubble[data-tone='warning'] {
+  border-color: color-mix(in srgb, var(--color-trading-warning) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-trading-warning) 12%, var(--color-surface-raised));
+}
+
+.tooltip__bubble[data-placement='top'] {
+  transform: translate(-50%, -100%);
+}
+
+.tooltip__bubble[data-placement='bottom'] {
+  transform: translate(-50%, 0);
+}
+
+.tooltip__bubble[data-placement='left'] {
+  transform: translate(-100%, -50%);
+}
+
+.tooltip__bubble[data-placement='right'] {
+  transform: translate(0, -50%);
+}
+
+@keyframes tooltip-enter {
+  from {
+    opacity: 0;
+    scale: 0.98;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes tooltip-exit {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+
+  to {
+    opacity: 0;
+    scale: 0.98;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip__bubble {
+    animation: none;
+    opacity: 1;
+  }
+}

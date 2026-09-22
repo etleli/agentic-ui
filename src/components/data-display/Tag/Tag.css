@@ -1,0 +1,119 @@
+.tag {
+  --tag-color: var(--color-foreground);
+  --tag-bg: color-mix(in srgb, var(--color-surface-muted) 72%, transparent);
+  --tag-border: var(--color-border);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  border: 1px solid var(--tag-border);
+  border-radius: var(--radius-pill);
+  background: var(--tag-bg);
+  color: var(--tag-color);
+  font-size: var(--type-label-small-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--type-label-small-line-height);
+  white-space: nowrap;
+}
+
+.tag[data-size='compact'] {
+  min-height: 24px;
+  padding: 2px var(--space-2);
+}
+
+.tag[data-size='comfortable'] {
+  min-height: 30px;
+  padding: 4px var(--space-3);
+}
+
+.tag[data-size='spacious'] {
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.tag[data-tone='accent'] {
+  --tag-color: var(--color-accent-text);
+  --tag-bg: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  --tag-border: color-mix(in srgb, var(--color-accent) 44%, var(--color-border));
+}
+
+.tag[data-tone='positive'] {
+  --tag-color: var(--color-trading-positive);
+  --tag-bg: var(--color-trading-positive-bg);
+  --tag-border: var(--color-trading-positive-border);
+}
+
+.tag[data-tone='negative'] {
+  --tag-color: var(--color-trading-negative);
+  --tag-bg: var(--color-trading-negative-bg);
+  --tag-border: var(--color-trading-negative-border);
+}
+
+.tag[data-tone='warning'] {
+  --tag-color: var(--color-trading-warning);
+  --tag-bg: var(--color-trading-warning-bg);
+  --tag-border: var(--color-trading-warning-border);
+}
+
+.tag[data-tone='neutral'] {
+  --tag-color: var(--color-trading-neutral);
+  --tag-bg: var(--color-trading-neutral-bg);
+  --tag-border: var(--color-trading-neutral-border);
+}
+
+.tag[data-tone='muted'] {
+  --tag-color: var(--color-muted);
+}
+
+.tag[data-variant='solid'] {
+  background: var(--tag-color);
+  border-color: var(--tag-color);
+  color: var(--color-accent-foreground);
+}
+
+.tag[data-variant='outline'] {
+  background: transparent;
+}
+
+.tag__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tag__dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.tag__icon {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.tag__remove {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-inline-end: -4px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+}
+
+.tag__remove:hover,
+.tag__remove:focus-visible {
+  outline: 0;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}

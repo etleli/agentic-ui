@@ -1,0 +1,13 @@
+.breadcrumb-example {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  width: min(760px, 100%);
+  min-width: 0;
+}
+
+.breadcrumb-example__selection {
+  color: var(--color-muted);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+}

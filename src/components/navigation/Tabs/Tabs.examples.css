@@ -1,0 +1,26 @@
+.tabs-example {
+  display: grid;
+  width: min(760px, 100%);
+  min-width: 0;
+}
+
+.tabs-example .navigation-tabs {
+  width: 100%;
+}
+
+.tabs-example__panel {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.tabs-example__panel strong {
+  font-size: var(--type-title-medium-size);
+  line-height: var(--type-title-medium-line-height);
+}
+
+.tabs-example__panel span {
+  color: var(--color-muted);
+  font-size: var(--type-body-medium-size);
+  line-height: var(--type-body-medium-line-height);
+}

@@ -1,0 +1,201 @@
+.obsidian-graph-view {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: var(--obsidian-graph-height, 420px);
+  min-height: 260px;
+  overflow: hidden;
+  color: var(--color-accent);
+  isolation: isolate;
+}
+
+.obsidian-graph-view[data-variant='panel'] {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 24%, var(--color-border));
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 5%, transparent), transparent 48%),
+    color-mix(in srgb, var(--color-background) 88%, var(--color-surface-raised));
+}
+
+.obsidian-graph-view[data-variant='plain'] {
+  background: transparent;
+}
+
+.obsidian-graph-view[data-density='compact'] {
+  min-height: 220px;
+}
+
+.obsidian-graph-view[data-density='spacious'] {
+  min-height: 340px;
+}
+
+.obsidian-graph-view__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: var(--type-body-small-size);
+  font-weight: var(--font-weight-semibold);
+}
+
+.obsidian-graph-view__canvas,
+.obsidian-graph-view__nodes {
+  position: absolute;
+  inset: 0;
+}
+
+.obsidian-graph-view__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.obsidian-graph-view__cluster {
+  fill: none;
+  opacity: 0.1;
+  stroke: currentColor;
+  stroke-dasharray: 7 14;
+  stroke-width: 0.8;
+}
+
+.obsidian-graph-view__cluster[data-tone='positive'] {
+  color: var(--color-trading-positive);
+}
+
+.obsidian-graph-view__cluster[data-tone='warning'] {
+  color: var(--color-trading-warning);
+}
+
+.obsidian-graph-view__cluster[data-tone='accent'] {
+  color: var(--color-accent);
+}
+
+.obsidian-graph-view__cluster[data-tone='neutral'] {
+  color: var(--color-muted);
+}
+
+.obsidian-graph-view__link {
+  stroke: color-mix(in srgb, var(--color-muted) 58%, transparent);
+  stroke-linecap: round;
+  stroke-width: 1.5;
+  opacity: 0.52;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    stroke var(--motion-duration-fast) var(--motion-easing-standard),
+    stroke-width var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.obsidian-graph-view__link[data-related='true'] {
+  stroke: color-mix(in srgb, var(--color-accent) 78%, var(--color-foreground));
+  stroke-width: 2.4;
+  opacity: 0.9;
+}
+
+.obsidian-graph-view__link[data-muted='true'] {
+  opacity: 0.12;
+}
+
+.obsidian-graph-view__nodes {
+  pointer-events: none;
+}
+
+.obsidian-graph-view__node {
+  --obsidian-node-color: var(--color-muted);
+  position: absolute;
+  left: var(--obsidian-node-x);
+  top: var(--obsidian-node-y);
+  display: grid;
+  place-items: center;
+  width: var(--obsidian-node-size);
+  height: var(--obsidian-node-size);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--obsidian-node-color);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+
+.obsidian-graph-view__node[data-tone='accent'] {
+  --obsidian-node-color: var(--color-accent);
+}
+
+.obsidian-graph-view__node[data-tone='positive'] {
+  --obsidian-node-color: var(--color-trading-positive);
+}
+
+.obsidian-graph-view__node[data-tone='warning'] {
+  --obsidian-node-color: var(--color-trading-warning);
+}
+
+.obsidian-graph-view__node[data-tone='neutral'] {
+  --obsidian-node-color: var(--color-muted);
+}
+
+.obsidian-graph-view__node[data-muted='true'] {
+  opacity: 0.28;
+}
+
+.obsidian-graph-view__node-dot {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, currentColor 72%, var(--color-border));
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 36% 30%, color-mix(in srgb, var(--color-foreground) 42%, transparent), transparent 30%),
+    currentColor;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, currentColor 8%, transparent),
+    0 0 14px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.obsidian-graph-view__node[data-active='true'] .obsidian-graph-view__node-dot,
+.obsidian-graph-view__node[data-selected='true'] .obsidian-graph-view__node-dot,
+.obsidian-graph-view__node:focus-visible .obsidian-graph-view__node-dot {
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, currentColor 15%, transparent),
+    0 0 22px color-mix(in srgb, currentColor 38%, transparent);
+}
+
+.obsidian-graph-view__node:focus-visible {
+  outline: 2px solid color-mix(in srgb, currentColor 76%, transparent);
+  outline-offset: 7px;
+}
+
+.obsidian-graph-view__label {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 50%;
+  display: grid;
+  gap: 1px;
+  min-width: 92px;
+  max-width: 160px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-background) 82%, transparent);
+  color: var(--color-foreground);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.obsidian-graph-view__label strong,
+.obsidian-graph-view__label small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.obsidian-graph-view__label strong {
+  font-size: var(--type-label-small-size);
+  line-height: var(--type-label-small-line-height);
+}
+
+.obsidian-graph-view__label small {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.1;
+}
