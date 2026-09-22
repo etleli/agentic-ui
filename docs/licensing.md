@@ -6,8 +6,9 @@ controls and takes precedence over this explanation. Elias Etl approved the
 complete license at commit `4037682722176bc9f72ae7f1db0ed60c72ea0942` on
 2026-09-22, with the authorization/payment clarification below. Finalization
 removes draft-only status and headings; all other substantive terms are retained.
-This records owner approval, not independent legal certification. Publication
-remains blocked with `private: true` and requires separate authorization.
+This records owner approval, not independent legal certification. The activated
+package is technically publishable; publication still requires explicit owner
+approval for the exact verified archive. See the [release record](release-status.md).
 
 Elias Etl has confirmed ownership of the first-party code and is its author and
 licensor. Third-party material keeps its own licenses; see
@@ -57,4 +58,4 @@ field-of-use requirements of the [Open Source Definition](https://opensource.org
 
 No fee, subscription, mandatory support purchase, contact email, governing-law,
 arbitration, or venue term is introduced. Follow the [publication procedure](publishing.md);
-release activation and publication still require separate owner authorization.
+publication and any repository visibility change require the final owner checkpoint.

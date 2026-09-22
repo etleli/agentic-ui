@@ -5,17 +5,50 @@ components, editing preview parameters and content, resizing previews, and
 adjusting theme tokens. The library includes controls, layouts, tables, content
 viewers, charts, graph helpers, and reusable domain presentation components.
 
-The local candidate is **`@etleli/agentic-ui@0.1.0-beta.1`**, by
-[Elias Etl](https://github.com/etleli). It is **not a published npm release**.
-Publication remains disabled with `private: true`.
+The first beta is **`@etleli/agentic-ui@0.1.0-beta.1`**, by
+[Elias Etl](https://github.com/etleli). This is beta software, not a stable or fully
+audited component library. Observed registry availability and release evidence
+belong in the [release record](https://github.com/etleli/agentic-ui/blob/main/docs/release-status.md).
 
 The owner-approved license is source-available with free personal noncommercial use
 by individuals; commercial and organizational use requires prior written
 authorization. Authorization may be free or subject to separately agreed terms;
 requiring it does not, by itself, imply a fee or guarantee permission.
-This is **not OSI-approved open source**. The finalized [LICENSE](LICENSE)
-controls the terms. See the [licensing explanation](docs/licensing.md),
-[third-party notices](THIRD_PARTY_NOTICES.md), and [release status](docs/release-status.md).
+This is **not OSI-approved open source**. The finalized [LICENSE](https://github.com/etleli/agentic-ui/blob/main/LICENSE)
+controls the terms. See the [licensing explanation](https://github.com/etleli/agentic-ui/blob/main/docs/licensing.md),
+[third-party notices](https://github.com/etleli/agentic-ui/blob/main/THIRD_PARTY_NOTICES.md), and [release status](https://github.com/etleli/agentic-ui/blob/main/docs/release-status.md).
+
+## Install the beta
+
+When the release record confirms publication, install the exact version:
+
+```sh
+npm install @etleli/agentic-ui@0.1.0-beta.1
+```
+
+React and React DOM 19 are peer dependencies. Before registry publication, use
+the inspected local tarball described below. An activated package manifest or a
+passing CI run is not evidence that npm publication has occurred.
+
+## Known beta limitations
+
+These four findings remain unresolved and assigned to the planned component audit:
+
+- `DataTable` can display a locally requested selection when a controlling parent
+  leaves its selection prop unchanged.
+- `DataTable` hides programmatic selection styling and `aria-current` when
+  `selectable={false}`.
+- `DateRangePicker` quick presets can emit dates outside supplied `min`/`max` bounds.
+- `Tooltip` bubbles near viewport edges can be clipped instead of repositioned.
+
+Do not treat the beta as a completed accessibility, interaction, or security audit.
+
+Later automated review reports are also awaiting component-audit validation:
+uncontrolled `FilePicker` selection/rerenders, persisted `SplitPane` and
+`ResizablePanel` sizes during server rendering, the workshop's generated-color
+control, controlled `DatePicker` values, and modal keyboard focus management.
+These reports have not been fixed or cleared by release activation. See the
+release record for their review status.
 
 ## Develop locally
 
@@ -47,7 +80,8 @@ This runs type checking, lint, interaction and consumer contracts, security test
 both builds, an actual tarball installed into a temporary consumer, package dry-run
 inspection, and a whitespace check. The consumer checks ESM/CommonJS imports,
 public types, CSS, and packaged agent guides. It requires npm registry access for
-the temporary consumer's locked-version dependencies and the `tar` command.
+normal consumer dependency resolution and the `tar` command. The consumer's
+build/type-check tools use the repository's verified versions.
 
 `npm run build` produces `dist/` (workshop) and `dist-library/` (library).
 Neither generated output belongs in Git. CI only validates pull requests and
@@ -69,11 +103,12 @@ npm pack --pack-destination /absolute/path/to/temporary-directory
 npm install /absolute/path/to/temporary-directory/etleli-agentic-ui-0.1.0-beta.1.tgz
 ```
 
-Registry installation is pending publication; `npm install @etleli/agentic-ui@beta`
-is a **future** instruction and does not verify this unpublished candidate.
+The `beta` distribution tag is intended for this release; verify its actual
+registry target in the release record. A local tarball check does not establish
+registry availability.
 
 ```tsx
-// After installing this repository's local tarball:
+// After installing the exact version or the inspected local tarball:
 import '@etleli/agentic-ui/style.css';
 import { Button, NodeCanvas } from '@etleli/agentic-ui';
 import type { ButtonProps } from '@etleli/agentic-ui';
@@ -87,13 +122,13 @@ sanitized using the pinned DOMPurify dependency.
 
 ## Read next
 
-- [Development and local package checks](docs/library-development.md)
-- [Component authoring](docs/component-authoring.md)
-- [Consumer contracts](docs/consumer-hardening.md)
-- [Interaction matrix](docs/interaction-contract-matrix.md)
-- [UI generation rulebook](docs/ui-generation-rulebook.md)
-- [Roadmap](docs/component-roadmap.md) and [release blockers](docs/release-status.md)
-- [Publication procedure](docs/publishing.md) and [dependency triage](docs/dependency-advisories.md)
+- [Development and local package checks](https://github.com/etleli/agentic-ui/blob/main/docs/library-development.md)
+- [Component authoring](https://github.com/etleli/agentic-ui/blob/main/docs/component-authoring.md)
+- [Consumer contracts](https://github.com/etleli/agentic-ui/blob/main/docs/consumer-hardening.md)
+- [Interaction matrix](https://github.com/etleli/agentic-ui/blob/main/docs/interaction-contract-matrix.md)
+- [UI generation rulebook](https://github.com/etleli/agentic-ui/blob/main/docs/ui-generation-rulebook.md)
+- [Roadmap](https://github.com/etleli/agentic-ui/blob/main/docs/component-roadmap.md) and [release blockers](https://github.com/etleli/agentic-ui/blob/main/docs/release-status.md)
+- [Publication procedure](https://github.com/etleli/agentic-ui/blob/main/docs/publishing.md) and [dependency triage](https://github.com/etleli/agentic-ui/blob/main/docs/dependency-advisories.md)
 
 Repository: [etleli/agentic-ui](https://github.com/etleli/agentic-ui).
 Report issues through the [issue tracker](https://github.com/etleli/agentic-ui/issues).

@@ -10,8 +10,8 @@ const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'
 const lock = JSON.parse(await readFile(new URL('package-lock.json', root), 'utf8'));
 const workflow = await readFile(new URL('.github/workflows/validate.yml', root), 'utf8');
 
-test('personal candidate metadata blocks publication and preserves package contracts', async () => {
-  assert.equal(manifest.private, true);
+test('activated beta metadata preserves the approved publication settings and package contracts', async () => {
+  assert.equal(manifest.private, false);
   assert.equal(manifest.license, 'SEE LICENSE IN LICENSE');
   assert.equal(manifest.name, '@etleli/agentic-ui');
   assert.equal(manifest.version, '0.1.0-beta.1');

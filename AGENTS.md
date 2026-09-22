@@ -1,7 +1,8 @@
 # Agentic UI development
 
 Agentic UI is a React/TypeScript component library and local workshop maintained
-by one developer with Codex. This is a development baseline, not a public release.
+by one developer with Codex. Treat it as a beta with documented unresolved
+component limitations; consult the release record for observed publication status.
 
 ## Read first
 
@@ -41,18 +42,22 @@ preview resizing, and browser errors. Inspect package output after export change
 
 Keep dependency versions and the lockfile stable unless the task requires a
 specific change. Avoid unrelated refactors, formatting, and framework changes.
-The local release candidate is `@etleli/agentic-ui@0.1.0-beta.1`, authored by
-Elias Etl. Keep `private: true` and `license: "SEE LICENSE IN LICENSE"`.
+The activated release candidate is `@etleli/agentic-ui@0.1.0-beta.1`, authored by
+Elias Etl. Keep the intentionally publishable `private: false` state and
+`license: "SEE LICENSE IN LICENSE"`, with the approved public registry/access/beta
+configuration. Activation is not permission to publish and is not registry evidence.
 The custom personal noncommercial LICENSE is owner-approved and finalized.
 Its strict individual-only permission remains; commercial and organizational use
 require prior written authorization, which does not by itself imply a fee.
 Further substantive license changes require explicit owner approval. Technical
 validation is not independent legal certification. Preserve third-party notices.
-No publishing, staging, deployment, releases, tags, credentials, or trust/account
-changes are authorized by candidate preparation. Future publication requires a
-separate owner-authorized task and a reviewed, committed change to the private
-flag and its tests; never patch that flag only in CI. See `docs/licensing.md`,
-`docs/release-status.md`, and `docs/publishing.md`.
+Before a visibility change or npm publication, finish validation, preserve the
+exact reviewed tarball, and obtain explicit owner approval for each action at
+the release checkpoint. Publish only that archive; never repack it after approval.
+Do not infer publication permission from activation, license approval, or CI.
+No staging, deployment, tags/releases, credentials, trust/account changes, or
+unrelated resource changes are included in first-beta activation. See
+`docs/licensing.md`, `docs/release-status.md`, and `docs/publishing.md`.
 
 Report verified results separately from assumptions, including pre-existing
 failures and unverified browser or CI checks. Keep private provenance and

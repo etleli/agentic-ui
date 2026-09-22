@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,9 +11,40 @@ import { JSDOM } from 'jsdom';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const lock = JSON.parse(readFileSync(join(root, 'package-lock.json'), 'utf8'));
-const temporary = mkdtempSync(join(tmpdir(), 'agentic-ui-consumer-'));
 const npmCli = process.env.npm_execpath;
 assert.ok(npmCli, 'Run this check through npm run test:tarball.');
+let suppliedArchive;
+let registryInstall = false;
+let reportPath;
+const argumentsToRead = process.argv.slice(2);
+while (argumentsToRead.length) {
+  const option = argumentsToRead.shift();
+  if (option === '--registry') {
+    registryInstall = true;
+  } else if (option === '--tarball' || option === '--report') {
+    const value = argumentsToRead.shift();
+    assert.ok(value && !value.startsWith('--'), `${option} requires a path.`);
+    if (option === '--tarball') suppliedArchive = realpathSync(resolve(value));
+    else reportPath = resolve(value);
+  } else {
+    throw new Error(`Unknown option: ${option}`);
+  }
+}
+assert.ok(!registryInstall || suppliedArchive, '--registry requires the approved --tarball for integrity comparison.');
+if (reportPath && suppliedArchive) {
+  const comparable = (value) => process.platform === 'win32' ? value.toLowerCase() : value;
+  assert.notEqual(comparable(reportPath), comparable(suppliedArchive), 'The report must not overwrite the supplied archive.');
+  if (existsSync(reportPath)) {
+    const reportFile = statSync(reportPath, { bigint: true });
+    const archiveFile = statSync(suppliedArchive, { bigint: true });
+    assert.ok(reportFile.dev !== archiveFile.dev || reportFile.ino !== archiveFile.ino, 'The report must not alias the supplied archive.');
+  }
+}
+const temporary = mkdtempSync(join(tmpdir(), 'agentic-ui-consumer-'));
+
+function archiveIntegrity(file) {
+  return `sha512-${createHash('sha512').update(readFileSync(file)).digest('base64')}`;
+}
 
 function run(command, args, cwd = temporary) {
   return execFileSync(command, args, { cwd, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -56,34 +88,55 @@ function assertConsumerDocumentScrolling(css, label) {
 }
 
 try {
-  const [packed] = JSON.parse(npm(['pack', '--ignore-scripts', '--json', '--pack-destination', temporary], root));
-  const archive = join(temporary, packed.filename);
+  let packed;
+  // A supplied release archive is inspected and installed directly, never repacked.
+  if (!suppliedArchive) [packed] = JSON.parse(npm(['pack', '--ignore-scripts', '--json', '--pack-destination', temporary], root));
+  const archive = suppliedArchive ?? join(temporary, packed.filename);
+  const integrity = archiveIntegrity(archive);
+  if (packed) assert.equal(integrity, packed.integrity);
   const entries = run('tar', ['-tzf', archive]).trim().split(/\r?\n/);
-  assert.equal(entries.length, packed.files.length);
+  if (packed) assert.equal(entries.length, packed.files.length);
+  assert.equal(new Set(entries).size, entries.length, 'Archive entries must be unique.');
   for (const entry of entries) {
     assert.match(entry, /^package\/(?:package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|src\/theme\/theme\.css|dist-library\/(?:agentic-ui\.(?:js|cjs|css)|types\/.+\.d\.ts(?:\.map)?|agent-guides\/.+\.(?:md|json)))$/);
     assert.ok(!entry.split('/').includes('..'), `Unsafe archive path: ${entry}`);
   }
 
-  const dependencies = {};
-  for (const name of [...Object.keys(manifest.dependencies), 'react', 'react-dom', '@types/react', '@types/react-dom', 'typescript', 'vite']) {
-    dependencies[name] = lock.packages[`node_modules/${name}`].version;
+  const packedManifest = JSON.parse(run('tar', ['-xzOf', archive, 'package/package.json']));
+  assert.equal(packedManifest.name, manifest.name);
+  assert.equal(packedManifest.version, manifest.version);
+  assert.equal(packedManifest.private, false);
+  const devDependencies = {};
+  for (const name of ['@types/react', '@types/react-dom', 'typescript', 'vite']) {
+    devDependencies[name] = lock.packages[`node_modules/${name}`].version;
   }
-  dependencies[manifest.name] = `file:${archive.replaceAll('\\', '/')}`;
-  write('package.json', JSON.stringify({ name: 'local-tarball-consumer', private: true, type: 'module', dependencies }, null, 2));
-  npm(['install', '--ignore-scripts', '--no-audit', '--no-fund']);
+  // The host app declares its React peers; library runtime dependencies are not preloaded.
+  const dependencies = {
+    [manifest.name]: registryInstall ? manifest.version : `file:${archive.replaceAll('\\', '/')}`,
+    react: manifest.peerDependencies.react,
+    'react-dom': manifest.peerDependencies['react-dom'],
+  };
+  write('package.json', JSON.stringify({ name: 'local-tarball-consumer', private: true, type: 'module', dependencies, devDependencies }, null, 2));
+  npm(['install', '--ignore-scripts', '--no-audit', '--no-fund', '--prefer-online', '--registry=https://registry.npmjs.org/']);
+  const consumerLock = JSON.parse(readFileSync(join(temporary, 'package-lock.json'), 'utf8'));
+  const installedLockEntry = consumerLock.packages[`node_modules/${manifest.name}`];
+  assert.equal(installedLockEntry.integrity, integrity, 'Installed package must match this exact archive.');
+  if (registryInstall) assert.match(installedLockEntry.resolved, /^https:\/\/registry\.npmjs\.org\//);
 
   const installed = join(temporary, 'node_modules', ...manifest.name.split('/'));
   assert.ok(realpathSync(installed).startsWith(realpathSync(temporary)), 'Package must be installed from the archive, not linked to source.');
   const installedManifest = JSON.parse(readFileSync(join(installed, 'package.json'), 'utf8'));
-  assert.equal(installedManifest.private, true);
+  assert.equal(installedManifest.private, false);
   assert.equal(installedManifest.name, manifest.name);
   assert.equal(installedManifest.version, manifest.version);
   assert.equal(installedManifest.license, 'SEE LICENSE IN LICENSE');
   assert.deepEqual(installedManifest.author, manifest.author);
   assert.deepEqual(installedManifest.publishConfig, manifest.publishConfig);
   assert.deepEqual(installedManifest.exports, manifest.exports);
+  assert.deepEqual(installedManifest.dependencies, manifest.dependencies);
+  assert.deepEqual(installedManifest.peerDependencies, manifest.peerDependencies);
   for (const noticeFile of ['LICENSE', 'THIRD_PARTY_NOTICES.md']) {
+    assert.equal(run('tar', ['-xzOf', archive, `package/${noticeFile}`]), readFileSync(join(root, noticeFile), 'utf8'), `${noticeFile} in the supplied archive must match the source checkout.`);
     assert.deepEqual(readFileSync(join(installed, noticeFile)), readFileSync(join(root, noticeFile)), `${noticeFile} must exactly match the reviewed repository file.`);
   }
   const notices = readFileSync(join(installed, 'THIRD_PARTY_NOTICES.md'), 'utf8').replaceAll('\r\n', '\n');
@@ -144,6 +197,22 @@ console.log('ESM/CommonJS exports and rendered button passed: ' + Object.keys(li
   const cssFiles = readdirSync(join(temporary, 'dist/assets')).filter((name) => name.endsWith('.css'));
   assert.ok(cssFiles.length > 0, 'Consumer build must emit packaged CSS.');
   assert.ok(cssFiles.some((name) => readFileSync(join(temporary, 'dist/assets', name), 'utf8').includes('--color-foreground')));
+  assert.equal(archiveIntegrity(archive), integrity, 'Verification must not modify the archive.');
+  const consumerDependencies = JSON.parse(npm(['ls', '--omit=dev', '--all', '--json']));
+  const verification = {
+    mode: registryInstall ? 'registry' : suppliedArchive ? 'supplied-archive' : 'local-pack',
+    archive,
+    integrity,
+    shasum: createHash('sha1').update(readFileSync(archive)).digest('hex'),
+    name: installedManifest.name,
+    version: installedManifest.version,
+    files: entries,
+    installedPackage: installedLockEntry,
+    consumerDependencies,
+    checks: { exports: publicNames.length, declarationMaps: maps, componentGuides: guides.guides.length, types: true, css: true, exactLicenseAndNotices: true, documentScrolling: true },
+  };
+  if (reportPath) writeFileSync(reportPath, `${JSON.stringify(verification, null, 2)}\n`);
+  console.log(`Archive mode: ${verification.mode}; integrity verified before and after consumer checks.`);
   console.log(`Tarball verified: ${entries.length} files, ${maps} declaration maps, ${guides.guides.length} component guides, ${publicNames.length} public value/type exports; consumer types and CSS build passed.`);
 } catch (error) {
   if (error.stdout) console.error(String(error.stdout));

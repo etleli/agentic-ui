@@ -1,8 +1,10 @@
-# Publication procedure — future owner-authorized task
+# First-beta activation and owner-authorized publication
 
-**Do not execute publication from this preparation PR.** It keeps `private: true`,
-the owner-approved license, and read-only validation CI. No npm trust, publishing workflow,
-credentials, package staging, or account changes have been configured.
+**Activation is not publication approval.** The release manifest intentionally
+sets `private: false`; its owner-approved license and read-only validation CI
+remain intact. No npm trust, publishing workflow, credentials, staging, or
+account changes have been configured. Stop at the owner checkpoint below before
+changing visibility or submitting an archive.
 
 Checked against official npm documentation on **2026-09-22**. Recheck it before
 execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
@@ -25,12 +27,12 @@ execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
    and confirms it is **etleli**, with publish access and 2FA enabled in npm account
    settings. Complete any interactive login/2FA personally; keep credentials out
    of repository files, logs, and PRs. An npm username check is not a 2FA check.
-5. Prepare a separate reviewed release commit removing the publication block
-   (`private: false` or removal of that field), and update the corresponding
-   assertions in `scripts/package-workflow-contract.test.mjs` and
-   `scripts/verify-tarball.mjs`. Retain the finalized-license state and content
-   assertions. Preserve all other package, consumer, CSS,
-   security, identity, and notice checks. Never patch the private flag only in CI.
+5. Validate and merge the bounded activation PR normally after current-head hosted
+   validation and review. Its committed `private: false` state is enforced by the
+   package and consumer tests. Retain all license, consumer, CSS, security, identity,
+   and notice safeguards; never patch publication settings only in CI. Fetch main
+   and require successful push-triggered validation for the exact merge commit.
+   Record that SHA as the release source commit.
 
 The candidate values are name `@etleli/agentic-ui`, version `0.1.0-beta.1`,
 registry `https://registry.npmjs.org/`, access `public`, and tag `beta`.
@@ -43,7 +45,7 @@ token. See [scoped public packages](https://docs.npmjs.com/creating-and-publishi
 
 ### Validate and inspect one immutable artifact
 
-Use a clean checkout of the exact reviewed release commit. Record its full SHA.
+Use a clean checkout of the exact validated release source commit. Record its full SHA.
 Run `npm ci`, `npm run validate`, and staged/working-tree whitespace checks.
 Hosted validation must also pass for that commit. Create an empty artifact
 directory outside the checkout and save npm's JSON pack result there:
@@ -59,14 +61,43 @@ Inspect the complete file list, compiled JS/CSS, declarations/maps, guides,
 LICENSE, and THIRD_PARTY_NOTICES.md. Confirm the private block was removed in
 the committed source and the packed manifest, the license is approved, and no
 workshop application or private material is included. Install **this exact tarball**
-in a separate consumer and verify root imports, types, both CSS exports, and
-document scrolling. Do not rebuild or replace it after review; any byte change
-requires renewed inspection and validation.
+using the existing harness's external-archive mode, which does not repack it:
+
+```sh
+npm run test:tarball -- --tarball /absolute/path/to/artifacts/etleli-agentic-ui-0.1.0-beta.1.tgz --report /absolute/path/to/artifacts/local-consumer.json
+```
+
+The consumer declares its React application peers with the documented ranges;
+other runtime dependencies resolve from the library declarations without preloading
+them to mask missing declarations. Its report records the
+actual resolved tree and archive integrity. Do not rebuild or replace the archive
+after review; any byte change requires renewed inspection and verification.
+
+### Final owner checkpoint
+
+Inspect current repository visibility and everything that would become public:
+tracked files, reachable branches/history, PR discussions, and relevant Actions
+logs/artifacts. Record inaccessible surfaces and findings; do not silently delete
+branches, rewrite history, or remove runs. Check README, LICENSE, and the enabled
+issue tracker as the public project and authorization-contact surfaces.
+
+Present the source SHA/hosted run, exact release tuple, archive path/integrity,
+consumer/audit results, four beta limitations, public-surface findings/gaps, and
+current visibility. Ask for explicit approval of **A: make etleli/agentic-ui public**
+if needed, and **B: publish this exact tarball with beta**. Preserve the archive
+and wait. CI, activation merge, and license approval do not authorize either action.
 
 ### Owner-authorized submission and verification
 
-Only after explicit owner authorization for the release artifact, publish the
-inspected archive, with every destination setting explicit:
+Only after the checkpoint approvals, recheck the exact source and artifact and
+confirm the version is still unused. Recompute integrity immediately before
+submission. If approved, change only this repository's visibility and verify
+unauthenticated repository, README, LICENSE, and issue-tracker access. If that
+change is unavailable, give the owner the exact required action and wait.
+
+Use the authenticated etleli npm session, letting the owner complete login/browser
+authentication/2FA locally. Never request passwords, tokens, or recovery codes in
+chat. Publish the inspected archive with every destination setting explicit:
 
 ```sh
 npm publish /absolute/path/to/artifacts/etleli-agentic-ui-0.1.0-beta.1.tgz --ignore-scripts --registry=https://registry.npmjs.org/ --access=public --tag=beta
@@ -77,6 +108,10 @@ package cannot use staging: npm requires an existing package, publish access,
 and an account with 2FA for that workflow.
 [Staging prerequisites](https://docs.npmjs.com/staged-publishing/).
 
+If submission times out or is ambiguous, query the exact version before retrying.
+If present, compare its integrity with the approved archive; a mismatch is a
+blocker, not permission to overwrite, unpublish, or increment the version.
+
 Read back exact registry metadata:
 
 ```sh
@@ -86,10 +121,19 @@ npm view @etleli/agentic-ui dist-tags --json --registry=https://registry.npmjs.o
 
 Require the reviewed name/version, repository URL, `SEE LICENSE IN LICENSE`,
 `beta` tag, and exact packed integrity/shasum. Inspect unexpected tags rather than
-silently changing them. Then create a fresh consumer using a registry install
-of `@etleli/agentic-ui@0.1.0-beta.1`, repeat imports/type/CSS checks, and compare
-its LICENSE/notices to the approved artifact. Record the actual result and URLs;
-do not report a successful live release solely because the publish command exited.
+silently changing them; do not move `latest`. Then verify a fresh registry consumer:
+
+```sh
+npm run test:tarball -- --tarball /absolute/path/to/artifacts/etleli-agentic-ui-0.1.0-beta.1.tgz --registry --report /absolute/path/to/artifacts/registry-consumer.json
+```
+
+This installs the exact version from npm using normal runtime dependency resolution,
+checks registry origin and integrity against the approved archive, and repeats
+imports/type/CSS/license checks. Record actual resolved versions. Keep public
+GitHub status, npm submission, registry readback, and consumer verification as
+separate outcomes in the activation PR and private handoff. A failed later check
+does not undo a successful earlier publication. Do not rewrite the release commit
+or rebuild the published artifact to record status.
 
 ## B. Subsequent releases: stage-only OIDC, then owner approval
 
