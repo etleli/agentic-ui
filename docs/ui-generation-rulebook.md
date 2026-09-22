@@ -1,6 +1,6 @@
 # Agentic UI Generation Rulebook
 
-Use this rulebook when composing an application with `@etleli/agentic-ui`. The personal candidate is unpublished; its license is owner-approved and finalized, while publication remains separately blocked. See the repository's release-status document. This rulebook turns the library's current visual and interaction conventions into repeatable rules for an agent. Follow it unless a component contract or an explicit product requirement says otherwise.
+Use this rulebook when composing an application with `@etleli/agentic-ui`. Its license is owner-approved and finalized. Consult the repository's release record for observed registry status and the README for known beta limitations; this rulebook does not establish publication or stability. It turns the library's current visual and interaction conventions into repeatable rules for an agent. Follow it unless a component contract or an explicit product requirement says otherwise.
 
 ## Read Order
 

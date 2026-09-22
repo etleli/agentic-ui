@@ -15,11 +15,14 @@ Use Node 24.19.0 and npm 11.17.0. Install with `npm ci`, then run
 - `npm run validate`: `check`, `pack:check`, and `git diff --check`.
 
 The existing `test:consumer-package` suite exercises the built library directly.
-`test:tarball` additionally packs the build and installs it in a separate temporary
+`test:tarball` normally packs the build and installs it in a separate temporary
 directory, checks ESM and CommonJS, compiles public types, and builds a consumer
-with the exported CSS. It checks packaged guides and cleans up its archive and
-consumer on exit. It needs `tar` on PATH and npm registry access. Direct dependency
-versions in that consumer come from the repository lockfile.
+with the exported CSS. With `--tarball`, it uses the supplied archive without
+packing another one and leaves that file intact. Temporary consumers and internally
+created archives are cleaned up. It needs `tar` on PATH and npm registry access.
+The consumer declares its React/React DOM application peers using the package's
+peer ranges. Library runtime dependencies resolve from the library's declarations
+without preloading them; only build/type-check tools use verified lockfile versions.
 
 ## Public surface
 
@@ -28,10 +31,10 @@ types, `style.css`, `theme.css`, and `agent-guides/`. Keep examples in the works
 registration alone never makes a component public. React and React DOM are peers;
 CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
 
-The personal candidate is `@etleli/agentic-ui@0.1.0-beta.1`. It is unpublished
-and remains `private: true`; the custom LICENSE is owner-approved and finalized.
-See [release status](release-status.md) and [licensing](licensing.md). Publication
-still requires separate owner authorization and release activation.
+The activated candidate is `@etleli/agentic-ui@0.1.0-beta.1`, with `private: false`;
+the custom LICENSE is owner-approved and finalized. See the [release record](release-status.md)
+for observed registry status and [licensing](licensing.md) for usage conditions.
+Publication and repository visibility require the explicit owner checkpoint.
 
 For manual inspection, choose an empty directory outside the repository:
 
@@ -44,12 +47,24 @@ Install that exact `.tgz` in a separate React consumer. Import the root API, a
 public prop type, and `@etleli/agentic-ui/style.css`. The stylesheet already
 includes tokens; `theme.css` is available when only tokens are needed. Inspect
 the manifest, JavaScript, CSS, declarations/maps, and guides. Delete temporary
-archives after inspection. The archive must contain the exact root LICENSE and
+disposable archives after inspection; preserve the final release archive while
+awaiting approval and publication. The archive must contain the exact root LICENSE and
 THIRD_PARTY_NOTICES.md, and retain the bundled DOMPurify attribution. The tarball
 test compares both files byte for byte with the repository, preserves public
 import/type checks, and rejects document scroll locking in either CSS export.
 Never commit generated output or credentials. Tests verify packaging, not legal
 approval. Future registry installation is described in [publishing](publishing.md).
+
+To verify and preserve one supplied archive, without repacking:
+
+```sh
+npm run test:tarball -- --tarball /absolute/path/to/etleli-agentic-ui-0.1.0-beta.1.tgz --report /absolute/path/to/consumer-report.json
+```
+
+After publication, add `--registry` to install the exact version from npm instead
+of the file. The approved archive remains the expected-integrity reference. The
+report records the actual resolved runtime dependency tree and installed package
+integrity. This command verifies availability; it never publishes or stages.
 
 ## Adding or fixing components
 

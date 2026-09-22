@@ -1,59 +1,72 @@
-# Release status
+# Release record and first-beta gates
 
-**Local candidate: `@etleli/agentic-ui@0.1.0-beta.1`. Not published.**
-Elias Etl is the confirmed first-party owner, author, and licensor.
-The package remains `private: true`, with `license: "SEE LICENSE IN LICENSE"`.
-The custom LICENSE is **owner-approved and finalized**. Elias Etl approved the
-complete text at `4037682722176bc9f72ae7f1db0ed60c72ea0942`, with the narrow
-authorization/payment clarification recorded in [licensing](licensing.md).
-This is owner approval, not independent legal certification or permission to publish.
+The activated candidate is **@etleli/agentic-ui@0.1.0-beta.1**, authored and
+licensed by Elias Etl. The committed manifest intentionally has **private: false**,
+with SEE LICENSE IN LICENSE, registry https://registry.npmjs.org/, public access,
+and the beta distribution tag. This makes the archive technically publishable;
+it does not establish registry availability or authorize submission.
 
-## Registry checks on 2026-09-22
+## Where observed status is recorded
 
-Authenticated `npm whoami` returned `etleli`. Read-only `npm view` queries for the
-package's versions/tags and for `0.1.0-beta.1` returned registry `E404` responses.
-Independent anonymous HTTP requests to the package and version endpoints also
-returned 404, while a known-package control returned 200. No public versions or
-dist-tags were available, and no candidate-version collision was observed.
-This is a not-found observation, not a name reservation or a guarantee of future
-publish access; recheck under the owner's account immediately before release.
-2FA state and unpublished/staged registry state were not verified in this task.
+[Activation PR #3](https://github.com/etleli/agentic-ui/pull/3) for branch
+`release/0.1.0-beta.1` is the release record. It records the validated source/merge
+SHA, hosted runs, artifact integrity,
+owner checkpoint, visibility outcome, registry readback, and registry-consumer
+result. Until those observations exist, do not infer them from this manifest,
+license approval, or passing CI. The final private handoff keeps local artifact
+paths and inspection evidence outside tracked files.
 
-## Review and launch gates
+After publication, update that PR record and private handoff without rewriting
+the release source commit or rebuilding the submitted archive. This document
+defines the gates; it does not claim a live package or public repository.
 
-1. **License approval completed.** The finalized [LICENSE](../LICENSE) preserves
-   strict individual-only personal noncommercial permission. Commercial and
-   organizational use require prior written authorization, which may be free or
-   subject to separately agreed terms; the requirement does not by itself imply
-   a fee or guarantee authorization. Modification/sharing, notices, warranty,
-   liability, termination/cure, and recipient protections were also approved.
-   See the [licensing explanation](licensing.md).
-2. **Review third-party obligations.** First-party ownership is settled. The
-   [third-party review](third-party-review.md) and [notices](../THIRD_PARTY_NOTICES.md)
-   cover the inspected distribution, including bundled DOMPurify's Apache option.
-   They do not relicense third-party material or certify every downstream use.
-3. **Dependency gate resolved; recheck before release.** On 2026-09-22, the
-   scoped tooling remediation updated all documented affected instances within
-   compatible parent ranges, including PostCSS 8.5.23 for both map-read advisories.
-   Full and production audits now report zero findings. The
-   [before/after record](dependency-advisories.md) includes the original 19 claims,
-   exact updates, regression checks, and full validation. This is remediation,
-   not owner risk acceptance or a complete security guarantee. The runtime
-   dependency closure and pinned DOMPurify remain unchanged.
-4. **Keep the component audit separate.** Controlled DataTable selection,
-   selection display when manual selection is disabled, DateRangePicker preset
-   bounds, and Tooltip viewport placement remain deferred audit findings.
-5. **Authorize release activation separately.** The publication block remains.
-   Removing it requires a reviewed, committed change that updates both private-flag
-   assertions while retaining the finalized-license checks and all other safeguards.
-   Validate that exact release commit, inspect its new tarball, and verify npm
-   account access and 2FA. License finalization alone does not authorize this step.
-6. **Authorize the actual first publication.** Follow [publishing.md](publishing.md).
-   A new package cannot be staged. Configure later stage-only OIDC only in a
-   separate authorized task after the package exists. Registry readback, integrity,
-   tags, and a fresh registry consumer must be verified after publication.
+## Established decisions
 
-`publishConfig` records the proposed npm registry, public access, and beta tag;
-it does not override the private flag. CI is validation-only with read-only
-repository permissions. No publish/deploy workflow, npm trust, credential, release,
-tag, visibility change, or account-setting change is activated by this PR.
+- The first-party LICENSE is owner-approved and finalized. Its strict individual
+  personal noncommercial permission remains. Commercial and organizational use
+  require prior written authorization, which does not itself imply a fee.
+- Third-party notices remain separate and unchanged; see [licensing](licensing.md)
+  and [third-party review](third-party-review.md).
+- The documented development-dependency remediation is complete; re-run both
+  audits for the actual release tree. Zero findings are not a security guarantee.
+- CI is validation-only with read-only repository permissions. No publishing job,
+  npm trust, credentials, Git tag/release, or workshop deployment is activated.
+
+## Known unresolved beta limitations
+
+These stay assigned to the component audit and are not fixed by release activation:
+
+1. DataTable can display a local selection that conflicts with unchanged controlled props.
+2. DataTable hides programmatic selection styling and aria-current when selectable is false.
+3. DateRangePicker quick presets may exceed min/max bounds.
+4. Tooltip bubbles can extend outside the viewport.
+
+The beta is neither stable nor comprehensively audited. Keep these limitations
+visible in the README and release record.
+
+The public-surface review also found a later automated review on PR #1 at
+`451455e6e06b21a67950f5dd12d95ed6477ac2c7`: uncontrolled FilePicker selection/rerenders
+and SSR with persisted SplitPane/ResizablePanel sizes (reported P1), plus the
+generated-color workshop control, controlled DatePicker values, and modal focus
+management (reported P2). These five additional reports are pending component-audit
+validation and owner disposition; activation does not fix, dismiss, or accept them.
+They must be disclosed alongside the original four findings at the checkpoint.
+
+## Required owner checkpoint
+
+Before either visibility change or publication, present the exact validated
+release commit and hosted run, archive path and SHA-512 integrity, package/version
+and registry/access/tag, consumer results, both audits, known limitations, current
+GitHub visibility, and the public-surface review with any gaps or findings.
+
+Obtain explicit approval separately for making only etleli/agentic-ui public
+(if still private) and for publishing only the identified tarball. Activation,
+license approval, and CI do not substitute for those approvals. Preserve the
+archive unchanged while waiting. No background monitoring is promised.
+
+After approval, recheck source/artifact/registry conditions and integrity. Let
+the owner complete local authentication or 2FA; never request secrets in chat.
+Follow [publishing.md](publishing.md), then record repository visibility, npm
+publication, registry metadata/integrity, and fresh registry-consumer verification
+as separate observed outcomes. Never overwrite a published version or choose
+another version without explicit direction.

@@ -8,15 +8,16 @@
 - Public components and types, interaction helpers, synthetic examples, component
   agent guides, global generation rulebook, and both application/library builds.
 - Validation-only CI, package checks, and a separate local tarball consumer.
-- Publication explicitly disabled.
+- Validation-only CI; publication requires an explicit owner checkpoint.
 
-## Finalized license; pending personal npm publication
+## Finalized license and first-beta activation
 
-The unpublished candidate is `@etleli/agentic-ui@0.1.0-beta.1`. First-party ownership
+The activated candidate is `@etleli/agentic-ui@0.1.0-beta.1`. First-party ownership
 is confirmed and the custom license is owner-approved and finalized. Strict
 personal-use conditions remain; commercial and organizational use require written
-authorization without an automatic fee. Release activation and publication need
-separate authorization. See [release status](release-status.md).
+authorization without an automatic fee. Activation does not establish publication;
+the exact artifact and visibility change require separate approval. See the
+[release record](release-status.md). The four component findings remain unresolved.
 
 ## Future component-contract audit
 

@@ -237,6 +237,6 @@ authorization, execution, and product copy in the consuming application.
 
 ## Validation
 
-Run `npm run validate`. The personal package candidate is unpublished;
+Run `npm run validate`. For the activated beta's observed registry status,
 see [release status](release-status.md). Changes to these sizing and interaction
 contracts require deliberate compatibility review and regression coverage.

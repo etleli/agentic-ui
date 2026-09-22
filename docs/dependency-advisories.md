@@ -16,8 +16,8 @@ Full validation and the separate tarball consumer pass after the updates.
 The current full and production audits both report **zero findings**. This is
 a dated registry result, not a complete security guarantee or approval to publish.
 The LICENSE was subsequently owner-approved and finalized as recorded in
-[licensing](licensing.md); release activation and actual publication remain
-separate owner-authorized steps.
+[licensing](licensing.md). The release manifest is now activated, but actual
+publication and repository visibility still require the final owner checkpoint.
 
 ## Exact updates and compatibility
 
@@ -196,7 +196,7 @@ configuration, or replace review of release inputs and artifact exposure. Keep
 validation read-only and release jobs limited to separately reviewed commits.
 The 20-minute CI timeout is not a security sandbox. Re-run audits before publication.
 
-Release activation and actual publication are still outstanding. Dependency
+Actual publication remains a separately approved action. Dependency
 remediation did not change or approve license terms and was not risk acceptance;
 the subsequent owner approval is recorded separately in [licensing](licensing.md).
 The four deferred component-behavior findings stay with the planned component
