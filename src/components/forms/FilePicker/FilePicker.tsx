@@ -1,5 +1,5 @@
 import { FileUp, X } from 'lucide-react';
-import { useEffect, useId, useRef, useState, type DragEvent } from 'react';
+import { useId, useRef, useState, type DragEvent } from 'react';
 import '../Forms.css';
 import { getFormClassName, normalizeFormSize } from '../Forms.utils';
 import type { FilePickerProps } from '../Forms.types';
@@ -21,7 +21,7 @@ export function FilePicker({
   multiple = false,
   placeholder = 'Drop files here or browse',
   required = false,
-  selectedFiles = [],
+  selectedFiles,
   size,
   onFilesChange,
   ...pickerProps
@@ -29,12 +29,13 @@ export function FilePicker({
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [files, setFiles] = useState(selectedFiles);
-
-  useEffect(() => setFiles(selectedFiles), [selectedFiles]);
+  const [internalFiles, setInternalFiles] = useState<string[]>([]);
+  const files = selectedFiles ?? internalFiles;
 
   function updateFiles(nextFiles: string[]) {
-    setFiles(nextFiles);
+    if (selectedFiles === undefined) {
+      setInternalFiles(nextFiles);
+    }
     onFilesChange?.(nextFiles);
   }
 

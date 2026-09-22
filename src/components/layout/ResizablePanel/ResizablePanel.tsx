@@ -28,15 +28,8 @@ export function ResizablePanel({
   ...panelProps
 }: ResizablePanelProps) {
   const dragStartRef = useRef<{ pointer: number; size: number } | null>(null);
-  const [internalSize, setInternalSize] = useState(() => {
-    if (size !== undefined || !persistKey) {
-      return size ?? defaultSize;
-    }
-
-    const persistedValue = window.localStorage.getItem(`agentic-ui:resizable-panel:${persistKey}`);
-    const parsedValue = Number.parseFloat(persistedValue ?? '');
-    return Number.isFinite(parsedValue) ? parsedValue : defaultSize;
-  });
+  const [internalSize, setInternalSize] = useState(size ?? defaultSize);
+  const restoredPersistKey = useRef<string | undefined>(undefined);
   const currentSize = clampLayoutValue(size ?? internalSize, minSize, maxSize);
   const panelStyle = {
     ...style,
@@ -49,6 +42,27 @@ export function ResizablePanel({
       setInternalSize(size);
     }
   }, [size]);
+
+  useEffect(() => {
+    if (size !== undefined || !persistKey) {
+      restoredPersistKey.current = undefined;
+      return;
+    }
+    if (restoredPersistKey.current === persistKey) {
+      return;
+    }
+    restoredPersistKey.current = persistKey;
+
+    let restoredValue = defaultSize;
+    try {
+      const saved = window.localStorage.getItem(`agentic-ui:resizable-panel:${persistKey}`);
+      const parsed = saved?.trim() ? Number(saved) : Number.NaN;
+      if (Number.isFinite(parsed)) restoredValue = parsed;
+    } catch {
+      // Persistence is optional when browser storage is unavailable or denied.
+    }
+    setInternalSize(clampLayoutValue(restoredValue, minSize, maxSize));
+  }, [defaultSize, maxSize, minSize, persistKey, size]);
 
   function startResize(event: ReactPointerEvent<HTMLButtonElement>) {
     if (!resizable) {
@@ -74,7 +88,11 @@ export function ResizablePanel({
 
       setInternalSize(nextSize);
       if (persistKey) {
-        window.localStorage.setItem(`agentic-ui:resizable-panel:${persistKey}`, String(nextSize));
+        try {
+          window.localStorage.setItem(`agentic-ui:resizable-panel:${persistKey}`, String(nextSize));
+        } catch {
+          // A storage failure must not prevent resizing or its callback.
+        }
       }
       onSizeChange?.(nextSize);
     }
