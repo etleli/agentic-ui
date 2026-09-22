@@ -60,6 +60,9 @@ export function FilePicker({
   }
 
   function removeFile(fileName: string) {
+    if (disabled) {
+      return;
+    }
     updateFiles(files.filter((currentFileName) => currentFileName !== fileName));
   }
 
@@ -110,7 +113,7 @@ export function FilePicker({
           {files.map((fileName) => (
             <li className="file-picker__file" key={fileName}>
               <span className="file-picker__file-name">{fileName}</span>
-              <button className="file-picker__remove" type="button" aria-label={`Remove ${fileName}`} onClick={() => removeFile(fileName)}>
+              <button className="file-picker__remove" type="button" disabled={disabled} aria-label={`Remove ${fileName}`} onClick={() => removeFile(fileName)}>
                 <X size={16} aria-hidden="true" />
               </button>
             </li>

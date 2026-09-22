@@ -479,7 +479,8 @@
 }
 
 .forms-picker__trigger:disabled,
-.file-picker__dropzone[data-disabled='true'] {
+.file-picker__dropzone[data-disabled='true'],
+.file-picker__remove:disabled {
   cursor: not-allowed;
   opacity: 0.62;
 }
@@ -562,7 +563,7 @@
 .date-picker__day:hover,
 .time-picker__option:hover,
 .date-range-picker__preset:hover,
-.file-picker__remove:hover {
+.file-picker__remove:hover:not(:disabled) {
   border-color: var(--color-border);
   background: var(--color-surface-muted);
 }

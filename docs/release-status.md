@@ -60,7 +60,7 @@ enabled without a controlled size.
 
 The repair gives FilePicker explicit controlled/internal state ownership and
 restores panel persistence after mounting from deterministic server/client defaults.
-Only these reproduced findings are marked fixed. The permanent behavioral suite
+These reproduced findings are marked fixed. The permanent behavioral suite
 exercises the built package, can target an installed tarball, and runs in validation
 and CI. It covers normal/StrictMode interaction, clean Node SSR, hydration, storage
 failures, controlled precedence, key changes, and resizing/remounting. See the
@@ -76,7 +76,28 @@ The old source commit above and both pre-fix archives are **superseded for publi
 Preserve their historical checkpoints and results. Neither is approval for the
 corrected artifact. A fresh candidate must come from the validated post-merge
 commit, pass exact supplied-archive and component checks, and receive a new owner
-checkpoint. Visibility, publication, and Git-history email exposure remain unapproved.
+checkpoint; approval of one archive never transfers to different bytes.
+
+### Disabled-removal follow-up
+
+A later [PR #4 review comment](https://github.com/etleli/agentic-ui/pull/4#discussion_r4074640087)
+reported that disabled FilePicker instances could still remove filenames and emit
+change requests. Launch preflight confirmed it on the candidate from
+`783baa896aea7cd7de8b8a39b0add5753d6cbe1e`. Its previously passing disabled-selection
+tests did not cover removal; those historical test results are retained as such.
+
+The owner authorized a small repair instead of accepting this additional limitation.
+FilePicker now disables removal controls and guards the removal handler. Regressions
+cover controlled and uncontrolled removal in normal rendering and StrictMode,
+including parent updates while disabled. No other component was changed.
+
+The candidate from `783baa896aea7cd7de8b8a39b0add5753d6cbe1e`, SHA-1
+`52a42b49e1b2bb2cf4c4db55be74b4ac2373a9e5`, is also superseded for publication;
+preserve its bytes and evidence. The owner approved repository visibility and the
+previously disclosed Git-history email exposure, but no visibility change has been
+executed. The byte-specific publication approval covered only that superseded
+archive. Its replacement requires a fresh publication approval. The four earlier
+unresolved findings and three unvalidated reports remain unchanged.
 
 ## Required owner checkpoint
 

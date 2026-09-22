@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { resolve, join } from 'node:path';
+import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { format } from 'node:util';
 
@@ -102,6 +103,9 @@ try {
   const calls = [];
 
   if (kind === 'filepicker') {
+    const stylesheet = document.createElement('style');
+    stylesheet.textContent = readFileSync(join(dirname(libraryPath), 'agentic-ui.css'), 'utf8');
+    document.head.append(stylesheet);
     const accepting = scenario === 'accepting';
     const controlled = accepting || scenario.startsWith('declining');
     const initial = scenario === 'declining' ? ['kept.txt'] : [];
@@ -122,6 +126,12 @@ try {
       }));
     }
     const names = () => [...document.querySelectorAll('.file-picker__file-name')].map(el => el.textContent);
+    function assertDisabledRemoval(button) {
+      assert.equal(button.disabled, true, 'Disabled selection must also disable removal');
+      const appearance = dom.window.getComputedStyle(button);
+      assert.equal(appearance.cursor, 'not-allowed');
+      assert.ok(Number(appearance.opacity) > 0 && Number(appearance.opacity) < 1, 'Disabled removal must be visibly muted');
+    }
     async function choose(fileNames, drop = false) {
       await step(() => {
         const files = fileNames.map(name => new dom.window.File(['fixture'], name, { type: 'text/plain' }));
@@ -169,6 +179,10 @@ try {
       assert.equal(document.querySelector('.file-picker__dropzone').disabled, true);
       await choose(['blocked.txt']); await choose(['blocked-drop.txt'], true);
       assert.deepEqual(names(), ['one.txt']); assert.deepEqual(calls, [['one.txt']]);
+      const disabledRemoval = document.querySelector('.file-picker__remove');
+      assertDisabledRemoval(disabledRemoval);
+      await step(() => disabledRemoval.click());
+      assert.deepEqual(names(), ['one.txt']); assert.deepEqual(calls, [['one.txt']]);
       await step(() => updateParent.props({ disabled: false, multiple: true, maxFiles: 2 }));
       await choose(['two.txt', 'three.txt'], true); assert.deepEqual(names(), ['one.txt', 'two.txt']);
       await step(() => updateParent.props({ maxFiles: 0 }));
@@ -177,6 +191,14 @@ try {
     }
     if (controlled) {
       const actionCount = calls.length;
+      const priorFiles = [...names()];
+      await step(() => updateParent.props({ disabled: true }));
+      const disabledRemoval = document.querySelector('.file-picker__remove');
+      if (disabledRemoval) {
+        assertDisabledRemoval(disabledRemoval);
+        await step(() => disabledRemoval.click());
+      }
+      assert.deepEqual(names(), priorFiles); assert.equal(calls.length, actionCount);
       await step(() => updateParent.files(['replacement.txt'])); assert.deepEqual(names(), ['replacement.txt']);
       await step(() => updateParent.files([])); assert.deepEqual(names(), []);
       assert.equal(calls.length, actionCount, 'Parent updates must not notify as user actions');
