@@ -17,8 +17,10 @@ const [files, setFiles] = useState<string[]>([]);
 ```
 
 The API contains filenames, not File objects, and performs no upload. Existing
-single/multiple selection and `maxFiles` truncation remain. Disabled input selection
-and dropping do not change files or emit change requests.
+single/multiple selection and `maxFiles` truncation remain. Disabled input selection,
+dropping, and removal do not change files or emit change requests. Removal controls
+are natively disabled. Controlled parent replacement and clearing still render
+while the picker is disabled, without user-action notifications.
 
 ## SplitPane and ResizablePanel
 
