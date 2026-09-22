@@ -9,8 +9,9 @@ it does not establish registry availability or authorize submission.
 ## Where observed status is recorded
 
 [Activation PR #3](https://github.com/etleli/agentic-ui/pull/3) for branch
-`release/0.1.0-beta.1` is the release record. It records the validated source/merge
-SHA, hosted runs, artifact integrity,
+`release/0.1.0-beta.1` preserves the activation record. The subsequent repair PR on
+`fix/first-beta-component-blockers` and its private handoff record the corrected
+candidate's validated source/merge SHA, hosted runs, artifact integrity,
 owner checkpoint, visibility outcome, registry readback, and registry-consumer
 result. Until those observations exist, do not infer them from this manifest,
 license approval, or passing CI. The final private handoff keeps local artifact
@@ -44,13 +45,38 @@ These stay assigned to the component audit and are not fixed by release activati
 The beta is neither stable nor comprehensively audited. Keep these limitations
 visible in the README and release record.
 
-The public-surface review also found a later automated review on PR #1 at
-`451455e6e06b21a67950f5dd12d95ed6477ac2c7`: uncontrolled FilePicker selection/rerenders
-and SSR with persisted SplitPane/ResizablePanel sizes (reported P1), plus the
-generated-color workshop control, controlled DatePicker values, and modal focus
-management (reported P2). These five additional reports are pending component-audit
-validation and owner disposition; activation does not fix, dismiss, or accept them.
-They must be disclosed alongside the original four findings at the checkpoint.
+Three additional reports from the automated review on PR #1 at
+`451455e6e06b21a67950f5dd12d95ed6477ac2c7` remain unvalidated: the generated-color
+workshop control, controlled DatePicker values, and modal focus management
+(reported P2). They remain deferred alongside the four limitations above.
+
+## Confirmed blockers corrected before the first beta
+
+The two P1 report groups were reproduced against a new diagnostic archive from
+`0ea20b948d8c228eeeb38b16d7b1e542ce869bb8`. FilePicker lost uncontrolled filenames,
+repeatedly updated, and displayed changes rejected by a controlled parent.
+SplitPane and ResizablePanel threw during server rendering when persistence was
+enabled without a controlled size.
+
+The repair gives FilePicker explicit controlled/internal state ownership and
+restores panel persistence after mounting from deterministic server/client defaults.
+Only these reproduced findings are marked fixed. The permanent behavioral suite
+exercises the built package, can target an installed tarball, and runs in validation
+and CI. It covers normal/StrictMode interaction, clean Node SSR, hydration, storage
+failures, controlled precedence, key changes, and resizing/remounting. See the
+[component contracts](file-picker-and-panel-persistence.md) for detailed behavior.
+
+The old source commit above and both pre-fix archives are **superseded for publication**:
+
+- Original release archive, recorded SHA-1 `672e477624115e414eface9eb15dd961a759a3cd`:
+  unavailable during component diagnosis and not tested in that diagnosis.
+- New pre-fix diagnostic archive, SHA-1 `503387f6eb1addc4cc72d98d552d2c55b05ea06f`:
+  tested and retained as failure evidence. It did not match the original's recorded checksum.
+
+Preserve their historical checkpoints and results. Neither is approval for the
+corrected artifact. A fresh candidate must come from the validated post-merge
+commit, pass exact supplied-archive and component checks, and receive a new owner
+checkpoint. Visibility, publication, and Git-history email exposure remain unapproved.
 
 ## Required owner checkpoint
 

@@ -23,15 +23,8 @@ export function SplitPane({
   ...paneProps
 }: SplitPaneProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const [internalSplitPercent, setInternalSplitPercent] = useState(() => {
-    if (splitPercent !== undefined || !persistKey) {
-      return splitPercent ?? defaultSplitPercent;
-    }
-
-    const persistedValue = window.localStorage.getItem(`agentic-ui:split-pane:${persistKey}`);
-    const parsedValue = Number.parseFloat(persistedValue ?? '');
-    return Number.isFinite(parsedValue) ? parsedValue : defaultSplitPercent;
-  });
+  const [internalSplitPercent, setInternalSplitPercent] = useState(splitPercent ?? defaultSplitPercent);
+  const restoredPersistKey = useRef<string | undefined>(undefined);
   const [isDragging, setIsDragging] = useState(false);
   const currentSplitPercent = clampLayoutValue(splitPercent ?? internalSplitPercent, minSplitPercent, maxSplitPercent);
   const paneStyle = {
@@ -44,6 +37,27 @@ export function SplitPane({
       setInternalSplitPercent(splitPercent);
     }
   }, [splitPercent]);
+
+  useEffect(() => {
+    if (splitPercent !== undefined || !persistKey) {
+      restoredPersistKey.current = undefined;
+      return;
+    }
+    if (restoredPersistKey.current === persistKey) {
+      return;
+    }
+    restoredPersistKey.current = persistKey;
+
+    let restoredValue = defaultSplitPercent;
+    try {
+      const saved = window.localStorage.getItem(`agentic-ui:split-pane:${persistKey}`);
+      const parsed = saved?.trim() ? Number(saved) : Number.NaN;
+      if (Number.isFinite(parsed)) restoredValue = parsed;
+    } catch {
+      // Persistence is optional when browser storage is unavailable or denied.
+    }
+    setInternalSplitPercent(clampLayoutValue(restoredValue, minSplitPercent, maxSplitPercent));
+  }, [defaultSplitPercent, maxSplitPercent, minSplitPercent, persistKey, splitPercent]);
 
   function updateSplitFromPointer(clientX: number, clientY: number) {
     const rect = rootRef.current?.getBoundingClientRect();
@@ -60,7 +74,11 @@ export function SplitPane({
 
     setInternalSplitPercent(nextSplitPercent);
     if (persistKey) {
-      window.localStorage.setItem(`agentic-ui:split-pane:${persistKey}`, String(nextSplitPercent));
+      try {
+        window.localStorage.setItem(`agentic-ui:split-pane:${persistKey}`, String(nextSplitPercent));
+      } catch {
+        // A storage failure must not prevent resizing or its callback.
+      }
     }
     onSplitPercentChange?.(nextSplitPercent);
   }

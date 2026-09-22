@@ -68,6 +68,12 @@ integrity. This command verifies availability; it never publishes or stages.
 
 ## Adding or fixing components
 
+`npm run test:component-blockers` also runs during validation and hosted CI. Its
+bounded behavioral tests exercise the built package and can target a separate
+archive consumer through `AGENTIC_UI_CONSUMER_ROOT`. See the
+[FilePicker and panel persistence contracts](file-picker-and-panel-persistence.md)
+for coverage and consumer setup. This mode does not pack or rebuild the archive.
+
 Read the authoring guide, consumer contracts, interaction matrix, rulebook, and
 component `AGENT.md`. Update component/group barrels and the root entry deliberately,
 then register a synthetic preview. Add focused regression coverage for changed

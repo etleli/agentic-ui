@@ -43,12 +43,12 @@ These four findings remain unresolved and assigned to the planned component audi
 
 Do not treat the beta as a completed accessibility, interaction, or security audit.
 
-Later automated review reports are also awaiting component-audit validation:
-uncontrolled `FilePicker` selection/rerenders, persisted `SplitPane` and
-`ResizablePanel` sizes during server rendering, the workshop's generated-color
+The confirmed `FilePicker` state/rerender and persisted `SplitPane` / `ResizablePanel`
+server-rendering blockers are corrected, with permanent behavioral regressions.
+See the [state and persistence contracts](https://github.com/etleli/agentic-ui/blob/main/docs/file-picker-and-panel-persistence.md).
+Three other automated reports remain unvalidated: the workshop's generated-color
 control, controlled `DatePicker` values, and modal keyboard focus management.
-These reports have not been fixed or cleared by release activation. See the
-release record for their review status.
+The four limitations above remain unresolved; see the release record for evidence.
 
 ## Develop locally
 
