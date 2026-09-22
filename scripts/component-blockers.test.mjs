@@ -42,4 +42,3 @@ for (const component of ['SplitPane', 'ResizablePanel']) {
     test(`${component} clean Node SSR (${scenario})`, () => check(['ssr', 'normal', scenario, component]));
   }
 }
-

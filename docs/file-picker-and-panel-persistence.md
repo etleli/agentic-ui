@@ -60,4 +60,3 @@ package's peer ranges, and JSDOM 29.1.1 there. The worker loads React and the pa
 from that directory, avoiding duplicate React instances and source imports.
 `COMPONENT_TEST_REPORT_DIR` optionally retains per-process results. Both directories
 must remain outside the tracked checkout; this test mode does not repack the archive.
-
