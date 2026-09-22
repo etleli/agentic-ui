@@ -1,14 +1,43 @@
 import assert from 'node:assert/strict';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 const root = new URL('../', import.meta.url);
 const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 const lock = JSON.parse(await readFile(new URL('package-lock.json', root), 'utf8'));
 const workflow = await readFile(new URL('.github/workflows/validate.yml', root), 'utf8');
+
+test('supplied archives with altered CSS side-effect metadata are rejected before installation', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'agentic-ui-altered-archive-'));
+  try {
+    await mkdir(join(directory, 'package'));
+    await writeFile(join(directory, 'package/package.json'), JSON.stringify({ ...manifest, sideEffects: false }));
+    const archive = join(directory, 'altered.tgz');
+    execFileSync('tar', ['-czf', archive, '-C', directory, 'package/package.json']);
+    const originalBytes = await readFile(archive);
+    const blockedNpm = join(directory, 'blocked-npm.cjs');
+    await writeFile(blockedNpm, "throw new Error('Unexpected npm invocation before rejecting altered metadata');\n");
+    const result = spawnSync(process.execPath, [fileURLToPath(new URL('scripts/verify-tarball.mjs', root)), '--tarball', archive], {
+      env: { ...process.env, npm_execpath: blockedNpm },
+      encoding: 'utf8',
+      timeout: 30000,
+    });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Packed manifest must exactly match the reviewed source manifest/);
+    assert.doesNotMatch(result.stderr, /Unexpected npm invocation/);
+    assert.deepEqual(await readFile(archive), originalBytes, 'Rejected archives must remain unchanged.');
+  } finally {
+    assert.equal(dirname(resolve(directory)), resolve(tmpdir()));
+    assert.ok(basename(directory).startsWith('agentic-ui-altered-archive-'));
+    await rm(directory, { recursive: true, force: true });
+  }
+});
 
 test('activated beta metadata preserves the approved publication settings and package contracts', async () => {
   assert.equal(manifest.private, false);

@@ -103,6 +103,7 @@ try {
   }
 
   const packedManifest = JSON.parse(run('tar', ['-xzOf', archive, 'package/package.json']));
+  assert.deepEqual(packedManifest, manifest, 'Packed manifest must exactly match the reviewed source manifest.');
   assert.equal(packedManifest.name, manifest.name);
   assert.equal(packedManifest.version, manifest.version);
   assert.equal(packedManifest.private, false);
@@ -126,6 +127,7 @@ try {
   const installed = join(temporary, 'node_modules', ...manifest.name.split('/'));
   assert.ok(realpathSync(installed).startsWith(realpathSync(temporary)), 'Package must be installed from the archive, not linked to source.');
   const installedManifest = JSON.parse(readFileSync(join(installed, 'package.json'), 'utf8'));
+  assert.deepEqual(installedManifest, packedManifest, 'Installed manifest must preserve the approved archive metadata.');
   assert.equal(installedManifest.private, false);
   assert.equal(installedManifest.name, manifest.name);
   assert.equal(installedManifest.version, manifest.version);
