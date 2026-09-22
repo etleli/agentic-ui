@@ -8,8 +8,9 @@ it does not establish registry availability or authorize submission.
 
 ## Where observed status is recorded
 
-The activation pull request for branch `release/0.1.0-beta.1` is the release
-record. It records the validated source/merge SHA, hosted runs, artifact integrity,
+[Activation PR #3](https://github.com/etleli/agentic-ui/pull/3) for branch
+`release/0.1.0-beta.1` is the release record. It records the validated source/merge
+SHA, hosted runs, artifact integrity,
 owner checkpoint, visibility outcome, registry readback, and registry-consumer
 result. Until those observations exist, do not infer them from this manifest,
 license approval, or passing CI. The final private handoff keeps local artifact
