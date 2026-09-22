@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { access, readFile, readdir } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
@@ -55,4 +58,61 @@ test('workshop composition stays separate from application routes', async () => 
   assert.doesNotMatch(app, /mockup/i);
   assert.match(app, /ariaLabel="Component previews"/);
   assert.match(app, /function openFullscreenPreview/);
+});
+
+const requireFromVite = createRequire(new URL('../node_modules/vite/package.json', import.meta.url));
+const postcss = requireFromVite('postcss');
+
+async function withSourceMapFixtures(check) {
+  const directory = await mkdtemp(join(tmpdir(), 'agentic-ui-source-maps-'));
+  const styles = join(directory, 'styles');
+  const outside = join(directory, 'outside.map');
+  const input = join(styles, 'input.css');
+  const makeMap = (marker) => JSON.stringify({ version: 3, sources: ['original.css'], sourcesContent: [marker], names: [], mappings: 'AAAA' });
+  try {
+    await mkdir(styles);
+    await writeFile(outside, makeMap('SYNTHETIC_OUTSIDE_SOURCE'));
+    await writeFile(join(styles, 'inside.map'), makeMap('SYNTHETIC_INSIDE_SOURCE'));
+    async function processCss(annotation, options = {}) {
+      const result = await postcss().process(`a { color: red }\n/*# sourceMappingURL=${annotation} */`, {
+        from: undefined,
+        map: { inline: false, annotation: false },
+        ...options,
+      });
+      assert.match(result.css, /color: red/, 'Ordinary CSS must remain intact.');
+      return `${result.root.source.input.map?.text ?? ''}\n${result.map?.toString() ?? ''}`;
+    }
+    await check({ input, outside, makeMap, processCss });
+  } finally {
+    assert.equal(dirname(resolve(directory)), resolve(tmpdir()));
+    assert.ok(basename(directory).startsWith('agentic-ui-source-maps-'));
+    await rm(directory, { recursive: true, force: true });
+  }
+}
+
+test('PostCSS rejects annotation traversal outside the CSS directory', async () => {
+  await withSourceMapFixtures(async ({ input, processCss }) => {
+    const map = await processCss('../outside.map', { from: input });
+    assert.doesNotMatch(map, /SYNTHETIC_OUTSIDE_SOURCE/);
+  });
+});
+
+test('PostCSS rejects external annotations when no source filename is supplied', async () => {
+  await withSourceMapFixtures(async ({ outside, processCss }) => {
+    for (const annotation of [outside, relative(process.cwd(), outside)]) {
+      const map = await processCss(annotation.replaceAll('\\', '/'));
+      assert.doesNotMatch(map, /SYNTHETIC_OUTSIDE_SOURCE/);
+    }
+  });
+});
+
+test('PostCSS preserves safe inline/local maps and explicit caller map choices', async () => {
+  await withSourceMapFixtures(async ({ input, outside, makeMap, processCss }) => {
+    assert.match(await processCss('inside.map', { from: input }), /SYNTHETIC_INSIDE_SOURCE/);
+    const inline = `data:application/json;base64,${Buffer.from(makeMap('SYNTHETIC_INLINE_SOURCE')).toString('base64')}`;
+    assert.match(await processCss(inline, { from: input }), /SYNTHETIC_INLINE_SOURCE/);
+    assert.doesNotMatch(await processCss('../outside.map', { from: input, map: false }), /SYNTHETIC_OUTSIDE_SOURCE/);
+    // An explicit trusted prev callback is a different boundary from an annotation.
+    assert.match(await processCss('inside.map', { from: input, map: { inline: false, annotation: false, prev: () => outside } }), /SYNTHETIC_OUTSIDE_SOURCE/);
+  });
 });

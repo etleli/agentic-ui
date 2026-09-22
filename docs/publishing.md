@@ -14,8 +14,8 @@ execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
 1. Review and approve the actual LICENSE, especially its modification/sharing,
    termination/cure, warranty, and liability terms. Resolve the draft status in
    a reviewed commit; technical checks do not approve legal wording.
-2. Resolve or explicitly accept the [release blockers](release-status.md), including
-   the PostCSS build-risk decision. Re-run current audits after any remediation.
+2. Review the [release blockers](release-status.md) and the completed dependency
+   remediation evidence. Re-run current audits before authorizing publication.
 3. Recheck the exact package and version on the registry. Stop on a collision;
    neither overwrite a version nor select another version without owner direction.
    A 404 must be distinguished from authentication/network errors and does not

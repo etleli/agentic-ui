@@ -29,12 +29,14 @@ publish access; recheck under the owner's account immediately before release.
    [third-party review](third-party-review.md) and [notices](../THIRD_PARTY_NOTICES.md)
    cover the inspected distribution, including bundled DOMPurify's Apache option.
    They do not relicense third-party material or certify every downstream use.
-3. **Resolve the build-risk gate.** The current production audit has zero
-   advisories; the full audit has seven affected development packages. The
-   [19-claim triage](dependency-advisories.md) requires a scoped PostCSS remediation
-   or explicit owner risk acceptance before first publication. Do not infer safety
-   from the production audit alone. Other tooling findings have documented
-   preconditions and a proposed targeted refresh; no dependencies were upgraded.
+3. **Dependency gate resolved; recheck before release.** On 2026-09-22, the
+   scoped tooling remediation updated all documented affected instances within
+   compatible parent ranges, including PostCSS 8.5.23 for both map-read advisories.
+   Full and production audits now report zero findings. The
+   [before/after record](dependency-advisories.md) includes the original 19 claims,
+   exact updates, regression checks, and full validation. This is remediation,
+   not owner risk acceptance or a complete security guarantee. The runtime
+   dependency closure and pinned DOMPurify remain unchanged.
 4. **Keep the component audit separate.** Controlled DataTable selection,
    selection display when manual selection is disabled, DateRangePicker preset
    bounds, and Tooltip viewport placement remain deferred audit findings.
