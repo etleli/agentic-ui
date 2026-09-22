@@ -1,0 +1,140 @@
+.code-editor {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-code-background);
+  box-shadow: var(--shadow-sm);
+}
+
+.code-editor:focus-within {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 24%, transparent);
+}
+
+.code-editor[data-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.code-editor[data-readonly='true'] {
+  border-style: dashed;
+}
+
+.code-editor__mount .cm-editor {
+  min-height: var(--code-editor-min-height, fit-content);
+  max-height: var(--code-editor-max-height, 520px);
+}
+
+.code-editor__mount .cm-scroller {
+  min-height: var(--code-editor-min-height, fit-content);
+  max-height: var(--code-editor-max-height, 520px);
+  overflow: auto;
+}
+
+.code-editor__mount .cm-gutterElement {
+  min-width: 3.5ch;
+}
+
+.code-editor__mount .cm-content {
+  min-width: 0;
+}
+
+.code-editor__mount .cm-line {
+  min-height: 1.55em;
+}
+
+/* CodeMirror draws focused selections in a separate overlay layer. Its base
+ * theme otherwise wins over the token-based editor theme in some browsers. */
+.code-editor__mount .cm-editor .cm-selectionLayer .cm-selectionBackground,
+.code-editor__mount .cm-editor.cm-focused .cm-selectionLayer .cm-selectionBackground {
+  background-color: var(--color-code-selection) !important;
+}
+
+.code-editor__mount .cm-foldGutter {
+  color: var(--color-code-gutter-foreground);
+}
+
+.code-editor__mount .cm-foldGutter .cm-gutterElement {
+  cursor: pointer;
+}
+
+.code-editor__mount .cm-tooltip {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-foreground);
+  box-shadow: var(--shadow-md);
+}
+
+.code-editor__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-code-gutter-border);
+  background: color-mix(in srgb, var(--color-code-gutter-background) 84%, var(--color-surface));
+}
+
+.code-editor__toolbar .input-field {
+  width: 100%;
+}
+
+.code-editor__diagnostics {
+  display: grid;
+  gap: var(--space-1);
+  max-height: 160px;
+  overflow: auto;
+  padding: var(--space-2);
+  border-top: 1px solid var(--color-code-gutter-border);
+  background: color-mix(in srgb, var(--color-code-gutter-background) 88%, var(--color-surface));
+}
+
+.code-editor__diagnostics-summary {
+  color: var(--color-muted);
+  font-size: var(--type-label-small-size);
+  text-transform: uppercase;
+}
+
+.code-editor__diagnostic {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: start;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-foreground);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.code-editor__diagnostic:hover,
+.code-editor__diagnostic:focus-visible {
+  outline: 0;
+  border-color: var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+}
+
+.code-editor__diagnostic-location {
+  color: var(--code-editor-diagnostic-color, var(--color-muted));
+  font-family: var(--font-code);
+  font-weight: var(--font-weight-bold);
+}
+
+.code-editor__diagnostic[data-severity='error'] {
+  --code-editor-diagnostic-color: var(--color-trading-negative);
+}
+
+.code-editor__diagnostic[data-severity='warning'] {
+  --code-editor-diagnostic-color: var(--color-trading-warning);
+}
+
+.code-editor__diagnostic[data-severity='info'] {
+  --code-editor-diagnostic-color: var(--color-accent);
+}

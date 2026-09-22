@@ -1,0 +1,57 @@
+.overlay-root {
+  position: relative;
+  z-index: var(--z-overlay, 2147483000);
+}
+
+.overlay-example-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(520px, 100%);
+  min-width: 0;
+  min-height: 300px;
+  padding: var(--space-5);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(color-mix(in srgb, var(--color-border) 16%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-border) 16%, transparent) 1px, transparent 1px),
+    color-mix(in srgb, var(--color-background) 90%, var(--color-surface) 10%);
+  background-size: 26px 26px;
+}
+
+.overlay-example-stage--compact {
+  min-height: 220px;
+}
+
+.overlay-example-stage--contained {
+  min-height: 360px;
+}
+
+.overlay-example-stack {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.overlay-example-stack span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-width: 0;
+  color: var(--color-muted);
+}
+
+.overlay-example-stack strong {
+  color: var(--color-foreground);
+}
+
+.overlay-example-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+}

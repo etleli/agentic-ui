@@ -1,0 +1,118 @@
+.risk-indicator {
+  --risk-indicator-color: var(--color-trading-warning);
+  --risk-indicator-height: 34px;
+  --risk-indicator-padding: 0 var(--space-3);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: var(--risk-indicator-height);
+  padding: var(--risk-indicator-padding);
+  border: 1px solid color-mix(in srgb, var(--risk-indicator-color) 34%, var(--color-border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--risk-indicator-color) 10%, var(--color-surface-raised));
+  color: var(--risk-indicator-color);
+}
+
+.risk-indicator[data-size='compact'] {
+  --risk-indicator-height: 28px;
+  --risk-indicator-padding: 0 var(--space-2);
+}
+
+.risk-indicator[data-size='spacious'] {
+  --risk-indicator-height: 42px;
+  --risk-indicator-padding: 0 var(--space-4);
+}
+
+.risk-indicator[data-level='low'] {
+  --risk-indicator-color: var(--color-trading-positive);
+}
+
+.risk-indicator[data-level='medium'] {
+  --risk-indicator-color: var(--color-trading-neutral);
+}
+
+.risk-indicator[data-level='high'] {
+  --risk-indicator-color: var(--color-trading-warning);
+}
+
+.risk-indicator[data-level='critical'] {
+  --risk-indicator-color: var(--color-trading-negative);
+}
+
+.risk-indicator__dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.risk-indicator__bars {
+  display: inline-flex;
+  align-items: end;
+  gap: 3px;
+  flex: 0 0 auto;
+  height: 16px;
+}
+
+.risk-indicator__bar {
+  display: block;
+  width: 5px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, currentColor 22%, transparent);
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    transform var(--motion-duration-list) var(--motion-easing-standard);
+}
+
+.risk-indicator__bar:nth-child(1) {
+  height: 7px;
+}
+
+.risk-indicator__bar:nth-child(2) {
+  height: 10px;
+}
+
+.risk-indicator__bar:nth-child(3) {
+  height: 13px;
+}
+
+.risk-indicator__bar:nth-child(4) {
+  height: 16px;
+}
+
+.risk-indicator__bar[data-active='true'] {
+  background: currentColor;
+}
+
+.risk-indicator__label,
+.risk-indicator__score {
+  overflow: hidden;
+  font-size: var(--type-label-medium-size);
+  line-height: var(--type-label-medium-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.risk-indicator__label {
+  min-width: 0;
+  color: var(--color-foreground);
+  font-weight: var(--font-weight-semibold);
+}
+
+.risk-indicator__score {
+  color: currentColor;
+  font-weight: var(--font-weight-bold);
+}
+
+.risk-indicator[data-size='spacious'] .risk-indicator__label,
+.risk-indicator[data-size='spacious'] .risk-indicator__score {
+  font-size: var(--type-label-large-size);
+  line-height: var(--type-label-large-line-height);
+}

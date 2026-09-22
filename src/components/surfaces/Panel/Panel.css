@@ -1,0 +1,92 @@
+.surface-panel {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  color: var(--color-foreground);
+  box-shadow: none;
+}
+
+.surface-panel[data-padding='none'] {
+  padding: 0;
+}
+
+.surface-panel[data-padding='compact'] {
+  padding: var(--space-3);
+}
+
+.surface-panel[data-padding='comfortable'] {
+  padding: var(--space-4);
+}
+
+.surface-panel[data-padding='spacious'] {
+  padding: var(--space-5);
+}
+
+.surface-panel[data-variant='filled'] {
+  border-color: color-mix(in srgb, var(--color-border) 58%, transparent);
+  background: color-mix(in srgb, var(--color-surface-muted) 76%, var(--color-background));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-foreground) 5%, transparent);
+}
+
+.surface-panel[data-variant='raised'] {
+  background: var(--color-surface-raised);
+  border-color: color-mix(in srgb, var(--color-border-strong) 64%, var(--color-border));
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.26),
+    0 1px 0 color-mix(in srgb, var(--color-foreground) 8%, transparent) inset;
+}
+
+.surface-panel__header,
+.surface-panel__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.surface-panel__heading-copy,
+.surface-panel__body,
+.surface-panel__footer {
+  min-width: 0;
+}
+
+.surface-panel__heading-copy {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.surface-panel__heading,
+.surface-panel__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.surface-panel__heading {
+  color: var(--color-foreground);
+  font-size: var(--type-title-medium-size);
+  line-height: var(--type-title-medium-line-height);
+}
+
+.surface-panel__description,
+.surface-panel__footer {
+  color: var(--color-muted);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+}
+
+.surface-panel__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: var(--space-2);
+}
+
+.surface-panel__body {
+  display: grid;
+  gap: var(--space-3);
+}

@@ -1,0 +1,9 @@
+.tree-view-example {
+  display: grid;
+  width: min(620px, 100%);
+  min-width: 0;
+}
+
+.tree-view-example .navigation-tree-view {
+  width: 100%;
+}

@@ -1,0 +1,98 @@
+.delta-indicator {
+  --delta-indicator-color: var(--color-trading-neutral);
+  --delta-indicator-min-height: 34px;
+  --delta-indicator-padding: 0 var(--space-3);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: var(--delta-indicator-min-height);
+  padding: var(--delta-indicator-padding);
+  border: 1px solid color-mix(in srgb, var(--delta-indicator-color) 30%, var(--color-border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--delta-indicator-color) 10%, var(--color-surface-raised));
+  color: var(--delta-indicator-color);
+}
+
+.delta-indicator[data-size='compact'] {
+  --delta-indicator-min-height: 28px;
+  --delta-indicator-padding: 0 var(--space-2);
+}
+
+.delta-indicator[data-size='spacious'] {
+  --delta-indicator-min-height: 44px;
+  --delta-indicator-padding: 0 var(--space-4);
+}
+
+.delta-indicator[data-direction='up'] {
+  --delta-indicator-color: var(--color-trading-positive);
+}
+
+.delta-indicator[data-direction='down'] {
+  --delta-indicator-color: var(--color-trading-negative);
+}
+
+.delta-indicator[data-direction='flat'] {
+  --delta-indicator-color: var(--color-trading-neutral);
+}
+
+.delta-indicator[data-variant='plain'] {
+  min-height: 0;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+}
+
+.delta-indicator[data-variant='card'] {
+  --delta-indicator-min-height: 58px;
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--delta-indicator-color) 9%, var(--color-surface-raised));
+}
+
+.delta-indicator__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.delta-indicator__content {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.delta-indicator__label {
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--type-label-small-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--type-label-small-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delta-indicator__value {
+  overflow: hidden;
+  color: inherit;
+  font-size: var(--type-label-large-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--type-label-large-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delta-indicator[data-size='compact'] .delta-indicator__value {
+  font-size: var(--type-label-medium-size);
+  line-height: var(--type-label-medium-line-height);
+}
+
+.delta-indicator[data-size='spacious'] .delta-indicator__value,
+.delta-indicator[data-variant='card'] .delta-indicator__value {
+  font-size: var(--type-title-medium-size);
+  line-height: var(--type-title-medium-line-height);
+}

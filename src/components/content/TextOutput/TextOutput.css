@@ -1,0 +1,115 @@
+.text-output {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+  min-width: 0;
+  color: var(--color-foreground);
+}
+
+.text-output[data-variant='panel'],
+.text-output[data-variant='code'] {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.text-output[data-variant='plain'] {
+  padding: 0;
+  background: transparent;
+}
+
+.text-output[data-variant='code'] {
+  background: color-mix(in srgb, var(--color-background) 78%, var(--color-surface) 22%);
+}
+
+.text-output__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.text-output__copy {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.text-output__label {
+  color: var(--color-foreground);
+  font-size: var(--type-title-small-size);
+  line-height: var(--type-title-small-line-height);
+}
+
+.text-output__description {
+  color: var(--color-muted);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+}
+
+.text-output__copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--type-label-medium-size);
+  font-weight: var(--font-weight-semibold);
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    transform var(--motion-duration-press) var(--motion-easing-standard);
+}
+
+.text-output__copy-button:hover,
+.text-output__copy-button:focus-visible {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-muted);
+}
+
+.text-output__copy-button:active {
+  transform: scale(0.96);
+}
+
+.text-output__copy-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.text-output__body {
+  max-height: var(--text-output-max-height, 260px);
+  min-height: 112px;
+  padding: var(--space-3);
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-foreground);
+  font-size: var(--type-body-medium-size);
+  line-height: var(--type-body-medium-line-height);
+  white-space: pre;
+}
+
+.text-output[data-variant='code'] .text-output__body {
+  font-family: var(--font-family-mono);
+  font-size: var(--type-body-small-size);
+}
+
+.text-output__body[data-wrap='true'] {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.text-output__body[data-empty='true'] {
+  color: var(--color-muted);
+}

@@ -1,0 +1,60 @@
+.brand-watermark {
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+}
+
+.brand-watermark[data-brand-watermark='true']::before {
+  position: absolute;
+  z-index: 0;
+  width: var(--brand-mark-size, 152px);
+  aspect-ratio: 1;
+  background: var(--brand-mark-color, var(--color-accent));
+  content: '';
+  opacity: var(--brand-mark-opacity, 0.12);
+  pointer-events: none;
+  -webkit-mask: var(--brand-mark-image, none) center / contain no-repeat;
+  mask: var(--brand-mark-image, none) center / contain no-repeat;
+}
+
+.brand-watermark[data-brand-watermark='true'] > * {
+  z-index: 1;
+}
+
+.brand-watermark[data-placement='top-left']::before {
+  top: var(--space-4);
+  left: var(--space-4);
+}
+
+.brand-watermark[data-placement='top-right']::before {
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+.brand-watermark[data-placement='bottom-left']::before {
+  bottom: var(--space-4);
+  left: var(--space-4);
+}
+
+.brand-watermark[data-placement='bottom-right']::before {
+  right: var(--space-4);
+  bottom: var(--space-4);
+}
+
+.brand-watermark[data-placement='center']::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.brand-mark-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  background: currentColor;
+  -webkit-mask: var(--brand-mark-image) center / contain no-repeat;
+  mask: var(--brand-mark-image) center / contain no-repeat;
+}

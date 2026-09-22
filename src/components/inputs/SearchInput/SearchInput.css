@@ -1,0 +1,59 @@
+.search-input .input-field__control {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0 var(--space-3);
+}
+
+.search-input .input-field__control[data-clearing='true'] .input-field__native {
+  text-align: left;
+}
+
+.search-input .input-field__native::-webkit-search-cancel-button,
+.search-input .input-field__native::-webkit-search-decoration {
+  appearance: none;
+  display: none;
+}
+
+.search-input__clear-tooltip {
+  display: inline-flex;
+}
+
+.search-input__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard),
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--motion-easing-emphasized);
+}
+
+.search-input__clear[data-visible='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-input__clear:hover,
+.search-input__clear:focus-visible {
+  background: var(--color-surface-muted);
+  color: var(--color-foreground);
+  outline: 0;
+}
+
+.search-input__clear:active {
+  transform: scale(0.88) rotate(12deg);
+}
+
+.search-input__clear:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}

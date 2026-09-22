@@ -1,0 +1,9 @@
+.command-menu-example {
+  display: grid;
+  width: min(660px, 100%);
+  min-width: 0;
+}
+
+.command-menu-example .command-menu {
+  width: 100%;
+}

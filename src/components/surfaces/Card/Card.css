@@ -1,0 +1,105 @@
+.surface-card {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-foreground);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--color-foreground) 5%, transparent) inset;
+  transition:
+    background var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard),
+    transform var(--motion-duration-press) var(--motion-easing-standard);
+}
+
+.surface-card[data-padding='compact'] {
+  padding: var(--space-3);
+}
+
+.surface-card[data-padding='comfortable'] {
+  padding: var(--space-4);
+}
+
+.surface-card[data-padding='spacious'] {
+  padding: var(--space-5);
+}
+
+.surface-card[data-variant='muted'] {
+  border-color: color-mix(in srgb, var(--color-border) 54%, transparent);
+  background: color-mix(in srgb, var(--color-surface-muted) 72%, var(--color-background));
+  box-shadow: none;
+}
+
+.surface-card[data-variant='accent'] {
+  border-color: color-mix(in srgb, var(--color-accent) 44%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface-raised));
+}
+
+.surface-card[data-selected='true'] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.surface-card[data-interactive='true'] {
+  cursor: pointer;
+}
+
+.surface-card[data-interactive='true']:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.surface-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.surface-card__copy,
+.surface-card__body,
+.surface-card__footer {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.surface-card__eyebrow,
+.surface-card__description,
+.surface-card__footer,
+.surface-card__meta {
+  color: var(--color-muted);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+}
+
+.surface-card__eyebrow {
+  color: var(--color-accent-text);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.surface-card__title {
+  overflow: hidden;
+  color: var(--color-foreground);
+  font-size: var(--type-title-medium-size);
+  line-height: var(--type-title-medium-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.surface-card__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.surface-card__meta {
+  flex: 0 0 auto;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+}
