@@ -12,9 +12,11 @@
 
 ## Pending licensing and personal npm publication
 
-Finalize rights and licensing, choose the personal package identity and first
-release version, and update all related metadata and examples in a separate task.
-See [release status](release-status.md). This baseline is not public-release readiness.
+The proposed identity is `@etleli/agentic-ui@0.1.0-beta.1`. First-party ownership
+is confirmed; the custom license, including proposed sharing and termination
+terms, awaits owner review. Review the dependency triage and approve a separate
+publication task. See [release status](release-status.md). The candidate is not
+public-release readiness.
 
 ## Future component-contract audit
 

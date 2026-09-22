@@ -1,0 +1,116 @@
+Agentic UI Personal Noncommercial License
+DRAFT FOR OWNER REVIEW — NOT APPROVED FOR RELEASE
+
+Copyright (c) 2026 Elias Etl.
+
+Review status: This entire document is a proposed license. It grants no new
+permission unless and until Elias Etl approves it for release. Section 3 and
+the warranty, liability, and termination provisions are drafting proposals,
+not previously confirmed owner decisions. Technical validation is not approval.
+
+1. Scope and definitions
+
+The "Licensor" is Elias Etl. The "Software" is the first-party Agentic UI
+source code, compiled code, styles, types, and documentation distributed with
+this license. Third-party code, dependencies, fonts, and other third-party
+materials are excluded and retain their own licenses and notices.
+
+"Personal Noncommercial Use" means use by a natural person, on that person's
+own behalf, for personal purposes, without commercial advantage or monetary
+compensation. Use for an employer, client, business, or other organization
+does not qualify, even when performed by an individual, without payment, or
+for an organization described as nonprofit.
+
+"Commercial Use" includes paid client projects; consulting or other paid
+work; internal business applications or operations; and products or services
+that incorporate or rely on the Software for commercial purposes. Charging
+for a surrounding product or service instead of charging for the Software
+does not avoid this boundary. Selling copies or offering paid access to the
+Software is also Commercial Use. There is no revenue threshold or automatic
+exemption based on size, legal form, or nonprofit status.
+
+2. Personal permission and separate authorization
+
+Subject to this license, the Licensor grants individuals a nonexclusive,
+worldwide permission, without charge, to use, run, and reproduce the Software
+for Personal Noncommercial Use. This permission continues while its conditions
+are met, subject to section 6.
+
+Commercial Use requires prior written authorization from Elias Etl. Any use
+outside the personal permission, including organizational use, also requires
+prior written authorization. Prices, payment, support, and additional or
+commercial rights, if any, are determined only by a separate written agreement
+with Elias Etl. This license promises no commercial agreement or support.
+
+For initial contact, open an issue at https://github.com/etleli/agentic-ui/issues
+requesting contact with Elias Etl. Do not post confidential business information.
+Opening an issue, silence, or an informal discussion is not written authorization.
+
+3. Proposed modification and sharing permission — requires owner approval
+
+Individuals may modify the Software for Personal Noncommercial Use and share
+original or modified Software, in source or compiled form, without charge,
+under this same license and its restrictions. This permission does not cover
+distribution for commercial advantage, paid client work, or organizational use.
+
+When sharing any copy or substantial portion of the Software, you must:
+
+- Include this license and retain applicable copyright, attribution, and
+  third-party license and notice text.
+- Identify modified library files and describe your modifications in a
+  reasonably prominent accompanying notice; do not imply that the Licensor
+  made, approved, or supports your changes.
+- Pass on the same restrictions for the first-party Software, without adding
+  terms that purport to grant commercial rights in it. Recipients receive
+  their permissions directly under this license and must qualify for them.
+
+You retain ownership of your original modifications and other original work.
+This license does not claim ownership of your application, data, or layouts,
+and does not require publication or source disclosure of unrelated application
+code. It does not require visible branding in a consuming user interface.
+No trademark rights or endorsement are granted, except use of names needed
+for accurate attribution. Rights to third-party materials are not restricted
+or replaced by this license.
+
+4. No warranty or service commitment
+
+To the extent permitted by applicable law, the Software is supplied as it is
+and as available. The Licensor makes no express or implied warranty, including
+of accuracy, security, uninterrupted operation, fitness for a particular
+purpose, merchantability, title, or noninfringement. You are responsible for
+evaluating and testing it for your use. The Licensor has no obligation under
+this license to provide maintenance, updates, support, or corrections.
+
+5. Limitation of liability
+
+To the extent permitted by applicable law, the Licensor is not liable for
+losses or damages arising from use, inability to use, modification, or
+distribution of the Software, including lost data, profits, or business and
+direct, indirect, incidental, special, or consequential damages, regardless
+of the legal theory and even if advised of the possibility. These exclusions
+do not limit liability or rights that applicable law does not allow to be
+excluded or limited.
+
+6. Termination and proposed cure
+
+The permissions granted by this license terminate automatically upon a
+material breach. You must stop the activities for which permission has ended.
+For a first breach, permissions are automatically reinstated if you fully
+cure the breach within 30 calendar days after you discover it or receive
+notice of it, whichever occurs first. Otherwise, or for a repeated breach,
+reinstatement requires written authorization from Elias Etl. Reinstatement
+does not erase liability for earlier unauthorized acts.
+
+Termination of your permissions does not terminate the separate permissions
+of recipients who comply with this license. Sections concerning ownership,
+third-party rights, warranty, liability, and the effects of termination survive.
+
+7. Interpretation
+
+This document controls over explanatory summaries. A separate written
+agreement with Elias Etl controls to the extent it expressly grants different
+rights. Rights not granted are reserved. Later license revisions do not
+retroactively change permissions for copies received under an approved version
+of this license. If a provision is unenforceable, the remaining provisions
+continue to apply to the extent permitted by law. This license specifies no
+governing law, arbitration requirement, or venue.

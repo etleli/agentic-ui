@@ -61,7 +61,7 @@ try {
   const entries = run('tar', ['-tzf', archive]).trim().split(/\r?\n/);
   assert.equal(entries.length, packed.files.length);
   for (const entry of entries) {
-    assert.match(entry, /^package\/(?:package\.json|README\.md|src\/theme\/theme\.css|dist-library\/(?:agentic-ui\.(?:js|cjs|css)|types\/.+\.d\.ts(?:\.map)?|agent-guides\/.+\.(?:md|json)))$/);
+    assert.match(entry, /^package\/(?:package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|src\/theme\/theme\.css|dist-library\/(?:agentic-ui\.(?:js|cjs|css)|types\/.+\.d\.ts(?:\.map)?|agent-guides\/.+\.(?:md|json)))$/);
     assert.ok(!entry.split('/').includes('..'), `Unsafe archive path: ${entry}`);
   }
 
@@ -79,7 +79,19 @@ try {
   assert.equal(installedManifest.private, true);
   assert.equal(installedManifest.name, manifest.name);
   assert.equal(installedManifest.version, manifest.version);
+  assert.equal(installedManifest.license, 'SEE LICENSE IN LICENSE');
+  assert.deepEqual(installedManifest.author, manifest.author);
+  assert.deepEqual(installedManifest.publishConfig, manifest.publishConfig);
   assert.deepEqual(installedManifest.exports, manifest.exports);
+  for (const noticeFile of ['LICENSE', 'THIRD_PARTY_NOTICES.md']) {
+    assert.deepEqual(readFileSync(join(installed, noticeFile)), readFileSync(join(root, noticeFile)), `${noticeFile} must exactly match the reviewed repository file.`);
+  }
+  const notices = readFileSync(join(installed, 'THIRD_PARTY_NOTICES.md'), 'utf8').replaceAll('\r\n', '\n');
+  assert.ok(notices.includes(readFileSync(join(root, 'node_modules/dompurify/LICENSE'), 'utf8').replaceAll('\r\n', '\n').trim()));
+  for (const bundle of ['agentic-ui.js', 'agentic-ui.cjs']) {
+    assert.match(readFileSync(join(installed, 'dist-library', bundle), 'utf8'), /Cure53 and other contributors/);
+  }
+  console.log('Candidate license and third-party notices match exactly; bundled attribution is retained.');
 
   let maps = 0;
   for (const entry of entries) {

@@ -1,6 +1,6 @@
 # Agentic UI Generation Rulebook
 
-Use this rulebook when composing an application with Agentic UI. The current package identity is temporary local staging metadata; see the repository's release-status document. It turns the library's current visual and interaction conventions into repeatable rules for an agent. Follow it unless a component contract or an explicit product requirement says otherwise.
+Use this rulebook when composing an application with `@etleli/agentic-ui`. The personal candidate is unpublished and its license requires owner review; see the repository's release-status document. It turns the library's current visual and interaction conventions into repeatable rules for an agent. Follow it unless a component contract or an explicit product requirement says otherwise.
 
 ## Read Order
 

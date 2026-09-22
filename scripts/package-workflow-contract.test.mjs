@@ -7,20 +7,31 @@ const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'
 const lock = JSON.parse(await readFile(new URL('package-lock.json', root), 'utf8'));
 const workflow = await readFile(new URL('.github/workflows/validate.yml', root), 'utf8');
 
-test('local staging metadata blocks publication and preserves package contracts', async () => {
+test('personal candidate metadata blocks publication and preserves package contracts', async () => {
   assert.equal(manifest.private, true);
-  assert.equal(manifest.license, 'UNLICENSED');
-  assert.equal(manifest.name, '@alphatraderone/agentic-ui');
-  assert.equal(manifest.version, '0.3.2');
+  assert.equal(manifest.license, 'SEE LICENSE IN LICENSE');
+  assert.equal(manifest.name, '@etleli/agentic-ui');
+  assert.equal(manifest.version, '0.1.0-beta.1');
+  assert.deepEqual(manifest.author, { name: 'Elias Etl', url: 'https://github.com/etleli' });
+  assert.equal(lock.name, manifest.name);
+  assert.equal(lock.version, manifest.version);
   assert.equal(manifest.name, lock.packages[''].name);
   assert.equal(manifest.version, lock.packages[''].version);
+  assert.equal(manifest.license, lock.packages[''].license);
   assert.equal(manifest.repository.url, 'https://github.com/etleli/agentic-ui.git');
-  assert.equal(manifest.publishConfig, undefined);
+  assert.deepEqual(manifest.publishConfig, { registry: 'https://registry.npmjs.org/', access: 'public', tag: 'beta' });
   assert.equal(manifest.dependencies.dompurify, '3.4.14');
   assert.equal(lock.packages[''].dependencies.dompurify, '3.4.14');
   assert.equal(lock.packages['node_modules/dompurify'].version, '3.4.14');
-  assert.deepEqual(manifest.files, ['dist-library', 'src/theme/theme.css', 'README.md']);
+  assert.deepEqual(manifest.files, ['dist-library', 'src/theme/theme.css', 'README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md']);
   assert.deepEqual(manifest.sideEffects, ['**/*.css']);
+  const license = await readFile(new URL('LICENSE', root), 'utf8');
+  assert.match(license, /DRAFT FOR OWNER REVIEW/);
+  assert.match(license, /Copyright \(c\) 2026 Elias Etl/);
+  const notices = (await readFile(new URL('THIRD_PARTY_NOTICES.md', root), 'utf8')).replaceAll('\r\n', '\n');
+  const bundledLicense = (await readFile(new URL('node_modules/dompurify/LICENSE', root), 'utf8')).replaceAll('\r\n', '\n').trim();
+  assert.ok(notices.includes(bundledLicense), 'Preserve the complete bundled DOMPurify Apache license.');
+  assert.match(notices, /Cure53 and other contributors/);
   await assert.rejects(access(new URL('.npmrc', root)), { code: 'ENOENT' });
 });
 
