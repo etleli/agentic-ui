@@ -67,6 +67,14 @@ including shadow-root openers. Native-reference fixtures check host tab indexes,
 positive inner indexes, slots and delegated focus. Closed shadow roots are opaque
 and are not enumerated by these browser APIs.
 
+Implicit native scroll stops participate at tab order zero: an actually overflowing
+`auto`/`scroll` region with no sequentially focusable descendants can receive focus
+and keyboard scrolling without adding a `tabindex` attribute. A matching region
+whose content fits is not added. Enabled sequential descendants replace the implicit
+stop; disabled, hidden and negative-index descendants do not. Explicit tab indexes
+remain authoritative. Native-reference Chromium fixtures compare forward and reverse
+navigation, and exercise ArrowDown scrolling, in normal rendering and StrictMode.
+
 ## Permanent browser regressions
 
 `npm run test:modal-focus` is part of `npm run check`, hence `npm run validate`
@@ -76,7 +84,7 @@ and CSS. The source fingerprints are checked before/after execution when a repor
 is saved. The installed package's integrity is recorded separately from the
 published baseline. Nothing is published or staged.
 
-The 114 cases run in normal rendering and StrictMode. They cover initial safe focus,
+The 128 cases run in normal rendering and StrictMode. They cover initial safe focus,
 explicit child autofocus, forward/backward containment, single/no targets, dynamic
 disabled/hidden targets, Escape/close/parent-driven restoration, removed/disabled/
 hidden/inert openers, declining controlled parents, contained presentation inside

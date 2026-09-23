@@ -804,5 +804,281 @@
         "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
       }
     ]
+  },
+  "scrollContainerReview": {
+    "reviewedHead": "6829cf426e8ac27da52a65594d5ad98a7cd00a2d",
+    "reviewComments": [
+      "https://github.com/etleli/agentic-ui/pull/7#discussion_r4081881053"
+    ],
+    "before": {
+      "summary": {
+        "cases": 126,
+        "passed": 118,
+        "failed": 8
+      },
+      "cases": [
+        {
+          "name": "native scroll-pane navigation {} (normal)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-child",
+            "modal": "scroll-child"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {} (StrictMode)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-child",
+            "modal": "scroll-child"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+          "passed": false,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "Cancel"
+          },
+          "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Cancel'\n- 'scroll-pane'\n"
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel"
+          }
+        }
+      ]
+    },
+    "after": {
+      "summary": {
+        "cases": 128,
+        "passed": 128,
+        "failed": 0
+      },
+      "cases": [
+        {
+          "name": "native scroll-pane navigation {} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 34,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollFits\":true} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-child",
+            "modal": "scroll-child",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 35,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 35,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 35,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 35,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollFits\":true} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-child",
+            "modal": "scroll-child",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 33,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 28,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "scroll-pane",
+            "modal": "scroll-pane",
+            "scrollTop": 34,
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        },
+        {
+          "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+          "passed": true,
+          "observation": {
+            "native": "Cancel",
+            "modal": "Cancel",
+            "nativeBackward": "inside",
+            "modalBackward": "inside"
+          }
+        }
+      ]
+    }
   }
 }

@@ -6,7 +6,7 @@ The seven outstanding findings were reproduced, not repaired, in that initial pa
 
 The paragraphs and counts below preserve the initial audit baseline. The subsequent
 [Modal focus repair](../modal-focus-contract.md) fixes only F7 in current source,
-with 114 permanent browser cases (78 fail against the unchanged published beta).
+with 128 permanent browser cases (78 fail against the unchanged published beta).
 The current inventory has four components with unfixed confirmed findings and one
 with verified Modal focus behavior; F5 remains a workshop finding. F1–F6 and all
 additional leads remain unresolved. This is not a new publication.

@@ -48,6 +48,9 @@ function App() {
     h('input', { id: 'field', 'aria-label': 'Modal field', autoFocus: options.autoFocus, disabled: options.disabledField, tabIndex: options.positive ? 2 : undefined }),
     options.long ? h('div', { style: { height: 1500 } }, 'Synthetic long modal content') : null,
     options.single ? null : h('button', { id: 'inside', tabIndex: options.positive ? 1 : undefined }, 'Inside'),
+    options.scroller ? h('div', { id: 'scroll-pane', style: { overflow: options.scrollOverflow ?? 'auto', height: 60, width: 180 } },
+      h('div', { style: { height: options.scrollFits ? 20 : 240 } }, 'Synthetic scroll content'),
+      options.scrollChild ? h('button', { id: 'scroll-child', tabIndex: options.scrollChild === 'negative' ? -1 : undefined, disabled: options.scrollChild === 'disabled', hidden: options.scrollChild === 'hidden' }, 'Scroll child') : null) : null,
     options.shadow ? h('div', { id: 'shadow-host', tabIndex: options.shadowIndex, ref: (host) => {
       if (!host || host.shadowRoot) return;
       const shadow = host.attachShadow({ mode: 'open', delegatesFocus: Boolean(options.delegatesFocus) });

@@ -644,6 +644,80 @@
       "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
     },
     {
+      "name": "native scroll-pane navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 36,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 31,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 33,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
       "name": "initial safe focus (StrictMode)",
       "passed": false,
       "observation": {
@@ -1279,6 +1353,80 @@
         }
       },
       "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "native scroll-pane navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 38,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
     }
   ],
   "warnings": [],
@@ -1286,8 +1434,8 @@
   "browser": "153.0.8010.12",
   "passed": false,
   "summary": {
-    "cases": 114,
-    "passed": 36,
+    "cases": 128,
+    "passed": 50,
     "failed": 78
   }
 }

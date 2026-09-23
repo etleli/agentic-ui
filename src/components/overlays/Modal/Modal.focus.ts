@@ -74,8 +74,37 @@ function tabOrder(element: FocusTarget) {
     // Chromium exposes -1 for some native sequential stops without an explicit attribute.
     if (element.matches('audio[controls],video[controls],details')
       || element instanceof element.ownerDocument.defaultView!.HTMLElement && element.isContentEditable && !element.parentElement?.isContentEditable) return 0;
+    if (element.tabIndex < 0 && isNativeScroller(element)) return 0;
   }
   return element.tabIndex;
+}
+
+function composedChildren(element: Element): Element[] {
+  if (element.shadowRoot) return [...element.shadowRoot.children];
+  if (element instanceof element.ownerDocument.defaultView!.HTMLSlotElement) {
+    const assigned = element.assignedNodes({ flatten: true });
+    if (assigned.length) return assigned.filter((node): node is Element => node instanceof element.ownerDocument.defaultView!.Element);
+  }
+  return [...element.children];
+}
+
+function isNativeScroller(element: FocusTarget): boolean {
+  if (!(element instanceof element.ownerDocument.defaultView!.HTMLElement)) return false;
+  const style = element.ownerDocument.defaultView!.getComputedStyle(element);
+  const scrollable = (['auto', 'scroll'].includes(style.overflowY) && element.scrollHeight > element.clientHeight)
+    || (['auto', 'scroll'].includes(style.overflowX) && element.scrollWidth > element.clientWidth);
+  if (!scrollable) return false;
+  // Chromium adds an implicit stop only when the scrollable region has no
+  // sequentially focusable descendants. Hidden/disabled/negative-index controls
+  // do not replace that stop; explicit tabindex on the scroller stays authoritative.
+  function hasSequentialDescendant(parent: Element): boolean {
+    return composedChildren(parent).some((child) => {
+      if (isFocusTarget(child, element.ownerDocument) && available(child) && tabOrder(child) >= 0) return true;
+      if (child.shadowRoot && child.hasAttribute('tabindex') && (child as HTMLElement).tabIndex < 0) return false;
+      return hasSequentialDescendant(child);
+    });
+  }
+  return !hasSequentialDescendant(element);
 }
 
 function owns(entry: FocusEntry, element: Element | null): element is FocusTarget {
@@ -120,12 +149,7 @@ function targets(entry: FocusEntry) {
       if (node.shadowRoot || node instanceof document.defaultView!.HTMLSlotElement) {
         const order = isFocusTarget(node, document) ? tabOrder(node) : -1;
         if (node.hasAttribute('tabindex') && order < 0 && !containsComposed(node, deepActive(document))) return;
-        let children: Element[];
-        if (node.shadowRoot) children = [...node.shadowRoot.children];
-        else {
-          const assigned = (node as HTMLSlotElement).assignedNodes({ flatten: true });
-          children = assigned.length ? assigned.filter((child): child is Element => child instanceof document.defaultView!.Element) : [...node.children];
-        }
+        const children = composedChildren(node);
         // A shadow/slot scope sorts its own positive indexes, then participates at
         // its host's position in the enclosing scope. Delegation must not add a duplicate stop.
         groups.push({ order: Math.max(0, order), elements: [...(target && !node.shadowRoot?.delegatesFocus ? [target] : []), ...collect(children)] });

@@ -298,6 +298,26 @@ try {
       await page.locator('#field').focus(); await page.keyboard.press('Escape'); await closed(page);
       o.focus = await active(page); assert.equal(o.focus.id, 'opener');
     });
+    for (const variant of [{}, { scrollFits: true }, { scrollChild: 'enabled' }, { scrollChild: 'negative' }, { scrollChild: 'disabled' }, { scrollChild: 'hidden' }, { scrollOverflow: 'hidden' }]) await check(`native scroll-pane navigation ${JSON.stringify(variant)}`, { scroller: true, ...variant }, async (page, o) => {
+      const native = await context.newPage(); native.setDefaultTimeout(4000);
+      native.on('console', (entry) => { if (['warning', 'error'].includes(entry.type())) report.warnings.push({ case: 'native scroller reference', message: entry.text() }); });
+      native.on('pageerror', (error) => report.errors.push({ case: 'native scroller reference', message: error.message }));
+      async function next(target) {
+        await target.bringToFront(); await target.locator('#inside').focus(); await target.keyboard.press('Tab');
+        return target.evaluate(() => document.activeElement.textContent === 'Cancel' ? 'Cancel' : document.activeElement.id);
+      }
+      try {
+        await native.goto(`${server.resolvedUrls.local[0]}?options=${encodeURIComponent(JSON.stringify({ nativeOnly: true, scroller: true, ...variant }))}`);
+        await native.waitForFunction(() => window.modalTest.ready); o.native = await next(native); o.modal = await next(page); assert.equal(o.modal, o.native);
+        if (o.modal === 'scroll-pane') {
+          await page.keyboard.press('ArrowDown'); await page.waitForTimeout(100);
+          o.scrollTop = await page.locator('#scroll-pane').evaluate((element) => element.scrollTop); assert.ok(o.scrollTop > 0);
+        }
+        await page.keyboard.press('Shift+Tab'); await native.bringToFront(); await native.keyboard.press('Shift+Tab');
+        o.nativeBackward = (await active(native)).id; o.modalBackward = (await active(page)).id;
+        assert.equal(o.modalBackward, o.nativeBackward); assert.equal(o.modalBackward, 'inside');
+      } finally { await native.close(); }
+    });
   }
 } finally {
   await browser?.close(); await server?.close();
