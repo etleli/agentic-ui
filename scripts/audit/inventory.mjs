@@ -134,7 +134,7 @@ const inventory = {
 assert.equal(components.length + helpers.length + types.length, exports.length);
 const destination = resolve(root, 'docs/audit/inventory.json');
 const output = `${JSON.stringify(inventory, null, 2)}\n`;
-if (process.argv.includes('--check')) assert.equal(read(destination), output, 'Audit inventory is stale; run npm run audit:inventory.');
+if (process.argv.includes('--check')) assert.equal(read(destination).replaceAll('\r\n', '\n'), output, 'Audit inventory is stale; run npm run audit:inventory.');
 else { mkdirSync(dirname(destination), { recursive: true }); writeFileSync(destination, output); }
 console.log(JSON.stringify(inventory.coverage, null, 2));
 console.log('Workshop-only/alias previews:', inventory.workshopOnlyEntries);
