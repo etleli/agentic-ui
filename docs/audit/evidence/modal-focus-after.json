@@ -1,0 +1,624 @@
+{
+  "mode": "candidate",
+  "packageVersion": "0.1.0-beta.1",
+  "integrity": "sha512-Z3jGpZmW8Ahq9cI2siEc399HrGPl8QQ8P1IHp3sfT2/HHFqnvuf7QLoYyoHOI36ktaSlWOmJuqkiQBKbwUulaw==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "initial safe focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "explicit child autoFocus and original return target (normal)",
+      "passed": true,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "forward Tab wraps and excludes background (normal)",
+      "passed": true,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "backward Shift+Tab wraps (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "Confirm"
+      }
+    },
+    {
+      "name": "single focusable target (normal)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "no focusable target uses dialog fallback (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "dialog"
+      }
+    },
+    {
+      "name": "disabled and dynamically hidden targets (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "restoration on Escape (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "name": "contained Modal in an outer React portal (normal)",
+      "passed": true,
+      "observation": {
+        "parentPortal": true
+      }
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (normal)",
+      "passed": true,
+      "observation": {
+        "childFocused": true
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (normal)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (normal)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "unmount removes listeners and restores once (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "positive tab order (normal)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "radio group retains one sequential stop (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (normal)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "closing animation is not keyboard interactive (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Cancel preserves callbacks (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      }
+    },
+    {
+      "name": "Confirm preserves callbacks (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      }
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initial safe focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "explicit child autoFocus and original return target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "forward Tab wraps and excludes background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "backward Shift+Tab wraps (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "Confirm"
+      }
+    },
+    {
+      "name": "single focusable target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "no focusable target uses dialog fallback (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "dialog"
+      }
+    },
+    {
+      "name": "disabled and dynamically hidden targets (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "restoration on Escape (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "name": "contained Modal in an outer React portal (StrictMode)",
+      "passed": true,
+      "observation": {
+        "parentPortal": true
+      }
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childFocused": true
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "unmount removes listeners and restores once (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "positive tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "radio group retains one sequential stop (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (StrictMode)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "closing animation is not keyboard interactive (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Cancel preserves callbacks (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      }
+    },
+    {
+      "name": "Confirm preserves callbacks (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      }
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "153.0.8010.12",
+  "passed": true,
+  "summary": {
+    "cases": 56,
+    "passed": 56,
+    "failed": 0
+  },
+  "sourceHashes": {
+    "src/components/overlays/Modal/Modal.tsx": "0d491a16ab9170ee9e7f9385208bdc3746cade23d417845080ba998db2b2e5e6",
+    "src/components/overlays/Modal/Modal.focus.ts": "068e5d6b7432ee621ab7d5800b316b15bd1a6770692ac72e9a6e6c4320490b71",
+    "src/components/overlays/overlayPortal.tsx": "d42f7afc13374040e78bbff3ee429ab6c610f9c6e9e2508ddb032789fbb8d439"
+  }
+}

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,6 +46,11 @@ visit(registry);
 const testFiles = readdirSync(resolve(root, 'scripts')).filter((name) => /test\.mjs$|worker\.mjs$/.test(name));
 const evidencePath = resolve(root, 'docs/audit/evidence/published-beta.1.json');
 const evidence = existsSync(evidencePath) ? JSON.parse(read(evidencePath)) : null;
+const modalEvidencePath = resolve(root, 'docs/audit/evidence/modal-focus-after.json');
+const modalEvidence = existsSync(modalEvidencePath) ? JSON.parse(read(modalEvidencePath)) : null;
+const modalSources = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx'];
+const modalFixed = modalEvidence?.mode === 'candidate' && modalEvidence.passed === true && modalEvidence.summary?.passed >= 56
+  && modalSources.every((file) => modalEvidence.sourceHashes?.[file] === createHash('sha256').update(read(resolve(root, file)).replaceAll('\r\n', '\n')).digest('hex'));
 // Curated review evidence; the mechanical scan below does not grant this status.
 const reviewed = new Set(['DataTable', 'DatePicker', 'DateRangePicker', 'Tooltip', 'Modal', 'SidebarNav', 'DateTimePicker', 'DatasetSummary', 'FieldProfile', 'AppShell']);
 const findingIds = { DataTable: ['F1', 'F2'], DateRangePicker: ['F3'], Tooltip: ['F4'], DatePicker: ['F6'], Modal: ['F7'] };
@@ -107,17 +113,18 @@ for (const exported of exports) {
   const baselineProtection = ['FilePicker', 'SplitPane', 'ResizablePanel'].includes(name);
   components.push({
     component: name, group: locations[0].split('/')[2], implementation: locations,
+    ...(name === 'Modal' ? { supportingImplementation: modalSources.slice(1), findingStatus: { F7: modalFixed ? 'fixed in current source; published beta remains affected' : 'confirmed/unfixed' } } : {}),
     styles: styles.map(rel), styleDelegation, types: [...new Set(typeLocations)],
     previews: previews.filter((p) => p.name === name),
     examples: [...new Set([...neighbors.filter((f) => /\.examples\./.test(f)).map((f) => rel(resolve(folder, f))), ...(registryExampleSources.get(`${name}Example`) ?? [])])],
     guides: existsSync(guide) ? [rel(guide)] : [],
-    contracts: ['docs/consumer-hardening.md', 'docs/interaction-contract-matrix.md', 'docs/ui-generation-rulebook.md', ...(baselineProtection ? ['docs/file-picker-and-panel-persistence.md'] : [])],
+    contracts: ['docs/consumer-hardening.md', 'docs/interaction-contract-matrix.md', 'docs/ui-generation-rulebook.md', ...(baselineProtection ? ['docs/file-picker-and-panel-persistence.md'] : []), ...(name === 'Modal' ? ['docs/modal-focus-contract.md'] : [])],
     testReferences: testFiles.filter((f) => new RegExp(`\\b${name}\\b`).test(read(resolve(root, 'scripts', f)))).map((f) => `scripts/${f}`),
     testReferenceMeaning: 'Textual references only; generic export checks and source assertions are not component behavior coverage.',
     sourceReview: reviewed.has(name) ? 'source reviewed' : 'not reviewed',
-    runtimeVerification: findingIds[name] ? (evidence?.harnessCompleted && findingIds[name].every((id) => evidence.summary[id]?.classification === 'confirmed') ? 'finding confirmed' : 'blocked/inconclusive') : baselineProtection ? 'behavior verified (established regression cases only)' : 'not reviewed',
+    runtimeVerification: name === 'Modal' && modalFixed ? 'behavior verified (Modal focus regressions)' : findingIds[name] ? (evidence?.harnessCompleted && findingIds[name].every((id) => evidence.summary[id]?.classification === 'confirmed') ? 'finding confirmed' : 'blocked/inconclusive') : baselineProtection ? 'behavior verified (established regression cases only)' : 'not reviewed',
     findings: findingIds[name] ?? [],
-    diagnosticFixtures: findingIds[name] ? ['scripts/audit/fixture/main.js', 'scripts/audit/browser-diagnostics.mjs', 'docs/audit/evidence/published-beta.1.json'] : [],
+    diagnosticFixtures: findingIds[name] ? ['scripts/audit/fixture/main.js', 'scripts/audit/browser-diagnostics.mjs', 'docs/audit/evidence/published-beta.1.json', ...(name === 'Modal' ? ['scripts/test-modal-focus.mjs', 'scripts/modal-focus/browser.mjs', 'scripts/modal-focus/main.js', 'docs/audit/evidence/modal-focus-before.json', 'docs/audit/evidence/modal-focus-after.json'] : [])] : [],
     exceptions: exceptions[name] ?? (/Modal|Drawer|Popover|Tooltip|Toast|ContextMenu|CommandMenu/.test(name) ? 'Viewport-constrained overlay/menu; verify geometry and focus rather than remove all limits.' : null),
     firstPass: { status: 'mechanical source leads only; unvalidated', files: [file, ...styles].map(rel) },
   });

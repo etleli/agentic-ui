@@ -1,8 +1,15 @@
 # Component-contract audit baseline
 
-This is the first audit pass, not a completed library audit. No reusable component
-behavior, style, public API, dependency version, or release identity changes here.
-The seven outstanding findings are reproduced, not repaired.
+This records the initial audit pass, not a completed library audit. That baseline
+changed no reusable behavior, styling, public API, dependencies or release identity.
+The seven outstanding findings were reproduced, not repaired, in that initial pass.
+
+The paragraphs and counts below preserve the initial audit baseline. The subsequent
+[Modal focus repair](../modal-focus-contract.md) fixes only F7 in current source,
+with 56 permanent browser cases (44 fail against the unchanged published beta).
+The current inventory has four components with unfixed confirmed findings and one
+with verified Modal focus behavior; F5 remains a workshop finding. F1–F6 and all
+additional leads remain unresolved. This is not a new publication.
 
 ## Baselines and evidence
 

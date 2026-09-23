@@ -94,6 +94,7 @@ test('the only workflow validates PRs and main with the verified runtime', async
   assert.doesNotMatch(workflow, /npm publish|id-token:|packages:\s*write|contents:\s*write|\brelease:|\bdeploy|registry-url:|NODE_AUTH_TOKEN|NPM_TOKEN|secrets\./i);
   assert.equal(manifest.scripts.validate, 'npm run check && npm run pack:check && npm run audit:inventory -- --check && git diff --check');
   assert.match(manifest.scripts.check, /npm run test:tarball/);
+  assert.match(manifest.scripts.check, /npm run test:modal-focus/);
 });
 
 test('workshop composition stays separate from application routes', async () => {

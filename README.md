@@ -53,6 +53,10 @@ All seven findings remain unresolved. The audit documents reproductions and repa
 scopes, not component fixes. These repository updates do not alter the published
 npm README or archive retroactively.
 
+Current source includes an unpublished [Modal focus repair](https://github.com/etleli/agentic-ui/blob/main/docs/modal-focus-contract.md)
+with permanent Chromium regressions. Only F7 is fixed in source; the published beta
+still has all seven limitations.
+
 ## Develop locally
 
 Use Node **24.19.0** and npm **11.17.0**, the verified runtime used by CI.

@@ -1,11 +1,12 @@
 import { X } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { Tooltip } from '../Tooltip';
 import { Button } from '../../inputs/Button';
 import { useOverlayPresence } from '../overlayPresence';
 import './Modal.css';
 import type { ModalConfirmVariant, ModalPresentation, ModalProps, ModalSize } from './Modal.types';
+import { ModalFocusScopeContext, useModalFocus } from './Modal.focus';
 
 function getModalClassName(className: ModalProps['className']) {
   return ['modal-overlay', className].filter(Boolean).join(' ');
@@ -36,7 +37,13 @@ export function Modal({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
   const isOpen = isControlled ? open : internalOpen;
+  const parentFocusScope = useContext(ModalFocusScopeContext);
+  const isFocusActive = isOpen && !modalProps.hidden && !modalProps.inert && (parentFocusScope?.open ?? true);
   const { isPresent, presenceState } = useOverlayPresence(isOpen);
+  const [dialog, setDialog] = useState<HTMLElement | null>(null);
+  const [focusRegions] = useState(() => new Set<HTMLElement>());
+  const focusScope = useMemo(() => ({ regions: focusRegions, open: isFocusActive }), [focusRegions, isFocusActive]);
+  useModalFocus(dialog, isFocusActive, focusRegions);
 
   const updateOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {
@@ -57,7 +64,7 @@ export function Modal({
   }, [onConfirm, updateOpen]);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isFocusActive) {
       return undefined;
     }
 
@@ -69,13 +76,14 @@ export function Modal({
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, updateOpen]);
+  }, [isFocusActive, updateOpen]);
 
   if (!isPresent) {
     return null;
   }
 
   const overlay = (
+    <ModalFocusScopeContext.Provider value={focusScope}>
     <div
       {...modalProps}
       className={getModalClassName(className)}
@@ -83,6 +91,7 @@ export function Modal({
       data-size={size}
       data-state={presenceState}
       role="presentation"
+      inert={modalProps.inert || !isFocusActive || undefined}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           updateOpen(false);
@@ -91,7 +100,7 @@ export function Modal({
         modalProps.onMouseDown?.(event);
       }}
     >
-      <section className="modal-overlay__dialog" role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : 'Modal dialog'}>
+      <section ref={setDialog} tabIndex={-1} className="modal-overlay__dialog" role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : 'Modal dialog'}>
         <header className="modal-overlay__header">
           <span className="modal-overlay__heading-copy">
             {title ? <strong>{title}</strong> : null}
@@ -128,6 +137,7 @@ export function Modal({
         </footer>
       </section>
     </div>
+    </ModalFocusScopeContext.Provider>
   );
 
   return presentation === 'viewport' ? <OverlayPortal>{overlay}</OverlayPortal> : overlay;

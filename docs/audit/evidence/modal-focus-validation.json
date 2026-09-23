@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-23T08:11:15.818Z",
+  "base": "408e94f5137b726beeda7c08cedab1edcb15591d",
+  "node": "24.19.0",
+  "npm": "11.17.0",
+  "npmCi": 0,
+  "validate": 0,
+  "nodeTests": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0,
+    "skipped": 0
+  },
+  "chromium": {
+    "before": {
+      "cases": 56,
+      "passed": 12,
+      "failed": 44
+    },
+    "after": {
+      "cases": 56,
+      "passed": 56,
+      "failed": 0
+    },
+    "browser": "153.0.8010.12",
+    "react": "19.3.0",
+    "warnings": [],
+    "errors": []
+  },
+  "fullAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "productionAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "inventoryFreshness": true,
+  "packageMetadataAndDependenciesUnchanged": true,
+  "existingBuildWarning": true,
+  "hostedEvidence": "Recorded in the repair PR for its exact head, separately from this local evidence."
+}
