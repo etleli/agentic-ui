@@ -1,33 +1,47 @@
 # Roadmap
 
-## Completed development baseline
+## Completed foundation and first publication
 
 - Curated reusable library and workshop with independent repository history.
-- Component catalog, individual previews, configuration controls, preview resizing,
-  fullscreen previews, editable theme tokens, and local presets.
-- Public components and types, interaction helpers, synthetic examples, component
-  agent guides, global generation rulebook, and both application/library builds.
-- Validation-only CI, package checks, and a separate local tarball consumer.
-- Validation-only CI; publication requires an explicit owner checkpoint.
+- Component catalog, previews, parameter/content controls, preview resizing,
+  fullscreen previews, theme editing and existing local presets.
+- Library types, helpers, synthetic examples, five component guides and generation
+  rulebook; workshop/library builds and validation-only CI.
+- Owner-approved licensing, personal package identity and dependency remediation.
+- First public npm beta `@etleli/agentic-ui@0.1.0-beta.1`, released from
+  `d9795c190c79266f96cc3b196b0d6a2e0335d225`; observed launch and consumer results
+  are in [PR #5](https://github.com/etleli/agentic-ui/pull/5) and
+  [release status](release-status.md). This does not imply stable or fully audited.
 
-## Finalized license and first-beta activation
+## Component-contract audit started
 
-The activated candidate is `@etleli/agentic-ui@0.1.0-beta.1`. First-party ownership
-is confirmed and the custom license is owner-approved and finalized. Strict
-personal-use conditions remain; commercial and organizational use require written
-authorization without an automatic fee. Activation does not establish publication;
-the exact artifact and visibility change require separate approval. See the
-[release record](release-status.md). The four component findings remain unresolved.
+The [audit baseline](audit/README.md) inventories all 122 public components and
+separates exports, examples, source review and runtime verification. All seven
+outstanding findings are reproduced with counterexamples. The FilePicker/panel
+repairs retain their existing regression coverage. Additional static leads remain
+unvalidated. See [rules](audit/rules.md) and [proposed repair batches](audit/findings.md).
 
-## Future component-contract audit
+Next: focused focus-management, controlled-state, date-bound, overlay-geometry and
+workshop-token repairs with appropriate regression tests. Then extend the audit to
+unreviewed groups and constrained layouts. No reusable behavior changes are part
+of the audit-baseline task. Preserve compatibility until a deliberate repair has
+an explicit rationale and verified coverage.
 
-Review sizing, overflow, selection, accessibility, and interactions systematically.
-Preserve the current compatibility boundary until each intentional change has a
-documented rationale, focused regression coverage, and consumer validation.
+## Planned browser-first workshop and visual configurator
 
-## Planned workshop and grid builder
+The product direction is a browser-first component workshop and visual UI
+configurator, including a future grid builder. These are planned additions:
 
-Evaluate richer theme tooling, component metadata, and export/integration flows.
-The baseline does not implement a component cart or generated integration bundles.
-Plan a grid-based UI builder separately, using reusable components and clear
-layout contracts. Builder design and implementation have not started here.
+- Eventual GitHub Pages hosting, with a static browser-first experience.
+- Browser-local persistence plus portable configuration import/export.
+- ZIP handoffs containing configuration, the relevant component guidance, and
+  Markdown rules for a coding agent.
+- ZIPs exclude component source, node_modules, and generated applications.
+- No required account, backend, or AI API connection.
+- Optional local-only capabilities may be considered later, separately from the
+  core browser experience.
+
+Existing local presets and the development server's source-file theme save are
+not this future portable configuration/ZIP system. The baseline has no component
+cart, ZIP exporter, generated integration bundle, grid builder or Pages deployment.
+The audit only records direction; implementation and hosting are separate work.

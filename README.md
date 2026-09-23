@@ -20,15 +20,15 @@ controls the terms. See the [licensing explanation](https://github.com/etleli/ag
 
 ## Install the beta
 
-When the release record confirms publication, install the exact version:
+The first beta is published; install the exact version:
 
 ```sh
 npm install @etleli/agentic-ui@0.1.0-beta.1
 ```
 
-React and React DOM 19 are peer dependencies. Before registry publication, use
-the inspected local tarball described below. An activated package manifest or a
-passing CI run is not evidence that npm publication has occurred.
+React and React DOM 19 are peer dependencies. The [launch record in PR #5](https://github.com/etleli/agentic-ui/pull/5)
+records actual publication and registry-consumer verification. The local tarball
+workflow below remains available for development.
 
 ## Known beta limitations
 
@@ -46,9 +46,12 @@ Do not treat the beta as a completed accessibility, interaction, or security aud
 The confirmed `FilePicker` state/rerender and persisted `SplitPane` / `ResizablePanel`
 server-rendering blockers are corrected, with permanent behavioral regressions.
 See the [state and persistence contracts](https://github.com/etleli/agentic-ui/blob/main/docs/file-picker-and-panel-persistence.md).
-Three other automated reports remain unvalidated: the workshop's generated-color
-control, controlled `DatePicker` values, and modal keyboard focus management.
-The four limitations above remain unresolved; see the release record for evidence.
+The [component audit baseline](https://github.com/etleli/agentic-ui/blob/main/docs/audit/README.md)
+also confirms the workshop's generated-color control/save defect, controlled
+`DatePicker` values diverging from parent props, and missing modal focus handling.
+All seven findings remain unresolved. The audit documents reproductions and repair
+scopes, not component fixes. These repository updates do not alter the published
+npm README or archive retroactively.
 
 ## Develop locally
 

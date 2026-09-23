@@ -50,7 +50,9 @@
     "prepack": "npm run build:lib",
     "pack:check": "npm pack --dry-run",
     "test:tarball": "node scripts/verify-tarball.mjs",
-    "validate": "npm run check && npm run pack:check && git diff --check"
+    "validate": "npm run check && npm run pack:check && git diff --check",
+    "audit:inventory": "node scripts/audit/inventory.mjs",
+    "audit:diagnostics": "node scripts/audit/run-diagnostics.mjs"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.4",

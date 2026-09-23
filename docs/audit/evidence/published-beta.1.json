@@ -1,0 +1,1689 @@
+{
+  "date": "2026-09-23T07:03:40.910Z",
+  "sourceSha": "d9795c190c79266f96cc3b196b0d6a2e0335d225",
+  "package": {
+    "version": "0.1.0-beta.1",
+    "resolved": "https://registry.npmjs.org/@etleli/agentic-ui/-/agentic-ui-0.1.0-beta.1.tgz",
+    "integrity": "sha512-pAnKfrR1icq77Aw7aQGTFC14NsFe+xmnN5RuFBzTKOR6nZGeWR3w7GoQMK49IsHLb1mZosGP0vmgwoS4pmnHlA=="
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "react": "19.3.0",
+    "reactDom": "19.3.0",
+    "playwright": "1.63.0",
+    "locale": "en-US",
+    "timezone": "UTC",
+    "fixedDate": "2026-09-23T12:00:00Z",
+    "browser": "153.0.8010.12"
+  },
+  "warnings": [],
+  "pageErrors": [],
+  "cases": [
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "declining"
+      },
+      "expected": {
+        "selected": [
+          "Alpha"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "observed": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "accepting"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "declining",
+        "selectable": false
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 0
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          }
+        ],
+        "notifications": []
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "id",
+        "mode": "declining",
+        "selectable": true
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 1
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": "true",
+            "current": "true",
+            "tabIndex": "0"
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": "0"
+          }
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "declining"
+      },
+      "expected": {
+        "selected": [
+          "Alpha"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "observed": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "accepting"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "declining",
+        "selectable": false
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 0
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          }
+        ],
+        "notifications": []
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": false,
+        "control": "index",
+        "mode": "declining",
+        "selectable": true
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 1
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": "true",
+            "current": "true",
+            "tabIndex": "0"
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": "0"
+          }
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": false,
+        "mode": "declining"
+      },
+      "expected": {
+        "date": "2026-09-15",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": false,
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "date": "2026-09-17"
+      },
+      "observed": {
+        "display": "Sep 17, 2026"
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": false,
+        "mode": "accepting"
+      },
+      "expected": {
+        "date": "2026-09-16",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": false,
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "date": "2026-09-16",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "declining"
+      },
+      "expected": {
+        "selected": [
+          "Alpha"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "observed": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "accepting"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "declining",
+        "selectable": false
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 0
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          }
+        ],
+        "notifications": []
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "id",
+        "mode": "declining",
+        "selectable": true
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 1
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": "true",
+            "current": "true",
+            "tabIndex": "0"
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": "0"
+          }
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "declining"
+      },
+      "expected": {
+        "selected": [
+          "Alpha"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "observed": {
+        "selected": [
+          "Beta"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "accepting"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F1",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "selected": [
+          "Beta"
+        ],
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": [
+          "Beta"
+        ],
+        "afterRerender": [
+          "Beta"
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "declining",
+        "selectable": false
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 0
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": null
+          }
+        ],
+        "notifications": []
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F2",
+      "configuration": {
+        "kind": "table",
+        "strict": true,
+        "control": "index",
+        "mode": "declining",
+        "selectable": true
+      },
+      "expected": {
+        "firstSelected": true,
+        "firstCurrent": "true",
+        "manualCallbacks": 1
+      },
+      "observed": {
+        "initial": [
+          {
+            "text": "Alpha",
+            "selected": "true",
+            "current": "true",
+            "tabIndex": "0"
+          },
+          {
+            "text": "Beta",
+            "selected": null,
+            "current": null,
+            "tabIndex": "0"
+          }
+        ],
+        "notifications": [
+          {
+            "id": "beta",
+            "index": 1
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": true,
+        "mode": "declining"
+      },
+      "expected": {
+        "date": "2026-09-15",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": true,
+        "mode": "declining",
+        "action": "parent changes prop"
+      },
+      "expected": {
+        "date": "2026-09-17"
+      },
+      "observed": {
+        "display": "Sep 17, 2026"
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": true,
+        "mode": "accepting"
+      },
+      "expected": {
+        "date": "2026-09-16",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "kind": "date",
+        "strict": true,
+        "mode": "uncontrolled"
+      },
+      "expected": {
+        "date": "2026-09-16",
+        "callbackCount": 1
+      },
+      "observed": {
+        "afterClick": "Sep 16, 2026",
+        "afterRerender": "Sep 16, 2026",
+        "notifications": [
+          "2026-09-16"
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "restriction": "disabled"
+      },
+      "expected": {
+        "dialogCount": 0,
+        "notifications": []
+      },
+      "observed": {
+        "dialogCount": 0,
+        "disabled": true,
+        "notifications": []
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F6",
+      "configuration": {
+        "restriction": "readOnly"
+      },
+      "expected": {
+        "dialogCount": 0,
+        "notifications": []
+      },
+      "observed": {
+        "dialogCount": 0,
+        "disabled": false,
+        "notifications": []
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-22",
+        "max": "2026-09-23",
+        "preset": "Today",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-23"
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-22",
+        "max": "2026-09-23",
+        "preset": "7D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-17"
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-22",
+        "max": "2026-09-23",
+        "preset": "30D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-08-25"
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-01",
+        "max": "2026-09-20",
+        "preset": "Today",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-23"
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-01",
+        "max": "2026-09-20",
+        "preset": "7D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-17"
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-09-01",
+        "max": "2026-09-20",
+        "preset": "30D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-08-25"
+          }
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-08-01",
+        "max": "2026-10-01",
+        "preset": "Today",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-23"
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-08-01",
+        "max": "2026-10-01",
+        "preset": "7D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-09-17"
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "min": "2026-08-01",
+        "max": "2026-10-01",
+        "preset": "30D",
+        "today": "2026-09-23T12:00:00Z"
+      },
+      "expected": "No callback endpoint outside min/max",
+      "observed": {
+        "notifications": [
+          {
+            "end": "2026-09-23",
+            "start": "2026-08-25"
+          }
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "action": "individual calendar excludes today"
+      },
+      "expected": {
+        "todayDisabled": true
+      },
+      "observed": {
+        "todayDisabled": true
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F3",
+      "configuration": {
+        "disabled": true
+      },
+      "expected": "All preset buttons disabled",
+      "observed": {
+        "disabled": [
+          true,
+          true,
+          true
+        ],
+        "notifications": []
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "left-edge",
+        "placement": "top",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "reduce"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 0,
+          "y": 200,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": -109.46875,
+          "y": 126,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 109.46875,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "right-edge",
+        "placement": "bottom",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "reduce"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 730,
+          "y": 200,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 710.953125,
+          "y": 234,
+          "width": 99.15625,
+          "height": 162
+        },
+        "overflow": {
+          "left": 0,
+          "right": 10.109375,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "top-edge",
+        "placement": "left",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "reduce"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 400,
+          "y": 0,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 112,
+          "y": -20,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 20,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "bottom-edge",
+        "placement": "right",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "reduce"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 400,
+          "y": 570,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 469.0625,
+          "y": 550,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 16
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "center",
+        "placement": "top",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "reduce"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 380,
+          "y": 300,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 270.53125,
+          "y": 226,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "left-edge",
+        "placement": "top",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "no-preference"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 0,
+          "y": 200,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": -109.46875,
+          "y": 126,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 109.46875,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "right-edge",
+        "placement": "bottom",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "no-preference"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 730,
+          "y": 200,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 710.953125,
+          "y": 234,
+          "width": 99.15625,
+          "height": 162
+        },
+        "overflow": {
+          "left": 0,
+          "right": 10.109375,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "top-edge",
+        "placement": "left",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "no-preference"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 400,
+          "y": 0,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 112,
+          "y": -20,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 20,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "bottom-edge",
+        "placement": "right",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "no-preference"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 400,
+          "y": 570,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 469.0625,
+          "y": 550,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 16
+        }
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F4",
+      "configuration": {
+        "label": "center",
+        "placement": "top",
+        "viewport": [
+          800,
+          600
+        ],
+        "reducedMotion": "no-preference"
+      },
+      "expected": "All tooltip bounds within viewport",
+      "observed": {
+        "triggerBox": {
+          "x": 380,
+          "y": 300,
+          "width": 61.0625,
+          "height": 26
+        },
+        "box": {
+          "x": 270.53125,
+          "y": 226,
+          "width": 280,
+          "height": 66
+        },
+        "overflow": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 0
+        }
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F7",
+      "configuration": {
+        "presentation": "viewport",
+        "controlled": true,
+        "keyboard": "open, Tab from opener, Tab after last action, Escape from input"
+      },
+      "expected": {
+        "initialInside": true,
+        "trapInside": true,
+        "restoredId": "opener",
+        "escapeCloses": true
+      },
+      "observed": {
+        "opened": {
+          "id": "opener",
+          "tag": "BUTTON",
+          "text": "Open diagnostic modal",
+          "insideDialog": false
+        },
+        "firstTab": {
+          "id": "background",
+          "tag": "BUTTON",
+          "text": "Background action",
+          "insideDialog": false
+        },
+        "traversal": [
+          {
+            "id": "",
+            "tag": "BODY",
+            "text": "Open diagnostic modalBackground action\nDiagnostic modalCancelConfirm",
+            "insideDialog": false
+          },
+          {
+            "id": "opener",
+            "tag": "BUTTON",
+            "text": "Open diagnostic modal",
+            "insideDialog": false
+          },
+          {
+            "id": "background",
+            "tag": "BUTTON",
+            "text": "Background action",
+            "insideDialog": false
+          },
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "",
+            "insideDialog": true
+          }
+        ],
+        "closed": {
+          "id": "",
+          "tag": "BODY",
+          "text": "Open diagnostic modalBackground action\n",
+          "insideDialog": false
+        },
+        "dialogsAfterEscape": 0,
+        "notifications": [
+          false
+        ]
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F7",
+      "configuration": {
+        "counterexample": "Escape still requests closure once"
+      },
+      "expected": {
+        "dialogs": 0,
+        "notifications": [
+          false
+        ]
+      },
+      "observed": {
+        "dialogs": 0,
+        "notifications": [
+          false
+        ]
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F5",
+      "configuration": {
+        "surface": "npm helper",
+        "input": "#ff0000"
+      },
+      "expected": "Canonical generated-base token changes helper output; legacy workshop token does not",
+      "observed": {
+        "before": "#4e8cff",
+        "wrongToken": "#4e8cff",
+        "canonicalToken": "#ff0000"
+      },
+      "contractSatisfied": true
+    },
+    {
+      "finding": "F5",
+      "configuration": {
+        "surface": "exact release workshop (not npm content)",
+        "action": "edit Data type base and Accent, save to isolated copy"
+      },
+      "expected": {
+        "generatedBase": "#ff0000",
+        "savedGeneratedBase": "#ff0000",
+        "savedAccent": "#00aa00"
+      },
+      "observed": {
+        "before": {
+          "--color-generated-base": "#4e8cff",
+          "--color-data-type-base": "#4e8cff",
+          "--color-accent": "#00ff88"
+        },
+        "edited": {
+          "--color-generated-base": "#4e8cff",
+          "--color-data-type-base": "#ff0000",
+          "--color-accent": "#00aa00"
+        },
+        "saved": {
+          "--color-foreground": "#ffffff",
+          "--color-background": "#0c0c0c",
+          "--color-surface": "#212020",
+          "--color-surface-muted": "#222222",
+          "--color-surface-raised": "#242424",
+          "--color-muted": "#d7ffcc",
+          "--color-border": "#3e3e3e",
+          "--color-border-strong": "#131313",
+          "--color-scrollbar-thumb": "#00ffae",
+          "--color-code-background": "#0f0f0f",
+          "--color-code-foreground": "#fff7ed",
+          "--color-code-gutter-background": "#1d1c1c",
+          "--color-code-active-line": "#2f2b28",
+          "--color-code-selection": "#704221",
+          "--color-accent": "#00aa00",
+          "--color-trading-positive": "#00ff04",
+          "--color-trading-negative": "#ff3344",
+          "--color-trading-warning": "#ffc800",
+          "--color-trading-neutral": "#ffffff",
+          "--radius-xs": "4px",
+          "--radius-sm": "8px",
+          "--radius-md": "11px",
+          "--radius-lg": "25px",
+          "--motion-duration-press": "120ms",
+          "--motion-duration-popup": "180ms",
+          "--motion-duration-list": "220ms",
+          "--motion-duration-counter": "160ms",
+          "--motion-duration-indicator": "900ms"
+        },
+        "saveStatus": 200
+      },
+      "contractSatisfied": false
+    },
+    {
+      "finding": "F5",
+      "configuration": {
+        "counterexample": "ordinary Accent control"
+      },
+      "expected": {
+        "current": "#00aa00",
+        "saved": "#00aa00"
+      },
+      "observed": {
+        "current": "#00aa00",
+        "saved": "#00aa00"
+      },
+      "contractSatisfied": true
+    }
+  ],
+  "harnessCompleted": true,
+  "summary": {
+    "F1": {
+      "classification": "confirmed",
+      "cases": 16,
+      "contractViolations": 4,
+      "unaffectedCases": 12
+    },
+    "F2": {
+      "classification": "confirmed",
+      "cases": 8,
+      "contractViolations": 4,
+      "unaffectedCases": 4
+    },
+    "F3": {
+      "classification": "confirmed",
+      "cases": 11,
+      "contractViolations": 5,
+      "unaffectedCases": 6
+    },
+    "F4": {
+      "classification": "confirmed",
+      "cases": 10,
+      "contractViolations": 8,
+      "unaffectedCases": 2
+    },
+    "F5": {
+      "classification": "confirmed",
+      "cases": 3,
+      "contractViolations": 1,
+      "unaffectedCases": 2
+    },
+    "F6": {
+      "classification": "confirmed",
+      "cases": 10,
+      "contractViolations": 2,
+      "unaffectedCases": 8
+    },
+    "F7": {
+      "classification": "confirmed",
+      "cases": 2,
+      "contractViolations": 1,
+      "unaffectedCases": 1
+    }
+  }
+}

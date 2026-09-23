@@ -11,6 +11,9 @@ Read `README.md`, `package.json`, `src/index.ts`,
 `docs/consumer-hardening.md`, and `docs/interaction-contract-matrix.md`.
 For UI composition, also read `docs/ui-generation-rulebook.md` and the relevant
 component's `AGENT.md`. Check `docs/component-roadmap.md` before expanding scope.
+For component audits, read `docs/audit/README.md` and its linked checklist and
+findings. Inventory/source-scan coverage is not behavioral verification; keep
+unfixed-bug diagnostics distinct from required regression validation.
 
 ## Boundaries
 
