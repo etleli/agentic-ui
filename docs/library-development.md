@@ -69,6 +69,11 @@ integrity. This command verifies availability; it never publishes or stages.
 
 ## Adding or fixing components
 
+`npm run test:modal-focus` runs in required validation/CI. It builds and packs the
+current library, then tests focus in an isolated Chromium consumer. See
+[Modal focus](modal-focus-contract.md) for setup, cases and the optional published
+beta comparison, which intentionally fails before the repair.
+
 `npm run test:component-blockers` also runs during validation and hosted CI. Its
 bounded behavioral tests exercise the built package and can target a separate
 archive consumer through `AGENTIC_UI_CONSUMER_ROOT`. See the

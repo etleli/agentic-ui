@@ -1,8 +1,10 @@
 # Seven reproduced findings and next repair batches
 
-All seven are **confirmed** on the stated baseline. See the
+All seven are **confirmed** on the published baseline. **F7 is fixed in current
+source** by the [Modal focus repair](../modal-focus-contract.md); F1–F6 and the
+additional leads remain unresolved. See the
 [machine-readable observations](evidence/published-beta.1.json) and
-[environment/coverage limits](README.md). No fixes are included. Review comments
+[environment/coverage limits](README.md). The original baseline is preserved. Review comments
 are evidence to test, not a substitute for testing.
 
 ## F1 — controlled DataTable selection
@@ -120,6 +122,12 @@ values, bounds, keyboard and parent updates while disabled/read-only.
 
 ## F7 — Modal keyboard focus
 
+**Current source: fixed**, after all 128 permanent Chromium cases passed in normal
+rendering and StrictMode. The identical suite failed 78 of 128 cases against the
+published beta, without browser warnings/errors in either run. See the
+[focus contract and evidence](../modal-focus-contract.md). The observations below
+describe the unchanged published package.
+
 [Original comment](https://github.com/etleli/agentic-ui/pull/1#discussion_r4069848746).
 [Implementation](../../src/components/overlays/Modal/Modal.tsx).
 Contract: a blocking aria-modal dialog receives/contains keyboard focus and returns
@@ -157,8 +165,8 @@ or sizing rewrite follows from these leads.
 
 ## Suggested repair order and next groups
 
-1. **Modal focus (F7)**: highest practical keyboard-access risk; browser focus
-   regression first. Keep nested-overlay scope explicit.
+1. **Modal focus (F7), completed in current source**: permanent Chromium focus
+   regressions protect this repair. The published beta remains affected.
 2. **Controlled state (F1/F2/F6)**: stable parent authority and selected display;
    add behavioral regressions before minimal separate repairs. Inspect composite
    and advanced-data leads after the confirmed components, not in the same patch.

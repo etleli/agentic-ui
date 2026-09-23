@@ -1,0 +1,1441 @@
+{
+  "mode": "published",
+  "packageVersion": "0.1.0-beta.1",
+  "integrity": "sha512-pAnKfrR1icq77Aw7aQGTFC14NsFe+xmnN5RuFBzTKOR6nZGeWR3w7GoQMK49IsHLb1mZosGP0vmgwoS4pmnHlA==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "initial safe focus (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "explicit child autoFocus and original return target (normal)",
+      "passed": false,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "forward Tab wraps and excludes background (normal)",
+      "passed": false,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "backward Shift+Tab wraps (normal)",
+      "passed": false,
+      "observation": {
+        "focus": "After"
+      },
+      "failure": "Expected values to be strictly equal:\n\n'After' !== 'Confirm'\n"
+    },
+    {
+      "name": "single focusable target (normal)",
+      "passed": false,
+      "observation": {
+        "initial": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'opener' !== 'field'\n"
+    },
+    {
+      "name": "no focusable target uses dialog fallback (normal)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'dialog'\n"
+    },
+    {
+      "name": "disabled and dynamically hidden targets (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "restoration on Escape (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "restoration on close button (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "restoration on parent (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "return target removed (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "contained Modal in an outer React portal (normal)",
+      "passed": false,
+      "observation": {
+        "parentPortal": true
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (normal)",
+      "passed": false,
+      "observation": {
+        "childFocused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "unmount removes listeners and restores once (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (normal)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "native summary and closed-details tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (normal)",
+      "passed": false,
+      "observation": {
+        "focused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "positive tab order (normal)",
+      "passed": false,
+      "observation": {
+        "initial": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'opener' !== 'inside'\n"
+    },
+    {
+      "name": "radio group retains one sequential stop (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (normal)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (normal)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
+    },
+    {
+      "name": "closing animation is not keyboard interactive (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'field' !== 'opener'\n"
+    },
+    {
+      "name": "Cancel preserves callbacks (normal)",
+      "passed": false,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Confirm preserves callbacks (normal)",
+      "passed": false,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "nested-opener",
+          "label": null,
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'nested-opener'\n- 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (normal)",
+      "passed": false,
+      "observation": {
+        "childHidden": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (normal)",
+      "passed": false,
+      "observation": {
+        "childHidden": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "native scroll-pane navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 36,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 31,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 33,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "initial safe focus (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "explicit child autoFocus and original return target (StrictMode)",
+      "passed": false,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "forward Tab wraps and excludes background (StrictMode)",
+      "passed": false,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "backward Shift+Tab wraps (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": "After"
+      },
+      "failure": "Expected values to be strictly equal:\n\n'After' !== 'Confirm'\n"
+    },
+    {
+      "name": "single focusable target (StrictMode)",
+      "passed": false,
+      "observation": {
+        "initial": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'opener' !== 'field'\n"
+    },
+    {
+      "name": "no focusable target uses dialog fallback (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'dialog'\n"
+    },
+    {
+      "name": "disabled and dynamically hidden targets (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "restoration on Escape (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "restoration on close button (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "restoration on parent (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "return target removed (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "contained Modal in an outer React portal (StrictMode)",
+      "passed": false,
+      "observation": {
+        "parentPortal": true
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (StrictMode)",
+      "passed": false,
+      "observation": {
+        "childFocused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "unmount removes listeners and restores once (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "native summary and closed-details tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "positive tab order (StrictMode)",
+      "passed": false,
+      "observation": {
+        "initial": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'opener' !== 'inside'\n"
+    },
+    {
+      "name": "radio group retains one sequential stop (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (StrictMode)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
+    },
+    {
+      "name": "closing animation is not keyboard interactive (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'field' !== 'opener'\n"
+    },
+    {
+      "name": "Cancel preserves callbacks (StrictMode)",
+      "passed": false,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Confirm preserves callbacks (StrictMode)",
+      "passed": false,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "nested-opener",
+          "label": null,
+          "inside": true
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'nested-opener'\n- 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "childHidden": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "childHidden": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "native scroll-pane navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 32,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 38,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "153.0.8010.12",
+  "passed": false,
+  "summary": {
+    "cases": 128,
+    "passed": 50,
+    "failed": 78
+  }
+}

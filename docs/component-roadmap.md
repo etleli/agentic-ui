@@ -27,6 +27,10 @@ unreviewed groups and constrained layouts. No reusable behavior changes are part
 of the audit-baseline task. Preserve compatibility until a deliberate repair has
 an explicit rationale and verified coverage.
 
+The first focused repair, [Modal focus/F7](modal-focus-contract.md), is implemented
+in current source with permanent Chromium regressions. Controlled state, date bounds,
+tooltip geometry and workshop tokens remain pending. No new beta is published.
+
 ## Planned browser-first workshop and visual configurator
 
 The product direction is a browser-first component workshop and visual UI

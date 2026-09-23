@@ -38,7 +38,7 @@
     "build": "npm run build:app && npm run build:lib",
     "build:app": "tsc -b && vite build",
     "build:lib": "vite build --config vite.config.library.ts && node scripts/copy-agent-guides.mjs && tsc -p tsconfig.library.json --pretty false",
-    "check": "npm run typecheck && npm run lint && npm run test:interaction && npm run test:workflow && npm run test:consumer-hardening && npm run build && npm run test:consumer-package && npm run test:component-blockers && npm run test:security && npm run test:tarball",
+    "check": "npm run typecheck && npm run lint && npm run test:interaction && npm run test:workflow && npm run test:consumer-hardening && npm run build && npm run test:consumer-package && npm run test:component-blockers && npm run test:modal-focus && npm run test:security && npm run test:tarball",
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint .",
     "test:interaction": "node --test scripts/interaction-contracts.test.mjs",
@@ -52,7 +52,8 @@
     "test:tarball": "node scripts/verify-tarball.mjs",
     "validate": "npm run check && npm run pack:check && npm run audit:inventory -- --check && git diff --check",
     "audit:inventory": "node scripts/audit/inventory.mjs",
-    "audit:diagnostics": "node scripts/audit/run-diagnostics.mjs"
+    "audit:diagnostics": "node scripts/audit/run-diagnostics.mjs",
+    "test:modal-focus": "node scripts/test-modal-focus.mjs"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.4",

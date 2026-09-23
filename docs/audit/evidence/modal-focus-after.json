@@ -1,0 +1,1489 @@
+{
+  "mode": "candidate",
+  "packageVersion": "0.1.0-beta.1",
+  "integrity": "sha512-aPBwKWrrUgeC/TLGEsM+zZwGx3gBaIjdS1g2TgaSwFwmO6cgUW7PtFR0ggAc6voo/LqgBNSmW8MmuGY/1CObIg==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "initial safe focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "explicit child autoFocus and original return target (normal)",
+      "passed": true,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "forward Tab wraps and excludes background (normal)",
+      "passed": true,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "backward Shift+Tab wraps (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "Confirm"
+      }
+    },
+    {
+      "name": "single focusable target (normal)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "no focusable target uses dialog fallback (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "dialog"
+      }
+    },
+    {
+      "name": "disabled and dynamically hidden targets (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "restoration on Escape (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "name": "contained Modal in an outer React portal (normal)",
+      "passed": true,
+      "observation": {
+        "parentPortal": true
+      }
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (normal)",
+      "passed": true,
+      "observation": {
+        "childFocused": true,
+        "closedFocus": {
+          "id": "nested-opener",
+          "label": null,
+          "inside": true
+        },
+        "trace": [
+          {
+            "id": "opener",
+            "label": null
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Focus Modal"
+          },
+          {
+            "id": "nested-opener",
+            "label": null,
+            "dialog": "Focus Modal"
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": null,
+            "label": null,
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": "nested-opener",
+            "label": null,
+            "dialog": "Focus Modal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (normal)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (normal)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "unmount removes listeners and restores once (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (normal)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (normal)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (normal)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "native summary and closed-details tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (normal)",
+      "passed": true,
+      "observation": {
+        "focused": true
+      }
+    },
+    {
+      "name": "positive tab order (normal)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "radio group retains one sequential stop (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (normal)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "opener"
+      }
+    },
+    {
+      "name": "closing animation is not keyboard interactive (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Cancel preserves callbacks (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      }
+    },
+    {
+      "name": "Confirm preserves callbacks (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      }
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (normal)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (normal)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (normal)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (normal)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (normal)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (normal)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 34,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 35,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 35,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 35,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "initial safe focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "explicit child autoFocus and original return target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "opened": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        },
+        "closed": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "forward Tab wraps and excludes background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "wrapped": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "backward Shift+Tab wraps (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "Confirm"
+      }
+    },
+    {
+      "name": "single focusable target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "field",
+          "label": "Modal field",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "no focusable target uses dialog fallback (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "dialog"
+      }
+    },
+    {
+      "name": "disabled and dynamically hidden targets (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "restoration on Escape (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target disabled (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "return target inert (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "name": "contained Modal in an outer React portal (StrictMode)",
+      "passed": true,
+      "observation": {
+        "parentPortal": true
+      }
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childFocused": true,
+        "closedFocus": {
+          "id": "nested-opener",
+          "label": null,
+          "inside": true
+        },
+        "trace": [
+          {
+            "id": "opener",
+            "label": null
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Focus Modal"
+          },
+          {
+            "id": "nested-opener",
+            "label": null,
+            "dialog": "Focus Modal"
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": null,
+            "label": null,
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": null,
+            "label": "Close dialog",
+            "dialog": "Nested Modal"
+          },
+          {
+            "id": "nested-opener",
+            "label": null,
+            "dialog": "Focus Modal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "cycles": 3
+      }
+    },
+    {
+      "name": "unmount removes listeners and restores once (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "2026-09-16",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (StrictMode)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "native summary and closed-details tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focused": true
+      }
+    },
+    {
+      "name": "positive tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "initial": {
+          "id": "inside",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "radio group retains one sequential stop (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "radio-b",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (StrictMode)",
+      "passed": true,
+      "observation": {
+        "dialog": {
+          "x": 270,
+          "y": 20,
+          "width": 420,
+          "height": 680
+        },
+        "target": {
+          "x": 287,
+          "y": 540,
+          "width": 386,
+          "height": 26
+        }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "opener"
+      }
+    },
+    {
+      "name": "closing animation is not keyboard interactive (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Cancel preserves callbacks (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "cancel",
+          false
+        ]
+      }
+    },
+    {
+      "name": "Confirm preserves callbacks (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          "confirm",
+          false
+        ]
+      }
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (StrictMode)",
+      "passed": true,
+      "observation": {
+        "hiddenFocus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 35,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-child",
+        "modal": "scroll-child",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 33,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 28,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "scroll-pane",
+        "modal": "scroll-pane",
+        "scrollTop": 34,
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": "Cancel",
+        "modal": "Cancel",
+        "nativeBackward": "inside",
+        "modalBackward": "inside"
+      }
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "153.0.8010.12",
+  "passed": true,
+  "summary": {
+    "cases": 128,
+    "passed": 128,
+    "failed": 0
+  },
+  "sourceHashes": {
+    "src/components/overlays/Modal/Modal.tsx": "b0c492564b7a16cc61302e9f27578d61b932a696d776f126dfa9d94a94228641",
+    "src/components/overlays/Modal/Modal.focus.ts": "d9e08832f3caed638e9f55ba477a11d408eee7541f7a7127d96ff9d884aae5c7",
+    "src/components/overlays/overlayPortal.tsx": "88471b5ebe59a52be452c197b60bc2bfe84a77e6693f5e177cd4cc0a4b52cbf5",
+    "src/components/overlays/Modal/Modal.css": "043e57f780cc392a192b81edfdfb71f0e11af5d2092a8e1a2b9d70f118cca770"
+  }
+}

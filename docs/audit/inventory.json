@@ -11,7 +11,7 @@
     "componentsWithExamples": 119,
     "componentsWithGuides": 5,
     "sourceReviewed": 10,
-    "findingConfirmedComponents": 5,
+    "findingConfirmedComponents": 4,
     "establishedProtectionComponents": 3
   },
   "workshopOnlyEntries": [
@@ -4220,6 +4220,13 @@
       "implementation": [
         "src/components/overlays/Modal/Modal.tsx"
       ],
+      "supportingImplementation": [
+        "src/components/overlays/Modal/Modal.focus.ts",
+        "src/components/overlays/overlayPortal.tsx"
+      ],
+      "findingStatus": {
+        "F7": "fixed in current source; published beta remains affected"
+      },
       "styles": [
         "src/components/overlays/Modal/Modal.css"
       ],
@@ -4241,19 +4248,25 @@
       "contracts": [
         "docs/consumer-hardening.md",
         "docs/interaction-contract-matrix.md",
-        "docs/ui-generation-rulebook.md"
+        "docs/ui-generation-rulebook.md",
+        "docs/modal-focus-contract.md"
       ],
       "testReferences": [],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "source reviewed",
-      "runtimeVerification": "finding confirmed",
+      "runtimeVerification": "behavior verified (Modal focus regressions)",
       "findings": [
         "F7"
       ],
       "diagnosticFixtures": [
         "scripts/audit/fixture/main.js",
         "scripts/audit/browser-diagnostics.mjs",
-        "docs/audit/evidence/published-beta.1.json"
+        "docs/audit/evidence/published-beta.1.json",
+        "scripts/test-modal-focus.mjs",
+        "scripts/modal-focus/browser.mjs",
+        "scripts/modal-focus/main.js",
+        "docs/audit/evidence/modal-focus-before.json",
+        "docs/audit/evidence/modal-focus-after.json"
       ],
       "exceptions": "Viewport-constrained overlay/menu; verify geometry and focus rather than remove all limits.",
       "firstPass": {
@@ -5759,8 +5772,8 @@
       "layout constraint candidate": "5, 6, 58, 64, 67, 68, 79, 82, 83, 89, 94, 110, 111"
     },
     "src/components/overlays/Modal/Modal.tsx": {
-      "effect/state ownership candidate": "2, 59",
-      "browser/lifecycle candidate": "70"
+      "effect/state ownership candidate": "2, 67",
+      "browser/lifecycle candidate": "78"
     },
     "src/components/overlays/Modal/Modal.css": {
       "layout constraint candidate": "37, 38, 67, 74, 75, 76, 81, 90, 97, 103, 110, 118, 141"

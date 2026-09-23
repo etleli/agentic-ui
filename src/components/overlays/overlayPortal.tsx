@@ -1,5 +1,6 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useContext, useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { addModalFocusRegion, ModalFocusScopeContext, removeModalFocusRegion } from './Modal/Modal.focus';
 
 const OVERLAY_ROOT_ID = 'agentic-ui-overlay-root';
 
@@ -17,6 +18,7 @@ function getOverlayRoot(): HTMLElement {
 }
 
 export function OverlayPortal({ children }: { children: ReactNode }) {
+  const modalScope = useContext(ModalFocusScopeContext);
   const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(() => (typeof document === 'undefined' ? null : getOverlayRoot()));
 
   useEffect(() => {
@@ -25,5 +27,11 @@ export function OverlayPortal({ children }: { children: ReactNode }) {
     }
   }, [overlayRoot]);
 
-  return overlayRoot ? createPortal(children, overlayRoot) : null;
+  return overlayRoot ? createPortal(modalScope ? (
+    <div style={{ display: modalScope.rendered ? 'contents' : 'none' }} inert={!modalScope.open || undefined} ref={(region) => {
+      if (!region) return undefined;
+      addModalFocusRegion(modalScope.regions, region);
+      return () => { removeModalFocusRegion(modalScope.regions, region); };
+    }}>{children}</div>
+  ) : children, overlayRoot) : null;
 }

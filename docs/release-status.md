@@ -50,7 +50,9 @@ findings: controlled DataTable selection, non-selectable programmatic selection,
 DateRangePicker preset bounds, Tooltip clipping, workshop generated-color controls,
 controlled DatePicker values, and Modal focus. The first four were accepted beta
 limitations at launch; the latter three were unvalidated reports then and are
-confirmed by this audit. None are fixed here. Build success is not full component,
+confirmed by this audit. The subsequent [Modal focus repair](modal-focus-contract.md)
+fixes only F7 in current source after passing permanent Chromium regressions.
+F1–F6 remain unresolved and the published beta is unchanged. Build success is not full component,
 accessibility, interaction, or security certification.
 
 ## Next gates
