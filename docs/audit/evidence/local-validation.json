@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-23T07:16:56.329Z",
+  "sourceSha": "d9795c190c79266f96cc3b196b0d6a2e0335d225",
+  "node": "24.19.0",
+  "npm": "11.17.0",
+  "npmCi": {
+    "exitCode": 0
+  },
+  "runs": [
+    {
+      "tree": "release source/current main",
+      "command": "npm run validate",
+      "exitCode": 0,
+      "tests": 68,
+      "passed": 68,
+      "failed": 0,
+      "skipped": 0,
+      "workshopChunkWarning": true,
+      "tarballConsumer": true
+    },
+    {
+      "tree": "audit changes",
+      "command": "npm run validate",
+      "exitCode": 0,
+      "tests": 68,
+      "passed": 68,
+      "failed": 0,
+      "skipped": 0,
+      "workshopChunkWarning": true,
+      "tarballConsumer": true
+    },
+    {
+      "tree": "final audit changes including mandatory inventory freshness",
+      "command": "npm run validate",
+      "exitCode": 0,
+      "tests": 68,
+      "passed": 68,
+      "failed": 0,
+      "skipped": 0,
+      "workshopChunkWarning": true,
+      "tarballConsumer": true,
+      "inventoryFreshness": true
+    }
+  ],
+  "additionalChecks": {
+    "inventoryFresh": true,
+    "finalLint": true,
+    "workingWhitespace": true,
+    "protectedSourceLicenseNoticesLockfileWorkflowUnchanged": true,
+    "staleInventoryRejectedWithoutRewrite": true,
+    "windowsCrlfFreshness": true
+  },
+  "limitations": [
+    "Hosted validation is recorded on the PR for its exact head, separately from these local results.",
+    "Diagnostic success is not component correctness; see published-beta.1.json."
+  ]
+}

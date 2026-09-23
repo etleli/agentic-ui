@@ -12,7 +12,8 @@ Use Node 24.19.0 and npm 11.17.0. Install with `npm ci`, then run
 - `npm run check`: type checking, lint, interaction/workflow/consumer contracts,
   both builds, rich-text security tests, and the real tarball consumer.
 - `npm run pack:check`: rebuild the library and print npm's dry-run file manifest.
-- `npm run validate`: `check`, `pack:check`, and `git diff --check`.
+- `npm run validate`: `check`, `pack:check`, the read-only audit inventory
+  freshness check (`audit:inventory -- --check`), and `git diff --check`.
 
 The existing `test:consumer-package` suite exercises the built library directly.
 `test:tarball` normally packs the build and installs it in a separate temporary

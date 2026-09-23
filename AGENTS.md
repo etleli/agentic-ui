@@ -11,6 +11,9 @@ Read `README.md`, `package.json`, `src/index.ts`,
 `docs/consumer-hardening.md`, and `docs/interaction-contract-matrix.md`.
 For UI composition, also read `docs/ui-generation-rulebook.md` and the relevant
 component's `AGENT.md`. Check `docs/component-roadmap.md` before expanding scope.
+For component audits, read `docs/audit/README.md` and its linked checklist and
+findings. Inventory/source-scan coverage is not behavioral verification; keep
+unfixed-bug diagnostics distinct from required regression validation.
 
 ## Boundaries
 
@@ -31,7 +34,8 @@ component's `AGENT.md`. Check `docs/component-roadmap.md` before expanding scope
 Use Node **24.19.0** and npm **11.17.0**. Run `npm ci`, then `npm run validate`.
 The comprehensive command runs type checking, lint, contract and security tests,
 both builds, a real tarball consumer check, the package dry run, and
-`git diff --check`. Focused commands remain available in `package.json`.
+the audit inventory freshness check and `git diff --check`. Focused commands
+remain available in `package.json`.
 
 Add a focused regression test for a behavior fix or compatibility change. Keep
 existing contract tests meaningful; do not weaken assertions or silently skip
