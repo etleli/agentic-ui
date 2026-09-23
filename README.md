@@ -81,7 +81,7 @@ npm run validate
 
 This runs type checking, lint, interaction and consumer contracts, security tests,
 both builds, an actual tarball installed into a temporary consumer, package dry-run
-inspection, and a whitespace check. The consumer checks ESM/CommonJS imports,
+inspection, audit inventory freshness, and a whitespace check. The consumer checks ESM/CommonJS imports,
 public types, CSS, and packaged agent guides. It requires npm registry access for
 normal consumer dependency resolution and the `tar` command. The consumer's
 build/type-check tools use the repository's verified versions.

@@ -34,7 +34,8 @@ unfixed-bug diagnostics distinct from required regression validation.
 Use Node **24.19.0** and npm **11.17.0**. Run `npm ci`, then `npm run validate`.
 The comprehensive command runs type checking, lint, contract and security tests,
 both builds, a real tarball consumer check, the package dry run, and
-`git diff --check`. Focused commands remain available in `package.json`.
+the audit inventory freshness check and `git diff --check`. Focused commands
+remain available in `package.json`.
 
 Add a focused regression test for a behavior fix or compatibility change. Keep
 existing contract tests meaningful; do not weaken assertions or silently skip

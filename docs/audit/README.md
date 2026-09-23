@@ -134,7 +134,9 @@ does not skip them. Unexpected browser errors/warnings fail the harness and rema
 in its report. If execution is blocked, report `blocked/inconclusive`, not a pass.
 
 Maintain curated review notes/finding associations in `scripts/audit/inventory.mjs`,
-then regenerate the inventory. The source files provide locations; the completed
+then regenerate the inventory. Required `npm run validate` (and therefore CI)
+runs its read-only `--check` mode; it never regenerates the inventory silently.
+The source files provide locations; the completed
 diagnostic report provides runtime confirmation. `--check` detects stale output.
 Do not promote a pattern match to `finding confirmed`. When repairing a finding,
 move the applicable expectation into the normal regression suite and keep the
