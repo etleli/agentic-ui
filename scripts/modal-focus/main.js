@@ -20,6 +20,8 @@ function App() {
   const [mounted, setMounted] = useState(true);
   const [nested, setNested] = useState(Boolean(options.initialNested));
   const [cycle, setCycle] = useState(0);
+  const [independent, setIndependent] = useState(false);
+  api.setIndependent = setIndependent;
   api.setOpen = setOpen;
   api.unmount = () => setMounted(false);
   useEffect(() => {
@@ -33,6 +35,9 @@ function App() {
     options.svgTarget ? h('svg', { id: 'svg-target', tabIndex: 0, role: 'button', 'aria-label': 'Diagram target', width: 120, height: 30 }, h('rect', { width: 120, height: 30, fill: 'gray' })) : null,
     options.disclosure ? h('details', {}, h('summary', { id: 'summary' }, 'Disclosure'), h('button', { id: 'details-button' }, 'Detail action')) : null,
     options.editable ? h('div', { id: 'editable', contentEditable: true, suppressContentEditableWarning: true }, 'Editable text') : null,
+    options.imageMap ? h(React.Fragment, {},
+      h('img', { id: 'map-image', useMap: '#modal-map', alt: 'Synthetic map', width: 120, height: 40, hidden: options.hiddenMap, src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40"><rect width="120" height="40" fill="gray"/></svg>' }),
+      h('map', { name: 'modal-map' }, h('area', { id: 'map-area', shape: 'rect', coords: '0,0,120,40', href: '#synthetic-map', alt: 'Map link' }))) : null,
     options.picker ? h(DatePicker, { ariaLabel: 'Child date picker', value: '2026-09-15', showTodayButton: false }) : null,
     options.radios ? h(React.Fragment, {}, h('input', { id: 'radio-a', type: 'radio', name: 'choice' }), h('input', { id: 'radio-b', type: 'radio', name: 'choice', defaultChecked: true })) : null,
     h('button', { id: 'hidden', style: { display: 'none' } }, 'Hidden'),
@@ -49,6 +54,7 @@ function App() {
     onOpenChange: (value) => { api.requests.push(value); if (!options.decline && !options.uncontrolled) setOpen(value); },
     onCancel: () => api.requests.push('cancel'), onConfirm: () => api.requests.push('confirm'),
   }, body) : null;
-  return options.outerPortal ? createPortal(modal, document.getElementById('portal-host')) : modal;
+  return h(React.Fragment, {}, options.outerPortal ? createPortal(modal, document.getElementById('portal-host')) : modal,
+    h(Modal, { open: independent, title: 'Independent Modal', onOpenChange: setIndependent }, h('input', { 'aria-label': 'Independent field' })));
 }
 createRoot(document.getElementById('root')).render(options.strict ? h(React.StrictMode, {}, h(App)) : h(App));

@@ -49,7 +49,7 @@ const evidence = existsSync(evidencePath) ? JSON.parse(read(evidencePath)) : nul
 const modalEvidencePath = resolve(root, 'docs/audit/evidence/modal-focus-after.json');
 const modalEvidence = existsSync(modalEvidencePath) ? JSON.parse(read(modalEvidencePath)) : null;
 const modalSources = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx', 'src/components/overlays/Modal/Modal.css'];
-const modalFixed = modalEvidence?.mode === 'candidate' && modalEvidence.passed === true && modalEvidence.summary?.passed >= 70
+const modalFixed = modalEvidence?.mode === 'candidate' && modalEvidence.passed === true && modalEvidence.summary?.passed >= 76
   && modalSources.every((file) => modalEvidence.sourceHashes?.[file] === createHash('sha256').update(read(resolve(root, file)).replaceAll('\r\n', '\n')).digest('hex'));
 // Curated review evidence; the mechanical scan below does not grant this status.
 const reviewed = new Set(['DataTable', 'DatePicker', 'DateRangePicker', 'Tooltip', 'Modal', 'SidebarNav', 'DateTimePicker', 'DatasetSummary', 'FieldProfile', 'AppShell']);

@@ -158,5 +158,65 @@
     ]
   },
   "correctedEvidence": "modal-focus-after.json",
-  "note": "All 70 cases pass after the corrections; hosted validation and re-review are recorded in PR #7."
+  "note": "All 76 cases pass after the corrections; hosted validation and re-review are recorded in PR #7.",
+  "secondReview": {
+    "reviewedHead": "59ea6f4d6fecdfbc98b8e74a27e476e0147692d0",
+    "comments": [
+      "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080622881",
+      "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080622887"
+    ],
+    "sourceHashes": {
+      "src/components/overlays/Modal/Modal.tsx": "6b3b681355c7dfc484a1b2c6c8338a41e817e6e44799031cd957ecdcf3d3eeaa",
+      "src/components/overlays/Modal/Modal.focus.ts": "5acf7100333bad8d79f4cf88a5084637e7d0beff128738f03519331dd8dfe48d",
+      "src/components/overlays/overlayPortal.tsx": "1bb864b7b2a47bd7a339c7db83f10fa09874f2d7a238582f9e63329d69e435cf",
+      "src/components/overlays/Modal/Modal.css": "a8821634c415dd449cda71f376d523282d368aac2d1912dd8dd36d70ba554d08"
+    },
+    "summary": {
+      "cases": 76,
+      "passed": 72,
+      "failed": 4
+    },
+    "failedCases": [
+      {
+        "name": "image-map link follows associated image visibility (visible) (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'map-area'\n"
+      },
+      {
+        "name": "later independent Modal is above an existing nested Modal (normal)",
+        "passed": false,
+        "observation": {
+          "focused": true
+        },
+        "failure": "locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Independent Modal', exact: true }).getByRole('button', { name: 'Close dialog' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close dialog\" class=\"modal-overlay__icon-button\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    7 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+      },
+      {
+        "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'map-area'\n"
+      },
+      {
+        "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focused": true
+        },
+        "failure": "locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Independent Modal', exact: true }).getByRole('button', { name: 'Close dialog' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close dialog\" class=\"modal-overlay__icon-button\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    7 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+      }
+    ]
+  }
 }

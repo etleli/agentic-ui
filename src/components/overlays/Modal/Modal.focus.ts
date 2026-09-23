@@ -13,20 +13,28 @@ function isFocusTarget(element: Element | null, document: Document): element is 
   return element instanceof view.HTMLElement || element instanceof view.SVGElement;
 }
 
-function available(element: FocusTarget) {
+function available(element: FocusTarget): boolean {
   for (let parent = element.parentElement; parent; parent = parent.parentElement) {
     if (parent.localName === 'details' && !parent.hasAttribute('open')) {
       const summary = [...parent.children].find((child) => child.localName === 'summary');
       if (!summary?.contains(element)) return false;
     }
   }
+  const map = element.localName === 'area' ? element.closest('map') : null;
+  const mapName = map?.getAttribute('name') || map?.id;
+  // Areas are focusable through an associated image despite having no CSS box.
+  const visibleBox = element.localName === 'area'
+    ? Boolean(mapName && [...element.ownerDocument.querySelectorAll<HTMLImageElement>('img[usemap]')]
+      .some((image) => image.getAttribute('usemap') === `#${mapName}` && available(image)))
+    : element.getClientRects().length > 0;
   return element.isConnected && !element.closest('[hidden],[inert]') && !element.matches(':disabled')
-    && element.getClientRects().length > 0
+    && visibleBox
     && !['hidden', 'collapse'].includes(element.ownerDocument.defaultView!.getComputedStyle(element).visibility);
 }
 
 function tabOrder(element: FocusTarget) {
   if (!element.hasAttribute('tabindex')) {
+    if (['a', 'area'].includes(element.localName) && !element.hasAttribute('href')) return -1;
     if (element.localName === 'summary' && (element.parentElement?.localName !== 'details'
       || [...element.parentElement.children].find((child) => child.localName === 'summary') !== element)) return -1;
     if (element.localName === 'details' && [...element.children].some((child) => child.localName === 'summary')) return -1;
@@ -66,17 +74,25 @@ function focusInside(entry: FocusEntry) {
   focus(next);
 }
 
+function updateLayers(stack: FocusEntry[]) {
+  stack.forEach((entry, index) => entry.dialog.parentElement?.style.setProperty('--modal-focus-layer', String(index)));
+}
+
 function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, parent: ModalFocusScope | null, returnTarget: Element | null) {
   const document = dialog.ownerDocument;
   const stack = activeModals.get(document) ?? [];
   activeModals.set(document, stack);
   const entry: FocusEntry = { dialog, regions, parent, lastFocused: null, lastInDialog: null, returnTargets: [returnTarget] };
+  const overlay = dialog.parentElement;
+  const previousLayer = overlay?.style.getPropertyValue('--modal-focus-layer');
+  const previousPriority = overlay?.style.getPropertyPriority('--modal-focus-layer');
   const descendantIndex = stack.findIndex((active) => {
     for (let ancestor = active.parent; ancestor; ancestor = ancestor.parent) if (ancestor.regions === regions) return true;
     return false;
   });
   // Child effects can register first. Logical ancestry, not effect timing, sets depth.
   stack.splice(descendantIndex < 0 ? stack.length : descendantIndex, 0, entry);
+  updateLayers(stack);
   const isTop = () => stack[stack.length - 1] === entry;
   if (owns(entry, document.activeElement) && available(document.activeElement)) entry.lastFocused = document.activeElement;
   else if (isTop()) focusInside(entry);
@@ -117,6 +133,9 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, parent: Mo
     document.removeEventListener('focusin', onFocusIn);
     const wasTop = isTop();
     stack.splice(stack.indexOf(entry), 1);
+    if (previousLayer) overlay?.style.setProperty('--modal-focus-layer', previousLayer, previousPriority);
+    else overlay?.style.removeProperty('--modal-focus-layer');
+    updateLayers(stack);
     // If an outer modal closes first, retain its opener as a fallback for the
     // remaining child. Keep the child's own opener first (including StrictMode replay).
     for (const active of stack) {

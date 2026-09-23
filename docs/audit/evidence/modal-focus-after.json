@@ -1,7 +1,7 @@
 {
   "mode": "candidate",
   "packageVersion": "0.1.0-beta.1",
-  "integrity": "sha512-vDj+P4zqc3NFDHLynoKr1xdnR1k/V6YRBXKdAWalLW9pAjmrca4GJJhxFzUKyy0gePWhqqm5BySIBJyfyZVBsw==",
+  "integrity": "sha512-NUeFkHA6J3+12TaeUAYOhhdfnkUCOE8bpN+4UqHJSpfglITZbcUnn+WzjjzpVBXWuZpwKjpPBm9pXNr8Bkxj6w==",
   "node": "v24.19.0",
   "react": "19.3.0",
   "playwright": "1.63.0",
@@ -265,6 +265,35 @@
           "label": null,
           "inside": true
         }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (normal)",
+      "passed": true,
+      "observation": {
+        "focused": true
       }
     },
     {
@@ -625,6 +654,35 @@
       }
     },
     {
+      "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focused": true
+      }
+    },
+    {
       "name": "positive tab order (StrictMode)",
       "passed": true,
       "observation": {
@@ -726,14 +784,14 @@
   "browser": "153.0.8010.12",
   "passed": true,
   "summary": {
-    "cases": 70,
-    "passed": 70,
+    "cases": 76,
+    "passed": 76,
     "failed": 0
   },
   "sourceHashes": {
-    "src/components/overlays/Modal/Modal.tsx": "6b3b681355c7dfc484a1b2c6c8338a41e817e6e44799031cd957ecdcf3d3eeaa",
-    "src/components/overlays/Modal/Modal.focus.ts": "5acf7100333bad8d79f4cf88a5084637e7d0beff128738f03519331dd8dfe48d",
+    "src/components/overlays/Modal/Modal.tsx": "6ede081529379111cdfbb79cb86af862b93a8123c25bd917499a3744cb308947",
+    "src/components/overlays/Modal/Modal.focus.ts": "2793e8c606935610e7df1c3670a02f03ec71c885b1f81c7bf3c6fbd580660045",
     "src/components/overlays/overlayPortal.tsx": "1bb864b7b2a47bd7a339c7db83f10fa09874f2d7a238582f9e63329d69e435cf",
-    "src/components/overlays/Modal/Modal.css": "a8821634c415dd449cda71f376d523282d368aac2d1912dd8dd36d70ba554d08"
+    "src/components/overlays/Modal/Modal.css": "043e57f780cc392a192b81edfdfb71f0e11af5d2092a8e1a2b9d70f118cca770"
   }
 }

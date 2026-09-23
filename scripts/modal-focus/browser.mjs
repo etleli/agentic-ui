@@ -158,6 +158,19 @@ try {
     await check('native editable host participates in Tab order', { editable: true }, async (page, o) => {
       await page.locator('#inside').focus(); await page.keyboard.press('Tab'); o.focus = await active(page); assert.equal(o.focus.id, 'editable');
     });
+    for (const hiddenMap of [false, true]) await check(`image-map link follows associated image visibility (${hiddenMap ? 'hidden' : 'visible'})`, { imageMap: true, hiddenMap }, async (page, o) => {
+      await page.locator('#inside').focus(); await page.keyboard.press('Tab'); o.focus = await active(page);
+      if (hiddenMap) assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Cancel');
+      else assert.equal(o.focus.id, 'map-area');
+    });
+    await check('later independent Modal is above an existing nested Modal', { nested: true }, async (page, o) => {
+      await page.locator('#nested-opener').click(); const child = page.getByRole('dialog', { name: 'Nested Modal', exact: true }); await child.waitFor();
+      await page.evaluate(() => window.modalTest.setIndependent(true));
+      const independent = page.getByRole('dialog', { name: 'Independent Modal', exact: true }); await independent.waitFor();
+      o.focused = await independent.evaluate((element) => element.contains(document.activeElement)); assert.equal(o.focused, true);
+      await independent.getByRole('button', { name: 'Close dialog' }).click(); await independent.waitFor({ state: 'hidden' });
+      assert.equal(await child.evaluate((element) => element.contains(document.activeElement)), true);
+    });
     await check('positive tab order', { positive: true }, async (page, o) => {
       o.initial = await active(page); assert.equal(o.initial.id, 'inside');
       await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'field');

@@ -273,6 +273,36 @@
       }
     },
     {
+      "name": "image-map link follows associated image visibility (visible) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (normal)",
+      "passed": false,
+      "observation": {
+        "focused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
       "name": "positive tab order (normal)",
       "passed": false,
       "observation": {
@@ -641,6 +671,36 @@
       }
     },
     {
+      "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "map-area",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focused": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
       "name": "positive tab order (StrictMode)",
       "passed": false,
       "observation": {
@@ -748,8 +808,8 @@
   "browser": "153.0.8010.12",
   "passed": false,
   "summary": {
-    "cases": 70,
-    "passed": 18,
-    "failed": 52
+    "cases": 76,
+    "passed": 22,
+    "failed": 54
   }
 }

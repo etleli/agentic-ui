@@ -3,8 +3,9 @@
 This repairs only audit finding [F7](audit/findings.md#f7--modal-keyboard-focus).
 The published `0.1.0-beta.1` remains unfixed. Current source has the repair;
 no version or published artifact changes here. Modal props, exports, sizing and animation are unchanged. The sole style correction
-raises nested Modal layers above their ancestors so the active dialog and its focus
-are visible; a standalone Modal retains its existing z-order.
+orders Modal layers with the active focus stack, preserving ancestry while placing
+a later independent Modal above older nested layers. The active dialog stays visible;
+a standalone Modal retains its existing z-order.
 
 ## Focus behavior
 
@@ -16,7 +17,7 @@ are visible; a standalone Modal retains its existing z-order.
   Targets include native keyboard-focusable HTML and SVG elements. SVG openers
   also receive restored focus. Targets are recomputed per keypress, including native summary/editable stops, closed details, native disabled fieldsets,
   hidden/inert ancestors, visibility, negative tab indexes, positive tab ordering
-  and radio-group stops. A single target cycles to itself. When targets disappear,
+  and radio-group stops. Image-map links use their associated image for visibility. A single target cycles to itself. When targets disappear,
   the dialog is the safe fallback. Widget handlers that consume Tab retain their
   interaction; escaped focus is corrected after the commit.
 - Explainably unavailable controls remain focusable according to the existing
@@ -27,7 +28,8 @@ are visible; a standalone Modal retains its existing z-order.
   immediately to a valid Modal target (preferring the last target in the dialog).
   A `display:contents` ownership wrapper is used
   only under a Modal; portals outside that context keep their original DOM path.
-- A nested Modal owns focus while active, including when both levels first mount open. Closing it restores its opener inside
+- A nested Modal owns focus while active, including when both levels first mount open.
+  A later independent Modal becomes the active and visibly topmost layer. Closing it restores its opener inside
   the outer Modal. If the outer Modal closes first, its opener remains a fallback
   for the child cleanup. Hidden/inert Modal ancestors deactivate descendant focus
   scopes. Closed overlays and their owned portals become inert during exit motion.
@@ -53,7 +55,7 @@ and CSS. The source fingerprints are checked before/after execution when a repor
 is saved. The installed package's integrity is recorded separately from the
 published baseline. Nothing is published or staged.
 
-The 70 cases run in normal rendering and StrictMode. They cover initial safe focus,
+The 76 cases run in normal rendering and StrictMode. They cover initial safe focus,
 explicit child autofocus, forward/backward containment, single/no targets, dynamic
 disabled/hidden targets, Escape/close/parent-driven restoration, removed/disabled/
 hidden/inert openers, declining controlled parents, contained presentation inside
