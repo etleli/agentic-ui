@@ -1,0 +1,162 @@
+{
+  "reviewedHead": "9ef638a00c573c46a566c63c900cf16c44259733",
+  "reviewComments": [
+    "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080400593",
+    "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080400601",
+    "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080400609"
+  ],
+  "manualSvgProbe": {
+    "summary": {
+      "cases": 60,
+      "passed": 56,
+      "failed": 4
+    },
+    "failedCases": [
+      {
+        "name": "focusable SVG remains a valid modal Tab target (normal)",
+        "passed": false,
+        "observation": {
+          "focus": "inside"
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'inside'\n- 'svg-target'\n"
+      },
+      {
+        "name": "focusable SVG opener receives restored focus (normal)",
+        "passed": false,
+        "observation": {
+          "focus": null
+        },
+        "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
+      },
+      {
+        "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": "inside"
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'inside'\n- 'svg-target'\n"
+      },
+      {
+        "name": "focusable SVG opener receives restored focus (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": null
+        },
+        "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
+      }
+    ]
+  },
+  "reviewProbe": {
+    "basis": "After the local SVG follow-up, before the three automated-review corrections",
+    "sourceHashes": {
+      "src/components/overlays/Modal/Modal.tsx": "0d491a16ab9170ee9e7f9385208bdc3746cade23d417845080ba998db2b2e5e6",
+      "src/components/overlays/Modal/Modal.focus.ts": "6ec69cef72f8bf3eb191bf7a3a19a46fae5fdcda66703e160ab08a95147f334b",
+      "src/components/overlays/overlayPortal.tsx": "d42f7afc13374040e78bbff3ee429ab6c610f9c6e9e2508ddb032789fbb8d439"
+    },
+    "summary": {
+      "cases": 70,
+      "passed": 60,
+      "failed": 10
+    },
+    "failedCases": [
+      {
+        "name": "focused child portal removal re-homes focus immediately (normal)",
+        "passed": false,
+        "observation": {
+          "inside": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "initially open nested Modal owns Tab (controlled) (normal)",
+        "passed": false,
+        "observation": {
+          "insideChild": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+        "passed": false,
+        "observation": {
+          "insideChild": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "native summary and closed-details tab order (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "inside",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'inside'\n- 'summary'\n"
+      },
+      {
+        "name": "native editable host participates in Tab order (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'editable'\n"
+      },
+      {
+        "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+        "passed": false,
+        "observation": {
+          "inside": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "insideChild": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "insideChild": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "native summary and closed-details tab order (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "inside",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'inside'\n- 'summary'\n"
+      },
+      {
+        "name": "native editable host participates in Tab order (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": true
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'editable'\n"
+      }
+    ]
+  },
+  "correctedEvidence": "modal-focus-after.json",
+  "note": "All 70 cases pass after the corrections; hosted validation and re-review are recorded in PR #7."
+}

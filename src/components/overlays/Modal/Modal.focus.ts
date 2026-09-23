@@ -1,60 +1,90 @@
 import { createContext, useLayoutEffect, useRef } from 'react';
 
 // Private ownership information for library portals rendered inside a Modal.
-export const ModalFocusScopeContext = createContext<{ regions: Set<HTMLElement>; open: boolean } | null>(null);
+type ModalFocusScope = { regions: Set<HTMLElement>; open: boolean; parent: ModalFocusScope | null };
+export const ModalFocusScopeContext = createContext<ModalFocusScope | null>(null);
 
-type FocusEntry = { dialog: HTMLElement; regions: Set<HTMLElement>; lastFocused: HTMLElement | null; returnTargets: (Element | null)[] };
+type FocusTarget = HTMLElement | SVGElement;
+type FocusEntry = { dialog: HTMLElement; regions: Set<HTMLElement>; parent: ModalFocusScope | null; lastFocused: FocusTarget | null; lastInDialog: FocusTarget | null; returnTargets: (Element | null)[] };
 const activeModals = new WeakMap<Document, FocusEntry[]>();
-const targetSelector = 'a[href],area[href],button,input,select,textarea,iframe,object,embed,[tabindex],[contenteditable]';
 
-function available(element: HTMLElement) {
+function isFocusTarget(element: Element | null, document: Document): element is FocusTarget {
+  const view = document.defaultView!;
+  return element instanceof view.HTMLElement || element instanceof view.SVGElement;
+}
+
+function available(element: FocusTarget) {
+  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+    if (parent.localName === 'details' && !parent.hasAttribute('open')) {
+      const summary = [...parent.children].find((child) => child.localName === 'summary');
+      if (!summary?.contains(element)) return false;
+    }
+  }
   return element.isConnected && !element.closest('[hidden],[inert]') && !element.matches(':disabled')
     && element.getClientRects().length > 0
     && !['hidden', 'collapse'].includes(element.ownerDocument.defaultView!.getComputedStyle(element).visibility);
 }
 
-function owns(entry: FocusEntry, element: Element | null): element is HTMLElement {
-  return element instanceof entry.dialog.ownerDocument.defaultView!.HTMLElement
+function tabOrder(element: FocusTarget) {
+  if (!element.hasAttribute('tabindex')) {
+    if (element.localName === 'summary' && (element.parentElement?.localName !== 'details'
+      || [...element.parentElement.children].find((child) => child.localName === 'summary') !== element)) return -1;
+    if (element.localName === 'details' && [...element.children].some((child) => child.localName === 'summary')) return -1;
+    // Chromium exposes -1 for some native sequential stops without an explicit attribute.
+    if (element.matches('audio[controls],video[controls],details')
+      || element instanceof element.ownerDocument.defaultView!.HTMLElement && element.isContentEditable && !element.parentElement?.isContentEditable) return 0;
+  }
+  return element.tabIndex;
+}
+
+function owns(entry: FocusEntry, element: Element | null): element is FocusTarget {
+  return isFocusTarget(element, entry.dialog.ownerDocument)
     && (entry.dialog.contains(element) || [...entry.regions].some((region) => region.contains(element)));
 }
 
 function targets(entry: FocusEntry) {
-  const candidates = [...new Set([entry.dialog, ...entry.regions].flatMap((region) => [...region.querySelectorAll<HTMLElement>(targetSelector)]))]
-    .filter((element) => element.tabIndex >= 0 && available(element));
+  const candidates = [...new Set([entry.dialog, ...entry.regions].flatMap((region) => [...region.querySelectorAll('*')]))]
+    .filter((element): element is FocusTarget => isFocusTarget(element, entry.dialog.ownerDocument) && tabOrder(element) >= 0 && available(element));
   // A radio group has one sequential keyboard stop, just as native Tab does.
   return candidates.filter((element) => {
     if (!(element instanceof element.ownerDocument.defaultView!.HTMLInputElement) || element.type !== 'radio' || !element.name) return true;
     const group = candidates.filter((candidate): candidate is HTMLInputElement => candidate instanceof element.ownerDocument.defaultView!.HTMLInputElement
       && candidate.type === 'radio' && candidate.name === element.name && candidate.form === element.form);
     return element === (group.find((radio) => radio.checked) ?? group[0]);
-  }).sort((first, second) => (first.tabIndex > 0 ? first.tabIndex : Infinity) - (second.tabIndex > 0 ? second.tabIndex : Infinity));
+  }).sort((first, second) => (tabOrder(first) > 0 ? tabOrder(first) : Infinity) - (tabOrder(second) > 0 ? tabOrder(second) : Infinity));
 }
 
-function focus(element: HTMLElement) {
+function focus(element: FocusTarget) {
   // Preserve native focus scrolling so long dialog content stays keyboard-visible.
   if (element.ownerDocument.activeElement !== element) element.focus();
 }
 
 function focusInside(entry: FocusEntry) {
   const next = entry.lastFocused && available(entry.lastFocused) && owns(entry, entry.lastFocused)
-    ? entry.lastFocused : targets(entry)[0] ?? entry.dialog;
+    ? entry.lastFocused : entry.lastInDialog && available(entry.lastInDialog) && entry.dialog.contains(entry.lastInDialog)
+      ? entry.lastInDialog : targets(entry)[0] ?? entry.dialog;
   focus(next);
 }
 
-function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, returnTarget: Element | null) {
+function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, parent: ModalFocusScope | null, returnTarget: Element | null) {
   const document = dialog.ownerDocument;
   const stack = activeModals.get(document) ?? [];
   activeModals.set(document, stack);
-  const entry: FocusEntry = { dialog, regions, lastFocused: null, returnTargets: [returnTarget] };
-  stack.push(entry);
+  const entry: FocusEntry = { dialog, regions, parent, lastFocused: null, lastInDialog: null, returnTargets: [returnTarget] };
+  const descendantIndex = stack.findIndex((active) => {
+    for (let ancestor = active.parent; ancestor; ancestor = ancestor.parent) if (ancestor.regions === regions) return true;
+    return false;
+  });
+  // Child effects can register first. Logical ancestry, not effect timing, sets depth.
+  stack.splice(descendantIndex < 0 ? stack.length : descendantIndex, 0, entry);
   const isTop = () => stack[stack.length - 1] === entry;
   if (owns(entry, document.activeElement) && available(document.activeElement)) entry.lastFocused = document.activeElement;
-  else focusInside(entry);
+  else if (isTop()) focusInside(entry);
 
   function onKeyDown(event: KeyboardEvent) {
     if (event.key !== 'Tab' || event.defaultPrevented || !isTop()) return;
     const elements = targets(entry);
-    const index = elements.indexOf(document.activeElement as HTMLElement);
+    const index = elements.indexOf(document.activeElement as FocusTarget);
     const next = elements.length === 0 ? dialog
       : elements[(index + (event.shiftKey ? -1 : 1) + elements.length) % elements.length];
     event.preventDefault();
@@ -63,11 +93,20 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, returnTarg
   }
 
   function onFocusIn() {
+    if (!isTop()) return;
+    if (owns(entry, document.activeElement) && available(document.activeElement)) {
+      entry.lastFocused = document.activeElement;
+      if (dialog.contains(document.activeElement)) entry.lastInDialog = document.activeElement;
+      return;
+    }
     // A portalled child can autofocus before its ownership ref is committed.
     // Defer the outside-focus check until all refs in that commit are attached.
     queueMicrotask(() => {
       if (!isTop()) return;
-      if (owns(entry, document.activeElement) && available(document.activeElement)) entry.lastFocused = document.activeElement;
+      if (owns(entry, document.activeElement) && available(document.activeElement)) {
+        entry.lastFocused = document.activeElement;
+        if (dialog.contains(document.activeElement)) entry.lastInDialog = document.activeElement;
+      }
       else focusInside(entry);
     });
   }
@@ -89,7 +128,7 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, returnTarg
       // StrictMode replay or an immediate reopening still owns this dialog.
       if (!wasTop || stack.some((active) => active.dialog === dialog)) return;
       const current = stack[stack.length - 1];
-      const target = entry.returnTargets.find((candidate): candidate is HTMLElement => candidate instanceof document.defaultView!.HTMLElement
+      const target = entry.returnTargets.find((candidate): candidate is FocusTarget => isFocusTarget(candidate, document)
         && available(candidate) && (!current || owns(current, candidate)));
       if (target) focus(target);
       else if (current) focusInside(current);
@@ -97,7 +136,18 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, returnTarg
   };
 }
 
-export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regions: Set<HTMLElement>) {
+export function removeModalFocusRegion(regions: Set<HTMLElement>, region: HTMLElement) {
+  const document = region.ownerDocument;
+  const stack = activeModals.get(document);
+  const entry = stack?.[stack.length - 1];
+  const lostFocus = entry?.regions === regions && region.contains(document.activeElement);
+  regions.delete(region);
+  if (lostFocus) queueMicrotask(() => {
+    if (stack?.[stack.length - 1] === entry && (!owns(entry, document.activeElement) || !available(document.activeElement))) focusInside(entry);
+  });
+}
+
+export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regions: Set<HTMLElement>, parent: ModalFocusScope | null) {
   const wasOpen = useRef(false);
   const returnTarget = useRef<Element | null>(null);
   // Capture before React commits descendant autoFocus, including defaultOpen mounts.
@@ -108,6 +158,6 @@ export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regio
   }, [beforeCommit, isOpen]);
   useLayoutEffect(() => {
     if (!isOpen || !dialog) return undefined;
-    return containFocus(dialog, regions, returnTarget.current);
-  }, [dialog, isOpen, regions]);
+    return containFocus(dialog, regions, parent, returnTarget.current);
+  }, [dialog, isOpen, regions, parent]);
 }

@@ -1,5 +1,5 @@
 .modal-overlay {
-  z-index: var(--z-overlay-modal, 2147483100);
+  z-index: calc(var(--z-overlay-modal, 2147483100) + var(--modal-focus-depth, 0));
   display: grid;
   place-items: center;
   padding: var(--space-5);

@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-23T08:11:15.818Z",
+  "date": "2026-09-23T08:42:11.997Z",
   "base": "408e94f5137b726beeda7c08cedab1edcb15591d",
   "node": "24.19.0",
   "npm": "11.17.0",
@@ -13,13 +13,13 @@
   },
   "chromium": {
     "before": {
-      "cases": 56,
-      "passed": 12,
-      "failed": 44
+      "cases": 70,
+      "passed": 18,
+      "failed": 52
     },
     "after": {
-      "cases": 56,
-      "passed": 56,
+      "cases": 70,
+      "passed": 70,
       "failed": 0
     },
     "browser": "153.0.8010.12",
@@ -46,5 +46,7 @@
   "inventoryFreshness": true,
   "packageMetadataAndDependenciesUnchanged": true,
   "existingBuildWarning": true,
-  "hostedEvidence": "Recorded in the repair PR for its exact head, separately from this local evidence."
+  "hostedEvidence": "Recorded in the repair PR for its exact head, separately from this local evidence.",
+  "reviewCorrections": "Three automated-review findings reproduced in 10 new cases, then fixed; SVG targets covered separately.",
+  "styleException": "Nested Modal z-order increases with ancestry depth to keep the focused child visible; standalone z-order and all sizing/colors/spacing/animation are unchanged."
 }

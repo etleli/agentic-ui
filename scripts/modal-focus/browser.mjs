@@ -136,6 +136,28 @@ try {
       o.focus = await active(page); assert.equal(o.focus.label, '2026-09-16');
       await popup.locator('button:enabled').last().focus(); await page.keyboard.press('Tab'); assert.equal((await active(page)).label, 'Close dialog');
     });
+    await check('focused child portal removal re-homes focus immediately', { picker: true }, async (page, o) => {
+      await page.getByRole('button', { name: 'Child date picker', exact: true }).click();
+      const popup = page.getByRole('dialog', { name: 'Child date picker', exact: true }); await popup.waitFor();
+      await popup.getByRole('button', { name: '2026-09-16', exact: true }).focus(); await page.keyboard.press('Enter');
+      await popup.waitFor({ state: 'hidden' }); await page.waitForTimeout(30);
+      o.inside = await dialog(page).evaluate((element) => element.contains(document.activeElement)); assert.equal(o.inside, true);
+    });
+    for (const uncontrolled of [false, true]) await check(`initially open nested Modal owns Tab (${uncontrolled ? 'defaultOpen' : 'controlled'})`, { initialNested: true, uncontrolled }, async (page, o) => {
+      const child = page.getByRole('dialog', { name: 'Nested Modal', exact: true }); await child.waitFor();
+      await child.getByRole('button', { name: 'Confirm', exact: true }).focus(); await page.keyboard.press('Tab');
+      o.insideChild = await child.evaluate((element) => element.contains(document.activeElement)); assert.equal(o.insideChild, true);
+      await child.getByRole('button', { name: 'Close dialog' }).click(); await child.waitFor({ state: 'hidden' });
+      assert.equal(await dialog(page).evaluate((element) => element.contains(document.activeElement)), true);
+    });
+    await check('native summary and closed-details tab order', { disclosure: true }, async (page, o) => {
+      await page.locator('#inside').focus(); await page.keyboard.press('Tab'); o.focus = await active(page); assert.equal(o.focus.id, 'summary');
+      await page.keyboard.press('Tab'); assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Cancel');
+      await page.locator('#summary').focus(); await page.keyboard.press('Enter'); await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'details-button');
+    });
+    await check('native editable host participates in Tab order', { editable: true }, async (page, o) => {
+      await page.locator('#inside').focus(); await page.keyboard.press('Tab'); o.focus = await active(page); assert.equal(o.focus.id, 'editable');
+    });
     await check('positive tab order', { positive: true }, async (page, o) => {
       o.initial = await active(page); assert.equal(o.initial.id, 'inside');
       await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'field');
@@ -150,6 +172,14 @@ try {
       await page.locator('#field').focus(); await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'inside');
       o.dialog = await dialog(page).boundingBox(); o.target = await page.locator('#inside').boundingBox();
       assert.ok(o.target.y >= o.dialog.y && o.target.y + o.target.height <= o.dialog.y + o.dialog.height, 'Focused control must be visible within the scrolled dialog.');
+    });
+    await check('focusable SVG remains a valid modal Tab target', { svgTarget: true }, async (page, o) => {
+      await page.locator('#inside').focus(); await page.keyboard.press('Tab'); await page.waitForTimeout(30);
+      o.focus = await page.evaluate(() => document.activeElement.getAttribute('id')); assert.equal(o.focus, 'svg-target');
+    });
+    await check('focusable SVG opener receives restored focus', { svgOpener: true }, async (page, o) => {
+      await page.locator('#field').focus(); await page.keyboard.press('Escape'); await closed(page);
+      o.focus = await page.evaluate(() => document.activeElement.getAttribute('id')); assert.equal(o.focus, 'opener');
     });
     await check('closing animation is not keyboard interactive', { motion: true }, async (page, o) => {
       await page.locator('#field').focus(); await page.evaluate(() => window.modalTest.setOpen(false));

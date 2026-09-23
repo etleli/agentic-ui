@@ -122,8 +122,8 @@ values, bounds, keyboard and parent updates while disabled/read-only.
 
 ## F7 — Modal keyboard focus
 
-**Current source: fixed**, after all 56 permanent Chromium cases passed in normal
-rendering and StrictMode. The identical suite failed 44 of 56 cases against the
+**Current source: fixed**, after all 70 permanent Chromium cases passed in normal
+rendering and StrictMode. The identical suite failed 52 of 70 cases against the
 published beta, without browser warnings/errors in either run. See the
 [focus contract and evidence](../modal-focus-contract.md). The observations below
 describe the unchanged published package.

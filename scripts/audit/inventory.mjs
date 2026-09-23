@@ -48,8 +48,8 @@ const evidencePath = resolve(root, 'docs/audit/evidence/published-beta.1.json');
 const evidence = existsSync(evidencePath) ? JSON.parse(read(evidencePath)) : null;
 const modalEvidencePath = resolve(root, 'docs/audit/evidence/modal-focus-after.json');
 const modalEvidence = existsSync(modalEvidencePath) ? JSON.parse(read(modalEvidencePath)) : null;
-const modalSources = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx'];
-const modalFixed = modalEvidence?.mode === 'candidate' && modalEvidence.passed === true && modalEvidence.summary?.passed >= 56
+const modalSources = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx', 'src/components/overlays/Modal/Modal.css'];
+const modalFixed = modalEvidence?.mode === 'candidate' && modalEvidence.passed === true && modalEvidence.summary?.passed >= 70
   && modalSources.every((file) => modalEvidence.sourceHashes?.[file] === createHash('sha256').update(read(resolve(root, file)).replaceAll('\r\n', '\n')).digest('hex'));
 // Curated review evidence; the mechanical scan below does not grant this status.
 const reviewed = new Set(['DataTable', 'DatePicker', 'DateRangePicker', 'Tooltip', 'Modal', 'SidebarNav', 'DateTimePicker', 'DatasetSummary', 'FieldProfile', 'AppShell']);
@@ -113,7 +113,7 @@ for (const exported of exports) {
   const baselineProtection = ['FilePicker', 'SplitPane', 'ResizablePanel'].includes(name);
   components.push({
     component: name, group: locations[0].split('/')[2], implementation: locations,
-    ...(name === 'Modal' ? { supportingImplementation: modalSources.slice(1), findingStatus: { F7: modalFixed ? 'fixed in current source; published beta remains affected' : 'confirmed/unfixed' } } : {}),
+    ...(name === 'Modal' ? { supportingImplementation: modalSources.slice(1, 3), findingStatus: { F7: modalFixed ? 'fixed in current source; published beta remains affected' : 'confirmed/unfixed' } } : {}),
     styles: styles.map(rel), styleDelegation, types: [...new Set(typeLocations)],
     previews: previews.filter((p) => p.name === name),
     examples: [...new Set([...neighbors.filter((f) => /\.examples\./.test(f)).map((f) => rel(resolve(folder, f))), ...(registryExampleSources.get(`${name}Example`) ?? [])])],

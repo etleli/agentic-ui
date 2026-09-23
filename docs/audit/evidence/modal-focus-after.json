@@ -1,7 +1,7 @@
 {
   "mode": "candidate",
   "packageVersion": "0.1.0-beta.1",
-  "integrity": "sha512-Z3jGpZmW8Ahq9cI2siEc399HrGPl8QQ8P1IHp3sfT2/HHFqnvuf7QLoYyoHOI36ktaSlWOmJuqkiQBKbwUulaw==",
+  "integrity": "sha512-vDj+P4zqc3NFDHLynoKr1xdnR1k/V6YRBXKdAWalLW9pAjmrca4GJJhxFzUKyy0gePWhqqm5BySIBJyfyZVBsw==",
   "node": "v24.19.0",
   "react": "19.3.0",
   "playwright": "1.63.0",
@@ -225,6 +225,49 @@
       }
     },
     {
+      "name": "focused child portal removal re-homes focus immediately (normal)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (normal)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "native summary and closed-details tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
       "name": "positive tab order (normal)",
       "passed": true,
       "observation": {
@@ -262,6 +305,20 @@
           "width": 386,
           "height": 26
         }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "opener"
       }
     },
     {
@@ -525,6 +582,49 @@
       }
     },
     {
+      "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+      "passed": true,
+      "observation": {
+        "inside": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "insideChild": true
+      }
+    },
+    {
+      "name": "native summary and closed-details tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
       "name": "positive tab order (StrictMode)",
       "passed": true,
       "observation": {
@@ -562,6 +662,20 @@
           "width": 386,
           "height": 26
         }
+      }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "opener"
       }
     },
     {
@@ -612,13 +726,14 @@
   "browser": "153.0.8010.12",
   "passed": true,
   "summary": {
-    "cases": 56,
-    "passed": 56,
+    "cases": 70,
+    "passed": 70,
     "failed": 0
   },
   "sourceHashes": {
-    "src/components/overlays/Modal/Modal.tsx": "0d491a16ab9170ee9e7f9385208bdc3746cade23d417845080ba998db2b2e5e6",
-    "src/components/overlays/Modal/Modal.focus.ts": "068e5d6b7432ee621ab7d5800b316b15bd1a6770692ac72e9a6e6c4320490b71",
-    "src/components/overlays/overlayPortal.tsx": "d42f7afc13374040e78bbff3ee429ab6c610f9c6e9e2508ddb032789fbb8d439"
+    "src/components/overlays/Modal/Modal.tsx": "6b3b681355c7dfc484a1b2c6c8338a41e817e6e44799031cd957ecdcf3d3eeaa",
+    "src/components/overlays/Modal/Modal.focus.ts": "5acf7100333bad8d79f4cf88a5084637e7d0beff128738f03519331dd8dfe48d",
+    "src/components/overlays/overlayPortal.tsx": "1bb864b7b2a47bd7a339c7db83f10fa09874f2d7a238582f9e63329d69e435cf",
+    "src/components/overlays/Modal/Modal.css": "a8821634c415dd449cda71f376d523282d368aac2d1912dd8dd36d70ba554d08"
   }
 }

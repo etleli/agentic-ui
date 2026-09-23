@@ -227,6 +227,52 @@
       "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
     },
     {
+      "name": "focused child portal removal re-homes focus immediately (normal)",
+      "passed": false,
+      "observation": {
+        "inside": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (normal)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "native summary and closed-details tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
       "name": "positive tab order (normal)",
       "passed": false,
       "observation": {
@@ -266,6 +312,21 @@
           "height": 26
         }
       }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (normal)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (normal)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
     },
     {
       "name": "closing animation is not keyboard interactive (normal)",
@@ -534,6 +595,52 @@
       "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ null\n- 'Close dialog'\n"
     },
     {
+      "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+      "passed": false,
+      "observation": {
+        "inside": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "insideChild": false
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "native summary and closed-details tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "summary",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native editable host participates in Tab order (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "editable",
+          "label": null,
+          "inside": true
+        }
+      }
+    },
+    {
       "name": "positive tab order (StrictMode)",
       "passed": false,
       "observation": {
@@ -573,6 +680,21 @@
           "height": 26
         }
       }
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": "svg-target"
+      }
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": null
+      },
+      "failure": "Expected values to be strictly equal:\n\nnull !== 'opener'\n"
     },
     {
       "name": "closing animation is not keyboard interactive (StrictMode)",
@@ -626,8 +748,8 @@
   "browser": "153.0.8010.12",
   "passed": false,
   "summary": {
-    "cases": 56,
-    "passed": 12,
-    "failed": 44
+    "cases": 70,
+    "passed": 18,
+    "failed": 52
   }
 }

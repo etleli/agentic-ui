@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { Tooltip } from '../Tooltip';
 import { Button } from '../../inputs/Button';
@@ -42,8 +42,10 @@ export function Modal({
   const { isPresent, presenceState } = useOverlayPresence(isOpen);
   const [dialog, setDialog] = useState<HTMLElement | null>(null);
   const [focusRegions] = useState(() => new Set<HTMLElement>());
-  const focusScope = useMemo(() => ({ regions: focusRegions, open: isFocusActive }), [focusRegions, isFocusActive]);
-  useModalFocus(dialog, isFocusActive, focusRegions);
+  const focusScope = useMemo(() => ({ regions: focusRegions, open: isFocusActive, parent: parentFocusScope }), [focusRegions, isFocusActive, parentFocusScope]);
+  useModalFocus(dialog, isFocusActive, focusRegions, parentFocusScope);
+  let focusDepth = 0;
+  for (let ancestor = parentFocusScope; ancestor; ancestor = ancestor.parent) focusDepth += 1;
 
   const updateOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {
@@ -92,6 +94,7 @@ export function Modal({
       data-state={presenceState}
       role="presentation"
       inert={modalProps.inert || !isFocusActive || undefined}
+      style={{ '--modal-focus-depth': focusDepth, ...modalProps.style } as CSSProperties}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           updateOpen(false);

@@ -22,7 +22,7 @@ function run(command, values, cwd = temporary, timeout = 180000) {
   return result.stdout;
 }
 const npm = (values, cwd) => run(process.execPath, [process.env.npm_execpath, ...values], cwd);
-const sourceFiles = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx'];
+const sourceFiles = ['src/components/overlays/Modal/Modal.tsx', 'src/components/overlays/Modal/Modal.focus.ts', 'src/components/overlays/overlayPortal.tsx', 'src/components/overlays/Modal/Modal.css'];
 const hashes = () => Object.fromEntries(sourceFiles.map((file) => [file, createHash('sha256').update(readFileSync(join(root, file), 'utf8').replaceAll('\r\n', '\n')).digest('hex')]));
 const sourceHashes = published ? null : hashes();
 try {
