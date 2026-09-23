@@ -46,6 +46,17 @@ actual `open` prop changes. Focus handling does not introduce a new topmost-only
 Escape policy for multiple open Modal instances. It changes keyboard focus ownership,
 not the existing dismissal policy.
 
+Focus ownership also follows rendered display/visibility and hidden/inert ancestors.
+Initially CSS-hidden dialogs do not intercept Tab. Hiding a visible dialog suspends
+containment and restores a usable prior target; revealing it activates a fresh focus
+cycle. Mutation/resize/transition observers are event-driven and are disconnected on
+close/unmount. Owned portal registration refreshes those observations even when
+animations are disabled. Recovery from removed/disabled targets waits for native
+focus transfers to settle, and pending recovery frames are cancelled on cleanup.
+
+This does not change controlled `open` or emit close requests when CSS changes.
+Escape retains its original open-prop semantics, including for CSS-hidden instances.
+
 ## Permanent browser regressions
 
 `npm run test:modal-focus` is part of `npm run check`, hence `npm run validate`
@@ -55,7 +66,7 @@ and CSS. The source fingerprints are checked before/after execution when a repor
 is saved. The installed package's integrity is recorded separately from the
 published baseline. Nothing is published or staged.
 
-The 76 cases run in normal rendering and StrictMode. They cover initial safe focus,
+The 96 cases run in normal rendering and StrictMode. They cover initial safe focus,
 explicit child autofocus, forward/backward containment, single/no targets, dynamic
 disabled/hidden targets, Escape/close/parent-driven restoration, removed/disabled/
 hidden/inert openers, declining controlled parents, contained presentation inside

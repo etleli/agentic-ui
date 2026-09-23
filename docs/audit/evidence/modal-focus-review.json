@@ -158,7 +158,7 @@
     ]
   },
   "correctedEvidence": "modal-focus-after.json",
-  "note": "All 76 cases pass after the corrections; hosted validation and re-review are recorded in PR #7.",
+  "note": "All 96 final cases pass. Published-beta evidence, full validation and exact-head CI/re-review are recorded separately.",
   "secondReview": {
     "reviewedHead": "59ea6f4d6fecdfbc98b8e74a27e476e0147692d0",
     "comments": [
@@ -216,6 +216,346 @@
           "focused": true
         },
         "failure": "locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Independent Modal', exact: true }).getByRole('button', { name: 'Close dialog' })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close dialog\" class=\"modal-overlay__icon-button\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    7 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <path d=\"m6 6 12 12\"></path> from <div>…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n"
+      }
+    ]
+  },
+  "thirdReview": {
+    "reviewedHead": "892d2f23bb9bfa1f5696c884eb101776dd5557b3",
+    "comment": "https://github.com/etleli/agentic-ui/pull/7#discussion_r4080821785",
+    "sourceHashes": {
+      "src/components/overlays/Modal/Modal.tsx": "6ede081529379111cdfbb79cb86af862b93a8123c25bd917499a3744cb308947",
+      "src/components/overlays/Modal/Modal.focus.ts": "2793e8c606935610e7df1c3670a02f03ec71c885b1f81c7bf3c6fbd580660045",
+      "src/components/overlays/overlayPortal.tsx": "1bb864b7b2a47bd7a339c7db83f10fa09874f2d7a238582f9e63329d69e435cf",
+      "src/components/overlays/Modal/Modal.css": "043e57f780cc392a192b81edfdfb71f0e11af5d2092a8e1a2b9d70f118cca770"
+    },
+    "summary": {
+      "cases": 92,
+      "passed": 76,
+      "failed": 16
+    },
+    "failedCases": [
+      {
+        "name": "initially CSS-hidden Modal does not trap (display) (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "initially CSS-hidden Modal does not trap (visibility) (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (visibility) (normal)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "initially CSS-hidden Modal does not trap (class) (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (class) (normal)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "non-Modal ancestor becoming hidden (normal)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "non-Modal ancestor becoming inert (normal)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "initially CSS-hidden Modal does not trap (display) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "initially CSS-hidden Modal does not trap (visibility) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (visibility) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "initially CSS-hidden Modal does not trap (class) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "opener",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'opener'\n- 'background'\n"
+      },
+      {
+        "name": "later CSS hiding releases and revealing restores containment (class) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "non-Modal ancestor becoming hidden (StrictMode)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "non-Modal ancestor becoming inert (StrictMode)",
+        "passed": false,
+        "observation": {
+          "hiddenFocus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      }
+    ]
+  },
+  "observerFollowup": {
+    "basis": "Local visibility implementation before explicit region notification and deferred focus recovery",
+    "registrationProbe": {
+      "cases": 96,
+      "passed": 94,
+      "failed": 2
+    },
+    "registrationFailures": [
+      {
+        "name": "contained Modal observes dynamic targets in a new child portal (normal)",
+        "passed": false,
+        "observation": {
+          "inside": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "contained Modal observes dynamic targets in a new child portal (StrictMode)",
+        "passed": false,
+        "observation": {
+          "inside": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      }
+    ],
+    "nativeTransferProbe": {
+      "cases": 96,
+      "passed": 94,
+      "failed": 2
+    },
+    "nativeTransferFailures": [
+      {
+        "name": "nested Modal focus ownership and restoration (normal)",
+        "passed": false,
+        "observation": {
+          "childFocused": true,
+          "closedFocus": {
+            "id": "",
+            "label": "Close dialog",
+            "inside": true
+          },
+          "trace": [
+            {
+              "id": "opener",
+              "label": null
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": null,
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            }
+          ]
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'nested-opener'\n"
+      },
+      {
+        "name": "nested Modal focus ownership and restoration (StrictMode)",
+        "passed": false,
+        "observation": {
+          "childFocused": true,
+          "closedFocus": {
+            "id": "",
+            "label": "Close dialog",
+            "inside": true
+          },
+          "trace": [
+            {
+              "id": "opener",
+              "label": null
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": null,
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Nested Modal"
+            },
+            {
+              "id": null,
+              "label": "Close dialog",
+              "dialog": "Focus Modal"
+            }
+          ]
+        },
+        "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'nested-opener'\n"
       }
     ]
   }

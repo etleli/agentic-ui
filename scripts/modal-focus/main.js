@@ -6,20 +6,30 @@ import { DatePicker, Modal } from '@etleli/agentic-ui';
 import '@etleli/agentic-ui/style.css';
 
 const options = JSON.parse(new URLSearchParams(window.location.search).get('options') ?? '{}');
+if (options.noPopupAnimation) {
+  const style = document.createElement('style');
+  style.textContent = '*{animation:none!important;transition:none!important}';
+  document.head.append(style);
+}
 if (options.svgOpener) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   for (const [name, value] of Object.entries({ id: 'opener', role: 'button', 'aria-label': 'Open Modal', tabindex: '0', width: '120', height: '30' })) svg.setAttribute(name, value);
   svg.innerHTML = '<rect width="120" height="30" fill="gray" />';
   document.getElementById('opener').replaceWith(svg);
 }
-const api = { requests: [], focusLog: [], ready: false };
+const api = { requests: [], focusLog: [], focusTrace: [], ready: false };
 window.modalTest = api;
-document.addEventListener('focusin', (event) => api.focusLog.push(event.target.id || event.target.getAttribute('aria-label') || event.target.textContent));
+document.addEventListener('focusin', (event) => {
+  api.focusLog.push(event.target.id || event.target.getAttribute('aria-label') || event.target.textContent);
+  api.focusTrace.push({ id: event.target.getAttribute('id'), label: event.target.getAttribute('aria-label'), dialog: event.target.closest('[role="dialog"]')?.getAttribute('aria-label') });
+});
 function App() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(true);
   const [nested, setNested] = useState(Boolean(options.initialNested));
   const [cycle, setCycle] = useState(0);
+  const [hiddenMode, setHiddenMode] = useState(options.hiddenMode ?? '');
+  api.setHiddenMode = setHiddenMode;
   const [independent, setIndependent] = useState(false);
   api.setIndependent = setIndependent;
   api.setOpen = setOpen;
@@ -49,7 +59,8 @@ function App() {
     key: options.uncontrolled ? cycle : 'controlled',
     ...(options.uncontrolled ? { defaultOpen: true } : { open }),
     title: 'Focus Modal', presentation: options.presentation ?? 'viewport',
-    className: options.noTargets ? 'no-targets' : options.single ? 'single-target' : undefined,
+    className: [options.noTargets ? 'no-targets' : options.single ? 'single-target' : '', hiddenMode === 'class' ? 'test-hidden-modal' : ''].filter(Boolean).join(' '),
+    style: hiddenMode === 'display' ? { display: 'none' } : hiddenMode === 'visibility' ? { visibility: 'hidden' } : undefined,
     confirmDisabled: options.confirmDisabled,
     onOpenChange: (value) => { api.requests.push(value); if (!options.decline && !options.uncontrolled) setOpen(value); },
     onCancel: () => api.requests.push('cancel'), onConfirm: () => api.requests.push('confirm'),

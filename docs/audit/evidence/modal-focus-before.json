@@ -229,10 +229,14 @@
     {
       "name": "focused child portal removal re-homes focus immediately (normal)",
       "passed": false,
-      "observation": {
-        "inside": false
-      },
-      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (normal)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
     },
     {
       "name": "initially open nested Modal owns Tab (controlled) (normal)",
@@ -403,6 +407,111 @@
         }
       },
       "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'nested-opener'\n- 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (normal)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (normal)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (normal)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
     },
     {
       "name": "initial safe focus (StrictMode)",
@@ -627,10 +736,14 @@
     {
       "name": "focused child portal removal re-homes focus immediately (StrictMode)",
       "passed": false,
-      "observation": {
-        "inside": false
-      },
-      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (StrictMode)",
+      "passed": false,
+      "observation": {},
+      "failure": "page.waitForFunction: Timeout 4000ms exceeded."
     },
     {
       "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
@@ -801,6 +914,111 @@
         }
       },
       "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'nested-opener'\n- 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "focus": {
+          "id": "background",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (StrictMode)",
+      "passed": false,
+      "observation": {
+        "hiddenFocus": {
+          "id": "",
+          "label": null,
+          "inside": false
+        }
+      },
+      "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (StrictMode)",
+      "passed": true,
+      "observation": {
+        "requests": [
+          false
+        ]
+      }
     }
   ],
   "warnings": [],
@@ -808,8 +1026,8 @@
   "browser": "153.0.8010.12",
   "passed": false,
   "summary": {
-    "cases": 76,
-    "passed": 22,
-    "failed": 54
+    "cases": 96,
+    "passed": 24,
+    "failed": 72
   }
 }

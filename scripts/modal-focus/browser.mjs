@@ -32,7 +32,7 @@ try {
         await page.goto(`${server.resolvedUrls.local[0]}?options=${encodeURIComponent(JSON.stringify({ ...options, strict }))}`);
         await page.waitForFunction(() => window.modalTest?.ready);
         await page.getByRole('button', { name: 'Open Modal', exact: true }).click();
-        await page.getByRole('dialog', { name: 'Focus Modal', exact: true }).waitFor();
+        if (!options.hiddenMode) await page.getByRole('dialog', { name: 'Focus Modal', exact: true }).waitFor();
         await page.waitForTimeout(80);
         await test(page, observation);
         report.cases.push({ name: caseName, passed: true, observation });
@@ -110,7 +110,8 @@ try {
       const child = page.getByRole('dialog', { name: 'Nested Modal', exact: true }); await child.waitFor(); await page.waitForTimeout(50);
       o.childFocused = await child.evaluate((element) => element.contains(document.activeElement)); assert.equal(o.childFocused, true);
       await child.getByRole('button', { name: 'Confirm', exact: true }).focus(); await page.keyboard.press('Tab'); assert.equal(await child.evaluate((element) => element.contains(document.activeElement)), true);
-      await child.getByRole('button', { name: 'Close dialog' }).click(); await child.waitFor({ state: 'hidden' }); assert.equal((await active(page)).id, 'nested-opener');
+      await child.getByRole('button', { name: 'Close dialog' }).click(); await child.waitFor({ state: 'hidden' });
+      o.closedFocus = await active(page); o.trace = await page.evaluate(() => window.modalTest.focusTrace); assert.equal(o.closedFocus.id, 'nested-opener');
     });
     for (const uncontrolled of [false, true]) await check(`repeated cycles and cleanup (${uncontrolled ? 'uncontrolled' : 'controlled'})`, { uncontrolled }, async (page, o) => {
       for (let i = 0; i < 3; i++) {
@@ -140,7 +141,16 @@ try {
       await page.getByRole('button', { name: 'Child date picker', exact: true }).click();
       const popup = page.getByRole('dialog', { name: 'Child date picker', exact: true }); await popup.waitFor();
       await popup.getByRole('button', { name: '2026-09-16', exact: true }).focus(); await page.keyboard.press('Enter');
-      await popup.waitFor({ state: 'hidden' }); await page.waitForTimeout(30);
+      await popup.waitFor({ state: 'hidden' });
+      await page.waitForFunction(() => document.querySelector('[role="dialog"][aria-label="Focus Modal"]')?.contains(document.activeElement));
+      o.inside = await dialog(page).evaluate((element) => element.contains(document.activeElement)); assert.equal(o.inside, true);
+    });
+    await check('contained Modal observes dynamic targets in a new child portal', { picker: true, presentation: 'contained', outerPortal: true, noPopupAnimation: true }, async (page, o) => {
+      await page.getByRole('button', { name: 'Child date picker', exact: true }).click();
+      const popup = page.getByRole('dialog', { name: 'Child date picker', exact: true }); await popup.waitFor();
+      const day = popup.getByRole('button', { name: '2026-09-16', exact: true }); await day.focus();
+      await day.evaluate((element) => { element.disabled = true; });
+      await page.waitForFunction(() => document.querySelector('[role="dialog"][aria-label="Focus Modal"]')?.contains(document.activeElement));
       o.inside = await dialog(page).evaluate((element) => element.contains(document.activeElement)); assert.equal(o.inside, true);
     });
     for (const uncontrolled of [false, true]) await check(`initially open nested Modal owns Tab (${uncontrolled ? 'defaultOpen' : 'controlled'})`, { initialNested: true, uncontrolled }, async (page, o) => {
@@ -210,6 +220,35 @@ try {
       await page.evaluate(() => window.modalTest.setOpen(false)); await page.waitForTimeout(30);
       o.focus = await active(page); assert.equal(o.focus.id, 'opener');
       await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'background'); await closed(page);
+    });
+    for (const hiddenMode of ['display', 'visibility', 'class']) {
+      await check(`initially CSS-hidden Modal does not trap (${hiddenMode})`, { hiddenMode }, async (page, o) => {
+        await page.keyboard.press('Tab'); o.focus = await active(page); assert.equal(o.focus.id, 'background');
+        assert.deepEqual(await page.evaluate(() => window.modalTest.requests), []);
+        await page.evaluate(() => window.modalTest.setHiddenMode('')); await dialog(page).waitFor(); await page.waitForTimeout(60);
+        assert.equal((await active(page)).inside, true);
+      });
+      await check(`later CSS hiding releases and revealing restores containment (${hiddenMode})`, {}, async (page, o) => {
+        await page.locator('#field').focus(); await page.evaluate((mode) => window.modalTest.setHiddenMode(mode), hiddenMode); await page.waitForTimeout(60);
+        o.hiddenFocus = await active(page); assert.equal(o.hiddenFocus.id, 'opener');
+        await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'background');
+        assert.deepEqual(await page.evaluate(() => window.modalTest.requests), []);
+        await page.evaluate(() => window.modalTest.setHiddenMode('')); await dialog(page).waitFor(); await page.waitForTimeout(60);
+        assert.equal((await active(page)).inside, true);
+        await page.keyboard.press('Escape'); await closed(page); assert.equal((await active(page)).id, 'background');
+      });
+    }
+    for (const attribute of ['hidden', 'inert']) await check(`non-Modal ancestor becoming ${attribute}`, { presentation: 'contained', outerPortal: true }, async (page, o) => {
+      await page.locator('#field').focus(); await page.locator('#portal-host').evaluate((element, key) => { element[key] = true; }, attribute); await page.waitForTimeout(60);
+      o.hiddenFocus = await active(page); assert.equal(o.hiddenFocus.id, 'opener');
+      await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'background');
+      await page.locator('#portal-host').evaluate((element, key) => { element[key] = false; }, attribute); await page.waitForTimeout(60);
+      assert.equal((await active(page)).inside, true);
+    });
+    await check('Escape retains its existing open-prop semantics when CSS-hidden', { hiddenMode: 'display' }, async (page, o) => {
+      await page.keyboard.press('Escape'); await page.waitForTimeout(60);
+      o.requests = await page.evaluate(() => window.modalTest.requests); assert.deepEqual(o.requests, [false]);
+      assert.equal(await page.locator('.modal-overlay').count(), 0);
     });
   }
 } finally {

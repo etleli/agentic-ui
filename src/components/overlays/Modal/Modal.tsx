@@ -64,7 +64,7 @@ export function Modal({
   }, [onConfirm, updateOpen]);
 
   useEffect(() => {
-    if (!isFocusActive) {
+    if (!isOpen) {
       return undefined;
     }
 
@@ -76,7 +76,7 @@ export function Modal({
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isFocusActive, updateOpen]);
+  }, [isOpen, updateOpen]);
 
   if (!isPresent) {
     return null;

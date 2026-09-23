@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { ModalFocusScopeContext, removeModalFocusRegion } from './Modal/Modal.focus';
+import { addModalFocusRegion, ModalFocusScopeContext, removeModalFocusRegion } from './Modal/Modal.focus';
 
 const OVERLAY_ROOT_ID = 'agentic-ui-overlay-root';
 
@@ -30,7 +30,7 @@ export function OverlayPortal({ children }: { children: ReactNode }) {
   return overlayRoot ? createPortal(modalScope ? (
     <div style={{ display: 'contents' }} inert={!modalScope.open || undefined} ref={(region) => {
       if (!region) return undefined;
-      modalScope.regions.add(region);
+      addModalFocusRegion(modalScope.regions, region);
       return () => { removeModalFocusRegion(modalScope.regions, region); };
     }}>{children}</div>
   ) : children, overlayRoot) : null;
