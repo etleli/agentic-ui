@@ -5,7 +5,9 @@ The published `0.1.0-beta.1` remains unfixed. Current source has the repair;
 no version or published artifact changes here. Modal props, exports, sizing and animation are unchanged. The sole style correction
 orders Modal layers with the active focus stack, preserving ancestry while placing
 a later independent Modal above older nested layers. The active dialog stays visible;
-a standalone Modal retains its existing z-order.
+a standalone Modal retains its existing z-order. Owned portalled content also follows
+its logical Modal ancestor's rendered inactivity, without unmounting or resetting
+child state. These are the only accessibility-related visibility/layer changes.
 
 ## Focus behavior
 
@@ -57,6 +59,14 @@ focus transfers to settle, and pending recovery frames are cancelled on cleanup.
 This does not change controlled `open` or emit close requests when CSS changes.
 Escape retains its original open-prop semantics, including for CSS-hidden instances.
 
+Rendered inactivity propagates through nested Modal scopes, including viewport
+portals outside a hidden/inert ancestor. Revealing the parent resumes the child
+with its controlled open state and entered values preserved. Open shadow roots
+and slots participate in composed-tree navigation; deep focus is captured/restored,
+including shadow-root openers. Native-reference fixtures check host tab indexes,
+positive inner indexes, slots and delegated focus. Closed shadow roots are opaque
+and are not enumerated by these browser APIs.
+
 ## Permanent browser regressions
 
 `npm run test:modal-focus` is part of `npm run check`, hence `npm run validate`
@@ -66,7 +76,7 @@ and CSS. The source fingerprints are checked before/after execution when a repor
 is saved. The installed package's integrity is recorded separately from the
 published baseline. Nothing is published or staged.
 
-The 96 cases run in normal rendering and StrictMode. They cover initial safe focus,
+The 114 cases run in normal rendering and StrictMode. They cover initial safe focus,
 explicit child autofocus, forward/backward containment, single/no targets, dynamic
 disabled/hidden targets, Escape/close/parent-driven restoration, removed/disabled/
 hidden/inert openers, declining controlled parents, contained presentation inside

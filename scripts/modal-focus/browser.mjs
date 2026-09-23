@@ -41,7 +41,13 @@ try {
       } finally { await page.close(); }
     }
     const dialog = (page) => page.getByRole('dialog', { name: 'Focus Modal', exact: true });
-    const active = (page) => page.evaluate(() => ({ id: document.activeElement.id, label: document.activeElement.getAttribute('aria-label'), inside: Boolean(document.activeElement.closest('[role="dialog"]')) }));
+    const active = (page) => page.evaluate(() => {
+      let element = document.activeElement;
+      while (element?.shadowRoot?.activeElement) element = element.shadowRoot.activeElement;
+      let ancestor = element;
+      while (ancestor && !ancestor.closest('[role="dialog"]')) ancestor = ancestor.getRootNode().host;
+      return { id: element.id, label: element.getAttribute('aria-label'), inside: Boolean(ancestor?.closest('[role="dialog"]')) };
+    });
     const closed = async (page) => { await dialog(page).waitFor({ state: 'hidden' }); await page.waitForTimeout(30); };
     await check('initial safe focus', {}, async (page, o) => { o.focus = await active(page); assert.equal(o.focus.label, 'Close dialog'); });
     await check('explicit child autoFocus and original return target', { autoFocus: true }, async (page, o) => {
@@ -249,6 +255,48 @@ try {
       await page.keyboard.press('Escape'); await page.waitForTimeout(60);
       o.requests = await page.evaluate(() => window.modalTest.requests); assert.deepEqual(o.requests, [false]);
       assert.equal(await page.locator('.modal-overlay').count(), 0);
+    });
+    for (const ancestor of [false, true]) await check(`unavailable parent suspends portalled child and preserves state (${ancestor ? 'inert ancestor' : 'CSS'})`, { nested: true, ...(ancestor ? { presentation: 'contained', outerPortal: true } : {}) }, async (page, o) => {
+      await page.locator('#nested-opener').click(); const child = page.getByRole('dialog', { name: 'Nested Modal', exact: true }); await child.waitFor();
+      await page.locator('#nested-field').fill('preserved');
+      if (ancestor) await page.locator('#portal-host').evaluate((element) => { element.inert = true; });
+      else await page.evaluate(() => window.modalTest.setHiddenMode('display'));
+      await page.waitForTimeout(100); o.childHidden = !(await child.isVisible()); assert.equal(o.childHidden, true);
+      await page.keyboard.press('Tab'); assert.equal((await active(page)).id, 'background');
+      assert.deepEqual(await page.evaluate(() => window.modalTest.requests), []);
+      if (ancestor) await page.locator('#portal-host').evaluate((element) => { element.inert = false; });
+      else await page.evaluate(() => window.modalTest.setHiddenMode(''));
+      await child.waitFor(); await page.waitForTimeout(80); assert.equal(await page.locator('#nested-field').inputValue(), 'preserved');
+      assert.equal(await child.evaluate((element) => element.contains(document.activeElement)), true);
+    });
+    for (const variant of [{}, { shadowIndex: 0 }, { shadowIndex: -1 }, { shadowIndex: -1, enterShadow: true }, { shadowPositive: true }, { shadowIndex: 0, delegatesFocus: true }]) await check(`open shadow/slot order matches native navigation ${JSON.stringify(variant)}`, { shadow: true, ...variant }, async (page, o) => {
+      const native = await context.newPage(); native.setDefaultTimeout(4000);
+      native.on('console', (entry) => { if (['warning', 'error'].includes(entry.type())) report.warnings.push({ case: `native shadow reference ${JSON.stringify(variant)}`, message: entry.text() }); });
+      native.on('pageerror', (error) => report.errors.push({ case: `native shadow reference ${JSON.stringify(variant)}`, message: error.message }));
+      async function sequence(target) {
+        await target.bringToFront(); await target.locator(variant.enterShadow ? '#shadow-first' : '#inside').focus(); const values = [];
+        for (let index = 0; index < 8; index++) {
+          await target.keyboard.press('Tab');
+          const value = await target.evaluate(() => {
+            let element = document.activeElement;
+            while (element?.shadowRoot?.activeElement) element = element.shadowRoot.activeElement;
+            return element.textContent === 'Cancel' ? 'Cancel' : element.id || element.getAttribute('aria-label');
+          });
+          values.push(value); if (value === 'Cancel') break;
+        }
+        return values;
+      }
+      try {
+        await native.goto(`${server.resolvedUrls.local[0]}?options=${encodeURIComponent(JSON.stringify({ nativeOnly: true, shadow: true, ...variant }))}`);
+        await native.waitForFunction(() => window.modalTest.ready); o.native = await sequence(native); o.modal = await sequence(page);
+        assert.deepEqual(o.modal, o.native);
+        await page.bringToFront(); await page.keyboard.press('Shift+Tab'); await native.bringToFront(); await native.keyboard.press('Shift+Tab');
+        assert.equal((await active(page)).id, (await active(native)).id);
+      } finally { await native.close(); }
+    });
+    await check('open-shadow opener receives restored focus', { shadowOpener: true }, async (page, o) => {
+      await page.locator('#field').focus(); await page.keyboard.press('Escape'); await closed(page);
+      o.focus = await active(page); assert.equal(o.focus.id, 'opener');
     });
   }
 } finally {

@@ -1,7 +1,7 @@
 {
   "mode": "candidate",
   "packageVersion": "0.1.0-beta.1",
-  "integrity": "sha512-DBcSFD93qSKLOc8Ml0j3GDwd8HK7ukkl1dF+nuzrQ0eAcPhTbW8SxRo8rFoEAmGm7GDWWxm7TSd3VZlGxEf5/A==",
+  "integrity": "sha512-4m/vc7kCWf3DcQczgyOLrVFlUrtQsQG2zWEo+P7uxPXtzjsrfeObXo0CADR/+e5VoeLp5sNZSdwvdyYWA8YKtA==",
   "node": "v24.19.0",
   "react": "19.3.0",
   "playwright": "1.63.0",
@@ -538,6 +538,133 @@
       }
     },
     {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (normal)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (normal)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
+    },
+    {
       "name": "initial safe focus (StrictMode)",
       "passed": true,
       "observation": {
@@ -1067,6 +1194,133 @@
           false
         ]
       }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (StrictMode)",
+      "passed": true,
+      "observation": {
+        "childHidden": true
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-host",
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "Cancel"
+        ],
+        "modal": [
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-last",
+          "shadow-first",
+          "slotted",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ],
+        "modal": [
+          "shadow-first",
+          "slotted",
+          "shadow-last",
+          "Cancel"
+        ]
+      }
+    },
+    {
+      "name": "open-shadow opener receives restored focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        }
+      }
     }
   ],
   "warnings": [],
@@ -1074,14 +1328,14 @@
   "browser": "153.0.8010.12",
   "passed": true,
   "summary": {
-    "cases": 96,
-    "passed": 96,
+    "cases": 114,
+    "passed": 114,
     "failed": 0
   },
   "sourceHashes": {
-    "src/components/overlays/Modal/Modal.tsx": "bfaf1e2672d5b2db7aa281a64455eef0f0d0b6e1f7a91b30a60931837060cd39",
-    "src/components/overlays/Modal/Modal.focus.ts": "a05d5ee16510bd765986e73f6fee53c4bce0ed5b2627d0933140d488735e1da3",
-    "src/components/overlays/overlayPortal.tsx": "1ea275ebc7138277f868fe78b07368530d88fd4fe2ef3cab6bc5e3c79466f41b",
+    "src/components/overlays/Modal/Modal.tsx": "b0c492564b7a16cc61302e9f27578d61b932a696d776f126dfa9d94a94228641",
+    "src/components/overlays/Modal/Modal.focus.ts": "1c706b28ca3f9633dc4552900a04c0d07298bd29fc0397048fab7a5c8ac67f7f",
+    "src/components/overlays/overlayPortal.tsx": "88471b5ebe59a52be452c197b60bc2bfe84a77e6693f5e177cd4cc0a4b52cbf5",
     "src/components/overlays/Modal/Modal.css": "043e57f780cc392a192b81edfdfb71f0e11af5d2092a8e1a2b9d70f118cca770"
   }
 }

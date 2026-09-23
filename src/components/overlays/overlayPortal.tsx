@@ -28,7 +28,7 @@ export function OverlayPortal({ children }: { children: ReactNode }) {
   }, [overlayRoot]);
 
   return overlayRoot ? createPortal(modalScope ? (
-    <div style={{ display: 'contents' }} inert={!modalScope.open || undefined} ref={(region) => {
+    <div style={{ display: modalScope.rendered ? 'contents' : 'none' }} inert={!modalScope.open || undefined} ref={(region) => {
       if (!region) return undefined;
       addModalFocusRegion(modalScope.regions, region);
       return () => { removeModalFocusRegion(modalScope.regions, region); };

@@ -42,8 +42,9 @@ export function Modal({
   const { isPresent, presenceState } = useOverlayPresence(isOpen);
   const [dialog, setDialog] = useState<HTMLElement | null>(null);
   const [focusRegions] = useState(() => new Set<HTMLElement>());
-  const focusScope = useMemo(() => ({ regions: focusRegions, open: isFocusActive, parent: parentFocusScope }), [focusRegions, isFocusActive, parentFocusScope]);
-  useModalFocus(dialog, isFocusActive, focusRegions, parentFocusScope);
+  const rendered = useModalFocus(dialog, isOpen && (parentFocusScope?.open ?? true), focusRegions, parentFocusScope);
+  const scopeRendered = rendered && !modalProps.hidden && !modalProps.inert && (parentFocusScope?.rendered ?? true);
+  const focusScope = useMemo(() => ({ regions: focusRegions, open: isFocusActive && scopeRendered, rendered: scopeRendered, parent: parentFocusScope }), [focusRegions, isFocusActive, scopeRendered, parentFocusScope]);
 
   const updateOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {

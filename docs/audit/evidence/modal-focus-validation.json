@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-23T10:18:42.719Z",
+  "date": "2026-09-23T11:18:12.598Z",
   "base": "408e94f5137b726beeda7c08cedab1edcb15591d",
   "node": "24.19.0",
   "npm": "11.17.0",
@@ -13,13 +13,13 @@
   },
   "chromium": {
     "before": {
-      "cases": 96,
-      "passed": 24,
-      "failed": 72
+      "cases": 114,
+      "passed": 36,
+      "failed": 78
     },
     "after": {
-      "cases": 96,
-      "passed": 96,
+      "cases": 114,
+      "passed": 114,
       "failed": 0
     },
     "browser": "153.0.8010.12",
@@ -47,6 +47,6 @@
   "packageMetadataAndDependenciesUnchanged": true,
   "existingBuildWarning": true,
   "hostedEvidence": "Recorded in the repair PR for its exact head, separately from this local evidence.",
-  "reviewCorrections": "Six automated findings reproduced and corrected, including effective CSS/ancestor visibility; SVG and no-animation portal observer/native-focus-transfer regressions also covered.",
-  "styleException": "Modal z-order follows the active focus stack, respecting ancestry and later independent dialogs; standalone z-order and sizing/colors/spacing/animation are unchanged."
+  "reviewCorrections": "Eight automated findings reproduced and corrected, including rendered inactivity propagation and open-shadow/slot traversal. Native reference fixtures cover host indexes, scoped positive indexes and focus delegation.",
+  "styleException": "Active-stack Modal layering and visibility of owned portalled content follow the active/rendered scope; standalone sizing/colors/spacing/animation remain unchanged."
 }

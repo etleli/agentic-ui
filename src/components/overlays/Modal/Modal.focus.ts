@@ -1,7 +1,7 @@
-import { createContext, useLayoutEffect, useRef } from 'react';
+import { createContext, useLayoutEffect, useRef, useState } from 'react';
 
 // Private ownership information for library portals rendered inside a Modal.
-type ModalFocusScope = { regions: Set<HTMLElement>; open: boolean; parent: ModalFocusScope | null };
+type ModalFocusScope = { regions: Set<HTMLElement>; open: boolean; rendered: boolean; parent: ModalFocusScope | null };
 export const ModalFocusScopeContext = createContext<ModalFocusScope | null>(null);
 
 type FocusTarget = HTMLElement | SVGElement;
@@ -26,11 +26,31 @@ function isFocusTarget(element: Element | null, document: Document): element is 
   return element instanceof view.HTMLElement || element instanceof view.SVGElement;
 }
 
-function available(element: FocusTarget): boolean {
-  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
-    if (parent.localName === 'details' && !parent.hasAttribute('open')) {
+function deepActive(document: Document): Element | null {
+  let element = document.activeElement;
+  while (element?.shadowRoot?.activeElement) element = element.shadowRoot.activeElement;
+  return element;
+}
+
+function composedParent(element: Element): Element | null {
+  if (element.assignedSlot) return element.assignedSlot;
+  if (element.parentElement) return element.parentElement;
+  const root = element.getRootNode();
+  return root instanceof element.ownerDocument.defaultView!.ShadowRoot ? root.host : null;
+}
+
+function containsComposed(root: Element, element: Element | null): boolean {
+  for (let node = element; node; node = composedParent(node)) if (node === root) return true;
+  return false;
+}
+
+function available(element: Element | null): element is FocusTarget {
+  if (!element || !isFocusTarget(element, element.ownerDocument)) return false;
+  for (let parent: Element | null = element; parent; parent = composedParent(parent)) {
+    if (parent.hasAttribute('hidden') || parent.hasAttribute('inert')) return false;
+    if (parent !== element && parent.localName === 'details' && !parent.hasAttribute('open')) {
       const summary = [...parent.children].find((child) => child.localName === 'summary');
-      if (!summary?.contains(element)) return false;
+      if (!summary || !containsComposed(summary, element)) return false;
     }
   }
   const map = element.localName === 'area' ? element.closest('map') : null;
@@ -60,30 +80,82 @@ function tabOrder(element: FocusTarget) {
 
 function owns(entry: FocusEntry, element: Element | null): element is FocusTarget {
   return isFocusTarget(element, entry.dialog.ownerDocument)
-    && (entry.dialog.contains(element) || [...entry.regions].some((region) => region.contains(element)));
+    && (containsComposed(entry.dialog, element) || [...entry.regions].some((region) => containsComposed(region, element)));
+}
+
+function rememberFocus(entry: FocusEntry) {
+  const active = deepActive(entry.dialog.ownerDocument);
+  if (!owns(entry, active) || !available(active)) return false;
+  entry.lastFocused = active;
+  if (containsComposed(entry.dialog, active)) entry.lastInDialog = active;
+  return true;
+}
+
+function openRoots(regions: Element[]) {
+  const roots = new Set<ShadowRoot>();
+  const seen = new Set<Element>();
+  function visit(element: Element) {
+    if (seen.has(element)) return;
+    seen.add(element);
+    if (element.shadowRoot) { roots.add(element.shadowRoot); for (const child of element.shadowRoot.children) visit(child); }
+    for (const child of element.children) visit(child);
+  }
+  for (const region of regions) {
+    visit(region);
+    let tree = region.getRootNode();
+    while (tree instanceof region.ownerDocument.defaultView!.ShadowRoot) { roots.add(tree); tree = tree.host.getRootNode(); }
+  }
+  return [...roots];
 }
 
 function targets(entry: FocusEntry) {
-  const candidates = [...new Set([entry.dialog, ...entry.regions].flatMap((region) => [...region.querySelectorAll('*')]))]
-    .filter((element): element is FocusTarget => isFocusTarget(element, entry.dialog.ownerDocument) && tabOrder(element) >= 0 && available(element));
+  const document = entry.dialog.ownerDocument;
+  const seen = new Set<Element>();
+  function collect(nodes: Element[]): FocusTarget[] {
+    const groups: { order: number; elements: FocusTarget[] }[] = [];
+    function visit(node: Element) {
+      if (seen.has(node)) return;
+      seen.add(node);
+      const target = isFocusTarget(node, document) && tabOrder(node) >= 0 && available(node) ? node : null;
+      if (node.shadowRoot || node instanceof document.defaultView!.HTMLSlotElement) {
+        const order = isFocusTarget(node, document) ? tabOrder(node) : -1;
+        if (node.hasAttribute('tabindex') && order < 0 && !containsComposed(node, deepActive(document))) return;
+        let children: Element[];
+        if (node.shadowRoot) children = [...node.shadowRoot.children];
+        else {
+          const assigned = (node as HTMLSlotElement).assignedNodes({ flatten: true });
+          children = assigned.length ? assigned.filter((child): child is Element => child instanceof document.defaultView!.Element) : [...node.children];
+        }
+        // A shadow/slot scope sorts its own positive indexes, then participates at
+        // its host's position in the enclosing scope. Delegation must not add a duplicate stop.
+        groups.push({ order: Math.max(0, order), elements: [...(target && !node.shadowRoot?.delegatesFocus ? [target] : []), ...collect(children)] });
+      } else {
+        if (target) groups.push({ order: tabOrder(target), elements: [target] });
+        for (const child of node.children) visit(child);
+      }
+    }
+    for (const node of nodes) visit(node);
+    return groups.sort((a, b) => (a.order > 0 ? a.order : Infinity) - (b.order > 0 ? b.order : Infinity)).flatMap((group) => group.elements);
+  }
+  const candidates = collect([entry.dialog, ...entry.regions].flatMap((region) => [...region.children]));
   // A radio group has one sequential keyboard stop, just as native Tab does.
   return candidates.filter((element) => {
     if (!(element instanceof element.ownerDocument.defaultView!.HTMLInputElement) || element.type !== 'radio' || !element.name) return true;
     const group = candidates.filter((candidate): candidate is HTMLInputElement => candidate instanceof element.ownerDocument.defaultView!.HTMLInputElement
-      && candidate.type === 'radio' && candidate.name === element.name && candidate.form === element.form);
+      && candidate.type === 'radio' && candidate.name === element.name && candidate.form === element.form && candidate.getRootNode() === element.getRootNode());
     return element === (group.find((radio) => radio.checked) ?? group[0]);
-  }).sort((first, second) => (tabOrder(first) > 0 ? tabOrder(first) : Infinity) - (tabOrder(second) > 0 ? tabOrder(second) : Infinity));
+  });
 }
 
 function focus(element: FocusTarget) {
   // Preserve native focus scrolling so long dialog content stays keyboard-visible.
-  if (element.ownerDocument.activeElement !== element) element.focus();
+  if (deepActive(element.ownerDocument) !== element) element.focus();
 }
 
 function focusInside(entry: FocusEntry) {
   if (!available(entry.dialog)) return;
   const next = entry.lastFocused && available(entry.lastFocused) && owns(entry, entry.lastFocused)
-    ? entry.lastFocused : entry.lastInDialog && available(entry.lastInDialog) && entry.dialog.contains(entry.lastInDialog)
+    ? entry.lastFocused : entry.lastInDialog && available(entry.lastInDialog) && containsComposed(entry.dialog, entry.lastInDialog)
       ? entry.lastInDialog : targets(entry)[0] ?? entry.dialog;
   focus(next);
 }
@@ -102,7 +174,7 @@ function recoverLostFocus(entry: FocusEntry) {
   entry.recoveryFrame = view.requestAnimationFrame(() => {
     entry.recoveryFrame = null;
     if (visibleTop(activeModals.get(document) ?? []) === entry
-      && (!owns(entry, document.activeElement) || !available(document.activeElement))) focusInside(entry);
+      && (!owns(entry, deepActive(document)) || !available(deepActive(document)))) focusInside(entry);
   });
 }
 
@@ -127,17 +199,14 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, parent: Mo
   updateLayers(stack);
   const isTop = () => stack[stack.length - 1] === entry;
   const canContain = () => visibleTop(stack) === entry;
-  if (owns(entry, document.activeElement) && available(document.activeElement)) entry.lastFocused = document.activeElement;
-  else if (isTop()) focusInside(entry);
-  if (owns(entry, document.activeElement) && available(document.activeElement)) {
-    entry.lastFocused = document.activeElement;
-    if (dialog.contains(document.activeElement)) entry.lastInDialog = document.activeElement;
-  }
+  if (!rememberFocus(entry) && isTop()) focusInside(entry);
+  rememberFocus(entry);
 
   function onKeyDown(event: KeyboardEvent) {
     if (event.key !== 'Tab' || event.defaultPrevented || !canContain()) return;
+    notifyRegions(regions);
     const elements = targets(entry);
-    const index = elements.indexOf(document.activeElement as FocusTarget);
+    const index = elements.indexOf(deepActive(document) as FocusTarget);
     const next = elements.length === 0 ? dialog
       : elements[(index + (event.shiftKey ? -1 : 1) + elements.length) % elements.length];
     event.preventDefault();
@@ -147,20 +216,13 @@ function containFocus(dialog: HTMLElement, regions: Set<HTMLElement>, parent: Mo
 
   function onFocusIn() {
     if (!canContain()) return;
-    if (owns(entry, document.activeElement) && available(document.activeElement)) {
-      entry.lastFocused = document.activeElement;
-      if (dialog.contains(document.activeElement)) entry.lastInDialog = document.activeElement;
-      return;
-    }
+    notifyRegions(regions);
+    if (rememberFocus(entry)) return;
     // A portalled child can autofocus before its ownership ref is committed.
     // Defer the outside-focus check until all refs in that commit are attached.
     queueMicrotask(() => {
       if (!canContain()) return;
-      if (owns(entry, document.activeElement) && available(document.activeElement)) {
-        entry.lastFocused = document.activeElement;
-        if (dialog.contains(document.activeElement)) entry.lastInDialog = document.activeElement;
-      }
-      else focusInside(entry);
+      if (!rememberFocus(entry)) focusInside(entry);
     });
   }
   document.addEventListener('keydown', onKeyDown);
@@ -197,23 +259,27 @@ export function removeModalFocusRegion(regions: Set<HTMLElement>, region: HTMLEl
   const document = region.ownerDocument;
   const stack = activeModals.get(document);
   const entry = stack ? visibleTop(stack) : undefined;
-  const lostFocus = entry?.regions === regions && region.contains(document.activeElement);
+  const lostFocus = entry?.regions === regions && containsComposed(region, deepActive(document));
   regions.delete(region);
   notifyRegions(regions);
   if (lostFocus) recoverLostFocus(entry);
 }
 
 export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regions: Set<HTMLElement>, parent: ModalFocusScope | null) {
+  const [rendered, setRendered] = useState(true);
   const wasOpen = useRef(false);
   const returnTarget = useRef<Element | null>(null);
   // Capture before React commits descendant autoFocus, including defaultOpen mounts.
-  const beforeCommit = typeof document === 'undefined' ? null : document.activeElement;
+  const beforeCommit = typeof document === 'undefined' ? null : deepActive(document);
   useLayoutEffect(() => {
     if (isOpen && !wasOpen.current) returnTarget.current = beforeCommit;
     wasOpen.current = isOpen;
   }, [beforeCommit, isOpen]);
   useLayoutEffect(() => {
-    if (!isOpen || !dialog) return undefined;
+    if (!isOpen || !dialog) {
+      if (!isOpen && !dialog) setRendered(true);
+      return undefined;
+    }
     const element = dialog;
     const document = element.ownerDocument;
     const view = document.defaultView;
@@ -221,26 +287,33 @@ export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regio
     let release: (() => void) | undefined;
     let stopped = false;
     let synchronizing = false;
-    let watched: HTMLElement[] = [];
-    const attributes = ['class', 'style', 'hidden', 'inert', 'disabled', 'tabindex', 'open'];
+    let watched: Node[] = [];
+    let shadows: ShadowRoot[] = [];
+    const attributes = ['class', 'style', 'hidden', 'inert', 'disabled', 'tabindex', 'open', 'slot', 'name'];
     const observer = new view.MutationObserver(() => synchronize());
     function synchronize() {
       if (stopped || synchronizing) return;
       synchronizing = true;
       try {
-        const ancestors: HTMLElement[] = [];
-        for (let node: HTMLElement | null = element; node; node = node.parentElement) ancestors.push(node);
-        const nodes = [...ancestors, ...regions];
+        const ancestors: Element[] = [];
+        for (let node: Element | null = element; node; node = composedParent(node)) ancestors.push(node);
+        const nextShadows = openRoots([element, ...regions]);
+        const nodes = [...ancestors, ...regions, ...nextShadows];
         if (nodes.length !== watched.length || nodes.some((node, index) => node !== watched[index])) {
           observer.disconnect();
+          for (const shadow of shadows) shadow.removeEventListener('slotchange', synchronize);
           for (const node of ancestors) observer.observe(node, { attributes: true, attributeFilter: attributes, childList: true });
-          for (const node of [element, ...regions]) observer.observe(node, { attributes: true, attributeFilter: attributes, childList: true, subtree: true });
+          for (const node of [element, ...regions, ...nextShadows]) observer.observe(node, { attributes: true, attributeFilter: attributes, childList: true, subtree: true });
+          for (const shadow of nextShadows) shadow.addEventListener('slotchange', synchronize);
+          shadows = nextShadows;
           watched = nodes;
         }
-        if (available(element)) {
+        const nextRendered = available(element);
+        setRendered(nextRendered);
+        if (nextRendered) {
           if (!release) {
-            const active = document.activeElement;
-            const alreadyInside = active && (element.contains(active) || [...regions].some((region) => region.contains(active)));
+            const active = deepActive(document);
+            const alreadyInside = active && (containsComposed(element, active) || [...regions].some((region) => containsComposed(region, active)));
             // CSS reveal starts a fresh active cycle; preserve the snapshot when a
             // descendant already took autoFocus during React's opening commit.
             if (!alreadyInside && isFocusTarget(active, document) && active !== document.body && active !== document.documentElement) returnTarget.current = active;
@@ -248,7 +321,7 @@ export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regio
           }
           const entry = visibleTop(activeModals.get(document) ?? []);
           if (entry?.regions === regions && entry.lastFocused && (!owns(entry, entry.lastFocused) || !available(entry.lastFocused))
-            && (!owns(entry, document.activeElement) || !available(document.activeElement))) recoverLostFocus(entry);
+            && (!owns(entry, deepActive(document)) || !available(deepActive(document)))) recoverLostFocus(entry);
         } else if (release) {
           release();
           release = undefined;
@@ -270,6 +343,7 @@ export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regio
       stopped = true;
       if (regionRefresh.get(regions) === synchronize) regionRefresh.delete(regions);
       observer.disconnect();
+      for (const shadow of shadows) shadow.removeEventListener('slotchange', synchronize);
       resize?.disconnect();
       view.removeEventListener('resize', synchronize);
       document.removeEventListener('transitionend', onVisualChange, true);
@@ -277,4 +351,5 @@ export function useModalFocus(dialog: HTMLElement | null, isOpen: boolean, regio
       release?.();
     };
   }, [dialog, isOpen, regions, parent]);
+  return rendered;
 }

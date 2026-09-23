@@ -6,6 +6,11 @@ import { DatePicker, Modal } from '@etleli/agentic-ui';
 import '@etleli/agentic-ui/style.css';
 
 const options = JSON.parse(new URLSearchParams(window.location.search).get('options') ?? '{}');
+if (options.shadowOpener) {
+  const host = document.createElement('div'); host.id = 'shadow-opener-host';
+  host.attachShadow({ mode: 'open' }).innerHTML = '<button id="opener">Open Modal</button>';
+  document.getElementById('opener').replaceWith(host);
+}
 if (options.noPopupAnimation) {
   const style = document.createElement('style');
   style.textContent = '*{animation:none!important;transition:none!important}';
@@ -35,13 +40,19 @@ function App() {
   api.setOpen = setOpen;
   api.unmount = () => setMounted(false);
   useEffect(() => {
-    document.getElementById('opener').onclick = () => { setMounted(true); setCycle((n) => n + 1); setOpen(true); };
+    const opener = document.getElementById('opener') ?? document.getElementById('shadow-opener-host')?.shadowRoot.getElementById('opener');
+    opener.onclick = () => { setMounted(true); setCycle((n) => n + 1); setOpen(true); };
     api.ready = true;
   }, []);
   const body = h(React.Fragment, {},
     h('input', { id: 'field', 'aria-label': 'Modal field', autoFocus: options.autoFocus, disabled: options.disabledField, tabIndex: options.positive ? 2 : undefined }),
     options.long ? h('div', { style: { height: 1500 } }, 'Synthetic long modal content') : null,
     options.single ? null : h('button', { id: 'inside', tabIndex: options.positive ? 1 : undefined }, 'Inside'),
+    options.shadow ? h('div', { id: 'shadow-host', tabIndex: options.shadowIndex, ref: (host) => {
+      if (!host || host.shadowRoot) return;
+      const shadow = host.attachShadow({ mode: 'open', delegatesFocus: Boolean(options.delegatesFocus) });
+      shadow.innerHTML = `<button id="shadow-first" ${options.shadowPositive ? 'tabindex="2"' : ''}>Shadow first</button><slot></slot><input id="shadow-last" aria-label="Shadow last" ${options.shadowPositive ? 'tabindex="1"' : ''}>`;
+    } }, h('button', { id: 'slotted' }, 'Slotted')) : null,
     options.svgTarget ? h('svg', { id: 'svg-target', tabIndex: 0, role: 'button', 'aria-label': 'Diagram target', width: 120, height: 30 }, h('rect', { width: 120, height: 30, fill: 'gray' })) : null,
     options.disclosure ? h('details', {}, h('summary', { id: 'summary' }, 'Disclosure'), h('button', { id: 'details-button' }, 'Detail action')) : null,
     options.editable ? h('div', { id: 'editable', contentEditable: true, suppressContentEditableWarning: true }, 'Editable text') : null,
@@ -65,6 +76,7 @@ function App() {
     onOpenChange: (value) => { api.requests.push(value); if (!options.decline && !options.uncontrolled) setOpen(value); },
     onCancel: () => api.requests.push('cancel'), onConfirm: () => api.requests.push('confirm'),
   }, body) : null;
+  if (options.nativeOnly) return h(React.Fragment, {}, body, h('button', { id: 'native-end' }, 'Cancel'));
   return h(React.Fragment, {}, options.outerPortal ? createPortal(modal, document.getElementById('portal-host')) : modal,
     h(Modal, { open: independent, title: 'Independent Modal', onOpenChange: setIndependent }, h('input', { 'aria-label': 'Independent field' })));
 }

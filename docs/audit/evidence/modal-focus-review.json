@@ -158,7 +158,7 @@
     ]
   },
   "correctedEvidence": "modal-focus-after.json",
-  "note": "All 96 final cases pass. Published-beta evidence, full validation and exact-head CI/re-review are recorded separately.",
+  "note": "All 114 final cases pass; the same suite fails 78 cases on the published beta. Exact-head CI and re-review are recorded in PR #7.",
   "secondReview": {
     "reviewedHead": "59ea6f4d6fecdfbc98b8e74a27e476e0147692d0",
     "comments": [
@@ -556,6 +556,252 @@
           ]
         },
         "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'nested-opener'\n"
+      }
+    ]
+  },
+  "fourthReview": {
+    "reviewedHead": "bfdb0c57f2f7a0d916a026e219944ec28b0dd34b",
+    "comments": [
+      "https://github.com/etleli/agentic-ui/pull/7#discussion_r4081448708",
+      "https://github.com/etleli/agentic-ui/pull/7#discussion_r4081448718"
+    ],
+    "sourceHashes": {
+      "src/components/overlays/Modal/Modal.tsx": "bfaf1e2672d5b2db7aa281a64455eef0f0d0b6e1f7a91b30a60931837060cd39",
+      "src/components/overlays/Modal/Modal.focus.ts": "a05d5ee16510bd765986e73f6fee53c4bce0ed5b2627d0933140d488735e1da3",
+      "src/components/overlays/overlayPortal.tsx": "1ea275ebc7138277f868fe78b07368530d88fd4fe2ef3cab6bc5e3c79466f41b",
+      "src/components/overlays/Modal/Modal.css": "043e57f780cc392a192b81edfdfb71f0e11af5d2092a8e1a2b9d70f118cca770"
+    },
+    "summary": {
+      "cases": 112,
+      "passed": 96,
+      "failed": 16
+    },
+    "failedCases": [
+      {
+        "name": "unavailable parent suspends portalled child and preserves state (CSS) (normal)",
+        "passed": false,
+        "observation": {
+          "childHidden": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (normal)",
+        "passed": false,
+        "observation": {
+          "childHidden": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {} (normal)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n-   'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (normal)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-host",
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "shadow-host",
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'shadow-host',\n-   'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (normal)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'slotted',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (normal)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-last",
+            "shadow-first",
+            "slotted",
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n-   'shadow-last',\n-   'shadow-first',\n    'slotted',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (normal)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "shadow-first",
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open-shadow opener receives restored focus (normal)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
+      },
+      {
+        "name": "unavailable parent suspends portalled child and preserves state (CSS) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "childHidden": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (StrictMode)",
+        "passed": false,
+        "observation": {
+          "childHidden": false
+        },
+        "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {} (StrictMode)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n-   'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (StrictMode)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-host",
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "shadow-host",
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'shadow-host',\n-   'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (StrictMode)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'slotted',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (StrictMode)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-last",
+            "shadow-first",
+            "slotted",
+            "Cancel"
+          ],
+          "modal": [
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n-   'shadow-last',\n-   'shadow-first',\n    'slotted',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (StrictMode)",
+        "passed": false,
+        "observation": {
+          "native": [
+            "shadow-first",
+            "slotted",
+            "shadow-last",
+            "Cancel"
+          ],
+          "modal": [
+            "shadow-first",
+            "slotted",
+            "Cancel"
+          ]
+        },
+        "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'shadow-first',\n    'slotted',\n-   'shadow-last',\n    'Cancel'\n  ]\n"
+      },
+      {
+        "name": "open-shadow opener receives restored focus (StrictMode)",
+        "passed": false,
+        "observation": {
+          "focus": {
+            "id": "",
+            "label": null,
+            "inside": false
+          }
+        },
+        "failure": "Expected values to be strictly equal:\n\n'' !== 'opener'\n"
       }
     ]
   }
