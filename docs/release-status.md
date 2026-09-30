@@ -1,6 +1,8 @@
 # Release status
 
 **Published: @etleli/agentic-ui@0.1.0-beta.1.** The repository is public.
+**Prepared in source: 0.1.0-beta.2.** Do not treat that candidate as published
+until the exact archive, registry readback, and fresh consumer are verified.
 The [first-publication record in PR #5](https://github.com/etleli/agentic-ui/pull/5)
 records owner approval, the exact submission, anonymous access, registry readback,
 and fresh registry-consumer verification. Preparation and CI alone were not
@@ -33,8 +35,9 @@ commit nor changes the npm README or published archive retroactively.
 ## Established protections and unresolved findings
 
 The owner-approved personal noncommercial LICENSE, third-party notices, package
-identity, dependencies and lockfile remain unchanged. See [licensing](licensing.md)
-and [dependency remediation](dependency-advisories.md). CI remains validation-only;
+name and direct dependency ranges remain unchanged. The beta.2 candidate updates
+its version and lockfile-only development dependencies to clear current advisories.
+See [licensing](licensing.md) and [dependency remediation](dependency-advisories.md). CI remains validation-only;
 no publishing/deployment workflow, npm trust, release tag or Pages deployment is added.
 
 The prepublication FilePicker state, panel SSR/persistence, and disabled-removal
@@ -54,6 +57,11 @@ confirmed by this audit. None are fixed here. Build success is not full componen
 accessibility, interaction, or security certification.
 
 ## Next gates
+
+The beta.2 candidate contains the scoped icon-only Button sizing and touch Tooltip
+dismissal fixes. It still needs a merged release source, exact-artifact review,
+explicit owner approval, and registry verification. The beta.1 publication
+evidence above remains historical and unchanged.
 
 Follow the audit's focused repair batches and promote each repaired reproduction
 into mandatory regression coverage. Future releases still require their own scoped

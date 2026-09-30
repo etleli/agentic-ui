@@ -5,8 +5,9 @@ components, editing preview parameters and content, resizing previews, and
 adjusting theme tokens. The library includes controls, layouts, tables, content
 viewers, charts, graph helpers, and reusable domain presentation components.
 
-The first beta is **`@etleli/agentic-ui@0.1.0-beta.1`**, by
-[Elias Etl](https://github.com/etleli). This is beta software, not a stable or fully
+This checkout builds **`@etleli/agentic-ui@0.1.0-beta.2`**, by
+[Elias Etl](https://github.com/etleli). The first published beta was `0.1.0-beta.1`.
+This is beta software, not a stable or fully
 audited component library. Observed registry availability and release evidence
 belong in the [release record](https://github.com/etleli/agentic-ui/blob/main/docs/release-status.md).
 
@@ -20,14 +21,14 @@ controls the terms. See the [licensing explanation](https://github.com/etleli/ag
 
 ## Install the beta
 
-The first beta is published; install the exact version:
+Check the release record for registry availability, then install this exact version:
 
 ```sh
-npm install @etleli/agentic-ui@0.1.0-beta.1
+npm install @etleli/agentic-ui@0.1.0-beta.2
 ```
 
 React and React DOM 19 are peer dependencies. The [launch record in PR #5](https://github.com/etleli/agentic-ui/pull/5)
-records actual publication and registry-consumer verification. The local tarball
+records beta.1 publication and registry-consumer verification. The local tarball
 workflow below remains available for development.
 
 ## Known beta limitations
@@ -103,7 +104,7 @@ temporary directory outside this repository, then run:
 ```sh
 npm pack --pack-destination /absolute/path/to/temporary-directory
 # In a separate React consumer:
-npm install /absolute/path/to/temporary-directory/etleli-agentic-ui-0.1.0-beta.1.tgz
+npm install /absolute/path/to/temporary-directory/etleli-agentic-ui-0.1.0-beta.2.tgz
 ```
 
 The `beta` distribution tag is intended for this release; verify its actual

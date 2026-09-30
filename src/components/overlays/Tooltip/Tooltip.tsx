@@ -135,8 +135,8 @@ export function Tooltip({
       onPointerDown={(event) => {
         if (event.pointerType === 'touch') {
           touchActive.current = true;
+          clearTouchDismiss();
           updateOpen(true);
-          dismissAfterTouch();
         } else if (event.pointerType === 'mouse') {
           touchActive.current = false;
           clearTouchDismiss();

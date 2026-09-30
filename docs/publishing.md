@@ -1,5 +1,13 @@
 # First-beta activation and owner-authorized publication
 
+Section A records the completed first beta. The current repository candidate is
+`@etleli/agentic-ui@0.1.0-beta.2`; its beta.1 commands and artifact name below
+are historical. For beta.2, use the same exact-artifact validation, consumer,
+owner-approval, and registry-readback gates with the beta.2 name/version.
+No staging workflow or npm trusted publisher is configured for this repository,
+so a manually authorized publication of the inspected beta.2 archive is the
+available path. Preserve the `beta` tag and do not move `latest` by assumption.
+
 **Activation is not publication approval.** The release manifest intentionally
 sets `private: false`; its owner-approved license and read-only validation CI
 remain intact. No npm trust, publishing workflow, credentials, staging, or
@@ -9,7 +17,7 @@ changing visibility or submitting an archive.
 Checked against official npm documentation on **2026-09-22**. Recheck it before
 execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
 
-## A. First publication of the personal package
+## A. First publication of the personal package (historical)
 
 ### Owner decisions and a release commit
 
@@ -34,7 +42,7 @@ execution. The verified project toolchain is Node 24.19.0 / npm 11.17.0.
    and require successful push-triggered validation for the exact merge commit.
    Record that SHA as the release source commit.
 
-The candidate values are name `@etleli/agentic-ui`, version `0.1.0-beta.1`,
+The first-publication values were name `@etleli/agentic-ui`, version `0.1.0-beta.1`,
 registry `https://registry.npmjs.org/`, access `public`, and tag `beta`.
 The release commit, package metadata, tests, and inspected artifact must agree.
 No instruction here authorizes a Git release/tag or repository visibility change.

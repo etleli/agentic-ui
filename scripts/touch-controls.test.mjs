@@ -78,6 +78,18 @@ test('touch tooltip dismisses after release despite sticky focus and synthetic h
   } finally { fixture.close(); }
 });
 
+test('long touch remains readable until release, then dismisses', async () => {
+  const fixture = render(createElement(Tooltip, { content: 'Long help' }, createElement('button', null, 'Target')));
+  try {
+    pointer(fixture.trigger(), 'pointerdown', 'touch');
+    await act(async () => delay(1900));
+    assert.equal(fixture.open(), true);
+    pointer(fixture.trigger(), 'pointerup', 'touch');
+    await act(async () => delay(1900));
+    assert.equal(fixture.open(), false);
+  } finally { fixture.close(); }
+});
+
 test('touch cancellation closes; keyboard focus and mouse hover still work', () => {
   const calls = [];
   const fixture = render(createElement(Tooltip, {
