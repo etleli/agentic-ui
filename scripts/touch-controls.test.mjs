@@ -90,6 +90,28 @@ test('long touch remains readable until release, then dismisses', async () => {
   } finally { fixture.close(); }
 });
 
+test('touch tracking survives a child that stops pointer propagation', async () => {
+  const captured = [];
+  const fixture = render(createElement(Tooltip, {
+    content: 'Help',
+    onPointerDownCapture: () => captured.push('down'),
+    onPointerUpCapture: () => captured.push('up'),
+  }, createElement('button', {
+    onPointerDown: (event) => event.stopPropagation(),
+    onPointerUp: (event) => event.stopPropagation(),
+  }, 'Target')));
+  try {
+    pointer(fixture.trigger(), 'pointerdown', 'touch');
+    assert.equal(fixture.open(), true);
+    await act(async () => delay(1900));
+    assert.equal(fixture.open(), true);
+    pointer(fixture.trigger(), 'pointerup', 'touch');
+    await act(async () => delay(1900));
+    assert.equal(fixture.open(), false);
+    assert.deepEqual(captured, ['down', 'up']);
+  } finally { fixture.close(); }
+});
+
 test('touch cancellation closes; keyboard focus and mouse hover still work', () => {
   const calls = [];
   const fixture = render(createElement(Tooltip, {

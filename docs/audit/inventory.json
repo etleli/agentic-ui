@@ -5967,8 +5967,8 @@
       "layout constraint candidate": "3, 13, 18, 43, 48, 50, 51, 56, 70, 75, 76"
     },
     "src/components/overlays/Tooltip/Tooltip.tsx": {
-      "effect/state ownership candidate": "1, 89, 93",
-      "browser/lifecycle candidate": "100, 101"
+      "effect/state ownership candidate": "1, 93, 97",
+      "browser/lifecycle candidate": "104, 105"
     },
     "src/components/overlays/Tooltip/Tooltip.css": {
       "layout constraint candidate": "5, 10, 18, 27, 39, 42"

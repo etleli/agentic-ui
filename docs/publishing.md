@@ -1,4 +1,4 @@
-# First-beta activation and owner-authorized publication
+# Agentic UI beta publication
 
 Section A records the completed first beta. The current repository candidate is
 `@etleli/agentic-ui@0.1.0-beta.2`; its beta.1 commands and artifact name below
@@ -7,6 +7,34 @@ owner-approval, and registry-readback gates with the beta.2 name/version.
 No staging workflow or npm trusted publisher is configured for this repository,
 so a manually authorized publication of the inspected beta.2 archive is the
 available path. Preserve the `beta` tag and do not move `latest` by assumption.
+
+## Current beta.2 release
+
+Merge the validated candidate, verify the push-triggered check for the exact
+`main` commit, and create one immutable archive from a clean checkout of that
+commit. Record its npm pack integrity and shasum, inspect its manifest, compiled
+code, CSS, types, guides, README, LICENSE, and third-party notices, then install
+that same archive in a separate consumer:
+
+```sh
+npm pack --json --pack-destination /absolute/path/to/empty-artifacts
+npm run test:tarball -- --tarball /absolute/path/to/empty-artifacts/etleli-agentic-ui-0.1.0-beta.2.tgz --report /absolute/path/to/consumer-report.json
+```
+
+Confirm the exact version is unused, the full and production dependency audits
+are clear, and the logged-in publisher is `etleli`. Present the source commit,
+hosted run, archive integrity, consumer result, and current public status to the
+owner. Only after explicit approval for that exact archive, publish it without
+repacking and keep the `beta` tag explicit:
+
+```sh
+npm publish /absolute/path/to/empty-artifacts/etleli-agentic-ui-0.1.0-beta.2.tgz --ignore-scripts --registry=https://registry.npmjs.org/ --access=public --tag=beta
+```
+
+Read back the registry version, integrity, shasum, and distribution tags, then
+run a fresh registry consumer against beta.2. Record a failed or ambiguous
+submission before retrying; a version cannot be overwritten. The commands in
+the historical first-publication section below are for beta.1 only.
 
 **Activation is not publication approval.** The release manifest intentionally
 sets `private: false`; its owner-approved license and read-only validation CI

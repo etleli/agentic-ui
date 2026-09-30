@@ -19,9 +19,13 @@ export function Tooltip({
   onMouseEnter,
   onMouseLeave,
   onPointerCancel,
+  onPointerCancelCapture,
   onPointerDown,
+  onPointerDownCapture,
   onPointerMove,
+  onPointerMoveCapture,
   onPointerUp,
+  onPointerUpCapture,
   onOpenChange,
   open,
   placement = 'top',
@@ -132,7 +136,7 @@ export function Tooltip({
         if (!touchActive.current) updateOpen(false);
         onMouseLeave?.(event);
       }}
-      onPointerDown={(event) => {
+      onPointerDownCapture={(event) => {
         if (event.pointerType === 'touch') {
           touchActive.current = true;
           clearTouchDismiss();
@@ -141,27 +145,31 @@ export function Tooltip({
           touchActive.current = false;
           clearTouchDismiss();
         }
-        onPointerDown?.(event);
+        onPointerDownCapture?.(event);
       }}
-      onPointerUp={(event) => {
+      onPointerDown={onPointerDown}
+      onPointerUpCapture={(event) => {
         if (event.pointerType === 'touch') dismissAfterTouch();
-        onPointerUp?.(event);
+        onPointerUpCapture?.(event);
       }}
-      onPointerCancel={(event) => {
+      onPointerUp={onPointerUp}
+      onPointerCancelCapture={(event) => {
         if (event.pointerType === 'touch') {
           clearTouchDismiss();
           updateOpen(false);
         }
-        onPointerCancel?.(event);
+        onPointerCancelCapture?.(event);
       }}
-      onPointerMove={(event) => {
+      onPointerCancel={onPointerCancel}
+      onPointerMoveCapture={(event) => {
         if (event.pointerType === 'mouse' && touchActive.current) {
           touchActive.current = false;
           clearTouchDismiss();
           updateOpen(true);
         }
-        onPointerMove?.(event);
+        onPointerMoveCapture?.(event);
       }}
+      onPointerMove={onPointerMove}
     >
       <span className="tooltip__trigger">{children}</span>
       {isPresent && content ? (
