@@ -29,6 +29,7 @@ async function findTsxFiles(directory) {
 }
 
 const rootWidthConstraintAllowlist = new Map([
+  ['inputs/Button/Button.css:.button[data-icon-only=\'true\']', 'Icon-only Button uses its selected hit-target size for a square width; labeled Buttons remain intrinsic or explicitly fill their container.'],
   ['layout/Layout.css:.resizable-panel', 'ResizablePanel exposes an explicit user-controlled width and height contract.'],
   ['node-system/NodeSystem.css:.node-system-minimap[data-variant=\'floating\']', 'The floating minimap is an overlaid canvas safety surface constrained to its host viewport.'],
   ['feedback/HealthMeter/HealthMeter.css:.health-meter', 'HealthMeter is an intentionally compact status indicator with documented size variants.'],
