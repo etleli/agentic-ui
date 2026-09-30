@@ -43,7 +43,7 @@ test('activated beta metadata preserves the approved publication settings and pa
   assert.equal(manifest.private, false);
   assert.equal(manifest.license, 'SEE LICENSE IN LICENSE');
   assert.equal(manifest.name, '@etleli/agentic-ui');
-  assert.equal(manifest.version, '0.1.0-beta.1');
+  assert.equal(manifest.version, '0.1.0-beta.2');
   assert.deepEqual(manifest.author, { name: 'Elias Etl', url: 'https://github.com/etleli' });
   assert.equal(lock.name, manifest.name);
   assert.equal(lock.version, manifest.version);

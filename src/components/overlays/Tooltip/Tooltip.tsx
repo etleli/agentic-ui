@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { useOverlayPresence } from '../overlayPresence';
 import './Tooltip.css';
@@ -18,6 +18,14 @@ export function Tooltip({
   onFocus,
   onMouseEnter,
   onMouseLeave,
+  onPointerCancel,
+  onPointerCancelCapture,
+  onPointerDown,
+  onPointerDownCapture,
+  onPointerMove,
+  onPointerMoveCapture,
+  onPointerUp,
+  onPointerUpCapture,
   onOpenChange,
   open,
   placement = 'top',
@@ -26,6 +34,8 @@ export function Tooltip({
   ...tooltipProps
 }: TooltipProps) {
   const rootRef = useRef<HTMLSpanElement | null>(null);
+  const touchDismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchActive = useRef(false);
   const [bubbleStyle, setBubbleStyle] = useState<CSSProperties>({});
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
@@ -66,6 +76,24 @@ export function Tooltip({
     onOpenChange?.(nextOpen);
   }
 
+  function clearTouchDismiss() {
+    if (touchDismissTimer.current !== null) clearTimeout(touchDismissTimer.current);
+    touchDismissTimer.current = null;
+  }
+
+  function dismissAfterTouch() {
+    clearTouchDismiss();
+    // Touch may synthesize mouseenter and leave focus on the trigger indefinitely.
+    touchDismissTimer.current = setTimeout(() => {
+      touchDismissTimer.current = null;
+      updateOpen(false);
+    }, 1800);
+  }
+
+  useEffect(() => () => {
+    if (touchDismissTimer.current !== null) clearTimeout(touchDismissTimer.current);
+  }, []);
+
   useLayoutEffect(() => {
     if (!isPresent) {
       return undefined;
@@ -92,6 +120,7 @@ export function Tooltip({
       data-tone={tone}
       ref={rootRef}
       onBlur={(event) => {
+        clearTouchDismiss();
         updateOpen(false);
         onBlur?.(event);
       }}
@@ -100,13 +129,47 @@ export function Tooltip({
         onFocus?.(event);
       }}
       onMouseEnter={(event) => {
-        updateOpen(true);
+        if (!touchActive.current) updateOpen(true);
         onMouseEnter?.(event);
       }}
       onMouseLeave={(event) => {
-        updateOpen(false);
+        if (!touchActive.current) updateOpen(false);
         onMouseLeave?.(event);
       }}
+      onPointerDownCapture={(event) => {
+        if (event.pointerType === 'touch') {
+          touchActive.current = true;
+          clearTouchDismiss();
+          updateOpen(true);
+        } else if (event.pointerType === 'mouse') {
+          touchActive.current = false;
+          clearTouchDismiss();
+        }
+        onPointerDownCapture?.(event);
+      }}
+      onPointerDown={onPointerDown}
+      onPointerUpCapture={(event) => {
+        if (event.pointerType === 'touch') dismissAfterTouch();
+        onPointerUpCapture?.(event);
+      }}
+      onPointerUp={onPointerUp}
+      onPointerCancelCapture={(event) => {
+        if (event.pointerType === 'touch') {
+          clearTouchDismiss();
+          updateOpen(false);
+        }
+        onPointerCancelCapture?.(event);
+      }}
+      onPointerCancel={onPointerCancel}
+      onPointerMoveCapture={(event) => {
+        if (event.pointerType === 'mouse' && touchActive.current) {
+          touchActive.current = false;
+          clearTouchDismiss();
+          updateOpen(true);
+        }
+        onPointerMoveCapture?.(event);
+      }}
+      onPointerMove={onPointerMove}
     >
       <span className="tooltip__trigger">{children}</span>
       {isPresent && content ? (

@@ -20,6 +20,9 @@ readable-column or shell maximum width.
 
 Buttons remain intrinsic by default. Set the shared `width="fill"` contract
 only where the surrounding layout requires a full-width action.
+Icon-only Buttons are the narrow exception: their width and height match the
+selected 36px, 44px, or 52px hit-target size on every platform. The explicit
+`width="fill"` option still fills its container.
 
 ```tsx
 <Button width="fill">Continue</Button>
@@ -33,6 +36,8 @@ Themes customize it through `--color-form-autofill-surface`,
 
 The width-contract test has a deliberately small exception list:
 
+- icon-only `Button`: its square hit target matches the selected size; labeled
+  buttons remain content-sized by default.
 - `ResizablePanel`: its explicit width and height are the component's public
   resize contract.
 - floating `NodeMiniMap`: an overlaid canvas safety surface must stay within

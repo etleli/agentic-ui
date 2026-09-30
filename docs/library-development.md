@@ -32,8 +32,9 @@ types, `style.css`, `theme.css`, and `agent-guides/`. Keep examples in the works
 registration alone never makes a component public. React and React DOM are peers;
 CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
 
-The activated candidate is `@etleli/agentic-ui@0.1.0-beta.1`, with `private: false`;
-the custom LICENSE is owner-approved and finalized. See the [release record](release-status.md)
+The published baseline is `@etleli/agentic-ui@0.1.0-beta.1`; the current
+candidate is `0.1.0-beta.2`, with `private: false`. The custom LICENSE is
+owner-approved and finalized. See the [release record](release-status.md)
 for observed registry status and [licensing](licensing.md) for usage conditions.
 Publication and repository visibility require the explicit owner checkpoint.
 
@@ -59,7 +60,7 @@ approval. Future registry installation is described in [publishing](publishing.m
 To verify and preserve one supplied archive, without repacking:
 
 ```sh
-npm run test:tarball -- --tarball /absolute/path/to/etleli-agentic-ui-0.1.0-beta.1.tgz --report /absolute/path/to/consumer-report.json
+npm run test:tarball -- --tarball /absolute/path/to/etleli-agentic-ui-0.1.0-beta.2.tgz --report /absolute/path/to/consumer-report.json
 ```
 
 After publication, add `--registry` to install the exact version from npm instead

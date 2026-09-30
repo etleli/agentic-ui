@@ -39,8 +39,24 @@
 }
 
 .button[data-icon-only='true'] {
-  aspect-ratio: 1;
+  box-sizing: border-box;
+  width: var(--button-icon-size);
+  min-width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  min-height: var(--button-icon-size);
   padding: 0;
+}
+
+.button[data-icon-only='true'][data-size='compact'] {
+  --button-icon-size: 36px;
+}
+
+.button[data-icon-only='true'][data-size='comfortable'] {
+  --button-icon-size: 44px;
+}
+
+.button[data-icon-only='true'][data-size='spacious'] {
+  --button-icon-size: 52px;
 }
 
 .button[data-width='fill'] {

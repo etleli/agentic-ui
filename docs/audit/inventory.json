@@ -2594,7 +2594,8 @@
       ],
       "testReferences": [
         "scripts/consumer-hardening-contract.test.mjs",
-        "scripts/package-consumer-import.test.mjs"
+        "scripts/package-consumer-import.test.mjs",
+        "scripts/touch-controls.test.mjs"
       ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "not reviewed",
@@ -3779,7 +3780,8 @@
         "scripts/consumer-hardening-contract.test.mjs",
         "scripts/interaction-contracts.test.mjs",
         "scripts/package-consumer-import.test.mjs",
-        "scripts/rich-text-security.test.mjs"
+        "scripts/rich-text-security.test.mjs",
+        "scripts/touch-controls.test.mjs"
       ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "not reviewed",
@@ -4419,7 +4421,9 @@
         "docs/interaction-contract-matrix.md",
         "docs/ui-generation-rulebook.md"
       ],
-      "testReferences": [],
+      "testReferences": [
+        "scripts/touch-controls.test.mjs"
+      ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "source reviewed",
       "runtimeVerification": "finding confirmed",
@@ -5544,7 +5548,7 @@
   "sourceLeads": {
     "src/components/inputs/Button/Button.tsx": {},
     "src/components/inputs/Button/Button.css": {
-      "layout constraint candidate": "8, 9, 10, 27, 32, 37, 170, 171, 200, 214, 239, 257, 258, 259"
+      "layout constraint candidate": "8, 9, 10, 27, 32, 37, 44, 45, 46, 186, 187, 216, 230, 255, 273, 274, 275"
     },
     "src/components/surfaces/BrandWatermark/BrandMarkIcon.tsx": {},
     "src/components/surfaces/BrandWatermark/BrandWatermark.css": {
@@ -5963,8 +5967,8 @@
       "layout constraint candidate": "3, 13, 18, 43, 48, 50, 51, 56, 70, 75, 76"
     },
     "src/components/overlays/Tooltip/Tooltip.tsx": {
-      "effect/state ownership candidate": "1, 69",
-      "browser/lifecycle candidate": "76, 77"
+      "effect/state ownership candidate": "1, 93, 97",
+      "browser/lifecycle candidate": "104, 105"
     },
     "src/components/overlays/Tooltip/Tooltip.css": {
       "layout constraint candidate": "5, 10, 18, 27, 39, 42"
