@@ -1,16 +1,18 @@
 # Agentic UI beta publication
 
-Section A records the completed first beta. The current repository candidate is
-`@etleli/agentic-ui@0.1.0-beta.2`; its beta.1 commands and artifact name below
-are historical. For beta.2, use the same exact-artifact validation, consumer,
-owner-approval, and registry-readback gates with the beta.2 name/version.
-No staging workflow or npm trusted publisher is configured for this repository,
-so a manually authorized publication of the inspected beta.2 archive is the
-available path. Preserve the `beta` tag and do not move `latest` by assumption.
+Section A records the completed first beta. `@etleli/agentic-ui@0.1.0-beta.2`
+was published from the exact archive described below on 2026-09-30. The beta.1
+commands and artifact name below are historical. Never resubmit an immutable
+version; future releases need a new version and their own exact-artifact approval.
+No staging workflow or npm trusted publisher was configured for this repository
+at beta.2 publication. The owner authorized manual submission of the inspected
+archive. It used the `beta` tag; `latest` remained on beta.1.
 
-## Current beta.2 release
+## Beta.2 release procedure (completed)
 
-Merge the validated candidate, verify the push-triggered check for the exact
+The following steps record the beta.2 procedure; the publish command below must
+not be run again because beta.2 now exists on npm. Merge the validated candidate,
+verify the push-triggered check for the exact
 `main` commit, and create one immutable archive from a clean checkout of that
 commit. Record its npm pack integrity and shasum, inspect its manifest, compiled
 code, CSS, types, guides, README, LICENSE, and third-party notices, then install
