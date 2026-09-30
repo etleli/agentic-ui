@@ -46,12 +46,13 @@ preview resizing, and browser errors. Inspect package output after export change
 
 Keep dependency versions and the lockfile stable unless the task requires a
 specific change. Avoid unrelated refactors, formatting, and framework changes.
-The published baseline is `@etleli/agentic-ui@0.1.0-beta.1`; this repository
-prepares `0.1.0-beta.2`, authored by Elias Etl. Keep the intentionally
+The current published release is `@etleli/agentic-ui@0.1.0-beta.2`; the audit
+still uses the original published beta.1 as its historical baseline. Both are
+authored by Elias Etl. Keep the intentionally
 publishable `private: false` state and
 `license: "SEE LICENSE IN LICENSE"`, with the approved public registry/access/beta
-configuration. Earlier publication is not permission to publish beta.2 and is not
-registry evidence for that candidate.
+configuration. The beta.2 publication is not permission for a future release;
+verify each version against the registry independently.
 The custom personal noncommercial LICENSE is owner-approved and finalized.
 Its strict individual-only permission remains; commercial and organizational use
 require prior written authorization, which does not by itself imply a fee.

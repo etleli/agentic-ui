@@ -5,7 +5,7 @@ components, editing preview parameters and content, resizing previews, and
 adjusting theme tokens. The library includes controls, layouts, tables, content
 viewers, charts, graph helpers, and reusable domain presentation components.
 
-This checkout builds **`@etleli/agentic-ui@0.1.0-beta.2`**, by
+The current published beta is **`@etleli/agentic-ui@0.1.0-beta.2`**, by
 [Elias Etl](https://github.com/etleli). The first published beta was `0.1.0-beta.1`.
 This is beta software, not a stable or fully
 audited component library. Observed registry availability and release evidence
@@ -21,7 +21,7 @@ controls the terms. See the [licensing explanation](https://github.com/etleli/ag
 
 ## Install the beta
 
-Check the release record for registry availability, then install this exact version:
+Install the published beta.2 version:
 
 ```sh
 npm install @etleli/agentic-ui@0.1.0-beta.2
@@ -97,7 +97,7 @@ The public entry is `src/index.ts`; component previews live in
 `src/app/componentRegistry.tsx`. Reusable implementations and their synthetic
 examples live under `src/components/`, with shared tokens under `src/theme/`.
 
-Use a local tarball to verify this candidate. `npm run validate` already performs
+Use a local tarball to verify this version. `npm run validate` already performs
 a separate-consumer installation. For a manual check, first create an empty
 temporary directory outside this repository, then run:
 

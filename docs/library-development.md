@@ -32,8 +32,9 @@ types, `style.css`, `theme.css`, and `agent-guides/`. Keep examples in the works
 registration alone never makes a component public. React and React DOM are peers;
 CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
 
-The published baseline is `@etleli/agentic-ui@0.1.0-beta.1`; the current
-candidate is `0.1.0-beta.2`, with `private: false`. The custom LICENSE is
+The current published release is `@etleli/agentic-ui@0.1.0-beta.2`; the
+component audit keeps beta.1 as its historical baseline. The package has
+`private: false`. The custom LICENSE is
 owner-approved and finalized. See the [release record](release-status.md)
 for observed registry status and [licensing](licensing.md) for usage conditions.
 Publication and repository visibility require the explicit owner checkpoint.
