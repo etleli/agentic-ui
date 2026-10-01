@@ -19,9 +19,11 @@ The [audit baseline](audit/README.md) inventories all 122 public components and
 separates exports, examples, source review and runtime verification. All seven
 outstanding findings are reproduced with counterexamples. The FilePicker/panel
 repairs retain their existing regression coverage. Additional static leads remain
-unvalidated. See [rules](audit/rules.md) and [proposed repair batches](audit/findings.md).
+unvalidated. The subsequent [native Modal repair](modal-native-focus.md) fixes F7
+in source with focused browser regressions; F1–F6 remain unfixed. It is not another
+package release. See [rules](audit/rules.md) and [proposed repair batches](audit/findings.md).
 
-Next: focused focus-management, controlled-state, date-bound, overlay-geometry and
+Next: focused controlled-state, date-bound, overlay-geometry and
 workshop-token repairs with appropriate regression tests. Then extend the audit to
 unreviewed groups and constrained layouts. No reusable behavior changes are part
 of the audit-baseline task. Preserve compatibility until a deliberate repair has

@@ -1,5 +1,5 @@
 .modal-overlay {
-  z-index: var(--z-overlay-modal, 2147483100);
+  z-index: calc(var(--z-overlay-modal, 2147483100) + var(--modal-focus-layer, 0));
   display: grid;
   place-items: center;
   padding: var(--space-5);
@@ -45,6 +45,11 @@
   transform: translateZ(0);
   will-change: opacity, transform;
   animation: modal-rise var(--motion-duration-popup) var(--motion-easing-emphasized) both;
+}
+
+.modal-overlay__dialog:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .modal-overlay[data-size='compact'] .modal-overlay__dialog {

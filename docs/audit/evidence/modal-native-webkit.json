@@ -1,0 +1,270 @@
+{
+  "mode": "candidate",
+  "packageVersion": "0.1.0-beta.2",
+  "integrity": "sha512-XCblVzxs7pwV6LnXHSaNjYXNrPBEv7aYVVIvaPk1aSlpUwiuUn6Apn+MAIdCl5Z5bt63JIfLaLCun9+lNPbjrA==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "initial safe focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native forward boundary excludes page background (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "native backward boundary excludes page background (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "restoration on Escape (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (normal)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal in an outer React portal (normal)",
+      "passed": true
+    },
+    {
+      "name": "SSR and hydration preserve the contained presentation and focus (normal)",
+      "passed": true
+    },
+    {
+      "name": "inert and layer cleanup preserve author state and remove listeners (normal)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline backdrop dismissal (normal)",
+      "passed": true
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (normal)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (normal)",
+      "passed": true
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (normal)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+      "passed": true
+    },
+    {
+      "name": "initial safe focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "native forward boundary excludes page background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "native backward boundary excludes page background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "restoration on Escape (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal in an outer React portal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "SSR and hydration preserve the contained presentation and focus (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "inert and layer cleanup preserve author state and remove listeners (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline backdrop dismissal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+      "passed": true
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "26.6",
+  "scope": "small WebKit smoke matrix",
+  "passed": true,
+  "summary": {
+    "cases": 26,
+    "passed": 26,
+    "failed": 0
+  },
+  "npm": "11.17.0",
+  "ssr": "plain Node SSR passed; contained HTML used by hydration cases",
+  "sourceHashes": {
+    "src/components/overlays/Modal/Modal.tsx": "3d9b9d15b57809f70fa2accd570a619dc035872bf787b695c2eec2365bb085a5",
+    "src/components/overlays/Modal/Modal.focus.ts": "f1e6c7e974dd8938bf46e7b4105ff0534e334c1cb090f1b3b73f1fa2e200b50a",
+    "src/components/overlays/overlayPortal.tsx": "4adde33e6db861e440049893f5be036bfd077b9e34bfd6753b20de43d175101a",
+    "src/components/overlays/Modal/Modal.css": "57e4672e69b4edc059c5145aaeb015074cc3ab4b1abc07303e81ef8c26af724f"
+  }
+}

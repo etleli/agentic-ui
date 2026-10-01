@@ -1,0 +1,1314 @@
+{
+  "mode": "candidate",
+  "packageVersion": "0.1.0-beta.2",
+  "integrity": "sha512-XCblVzxs7pwV6LnXHSaNjYXNrPBEv7aYVVIvaPk1aSlpUwiuUn6Apn+MAIdCl5Z5bt63JIfLaLCun9+lNPbjrA==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "initial safe focus (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "idle scope keeps inert and managed styles stable under reduced motion (normal)",
+      "passed": true
+    },
+    {
+      "name": "explicit child autoFocus and original return target (normal)",
+      "passed": true
+    },
+    {
+      "name": "native forward boundary excludes page background (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "native backward boundary excludes page background (normal)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "single focusable target (normal)",
+      "passed": true
+    },
+    {
+      "name": "no focusable target uses dialog fallback (normal)",
+      "passed": true
+    },
+    {
+      "name": "disabled and dynamically hidden targets (normal)",
+      "passed": true
+    },
+    {
+      "name": "restoration on Escape (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (normal)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (normal)",
+      "passed": true
+    },
+    {
+      "name": "return target disabled (normal)",
+      "passed": true
+    },
+    {
+      "name": "return target hidden (normal)",
+      "passed": true
+    },
+    {
+      "name": "return target inert (normal)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (normal)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal in an outer React portal (normal)",
+      "passed": true
+    },
+    {
+      "name": "contained host excludes local background and leaves the page usable (normal)",
+      "passed": true
+    },
+    {
+      "name": "SSR and hydration preserve the contained presentation and focus (normal)",
+      "passed": true
+    },
+    {
+      "name": "new background branches become inert and are released on close (normal)",
+      "passed": true
+    },
+    {
+      "name": "inert and layer cleanup preserve author state and remove listeners (normal)",
+      "passed": true
+    },
+    {
+      "name": "unrelated shared-root and arbitrary consumer portals are not owned (normal)",
+      "passed": true
+    },
+    {
+      "name": "backdrop dismissal keeps its existing callback (normal)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline backdrop dismissal (normal)",
+      "passed": true
+    },
+    {
+      "name": "unavailable confirmation stays reachable and rejects activation (normal)",
+      "passed": true
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (normal)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (normal)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (normal)",
+      "passed": true
+    },
+    {
+      "name": "unmount removes listeners and restores once (normal)",
+      "passed": true
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (normal)",
+      "passed": true
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (normal)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (normal)",
+      "passed": true
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (normal)",
+      "passed": true
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (normal)",
+      "passed": true
+    },
+    {
+      "name": "native summary and closed-details tab order (normal)",
+      "passed": true
+    },
+    {
+      "name": "native editable host participates in Tab order (normal)",
+      "passed": true
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (normal)",
+      "passed": true
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (normal)",
+      "passed": true
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (normal)",
+      "passed": true
+    },
+    {
+      "name": "native positive tab order after explicit focus (normal)",
+      "passed": true
+    },
+    {
+      "name": "radio group retains one sequential stop (normal)",
+      "passed": true
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (normal)",
+      "passed": true
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (normal)",
+      "passed": true
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (normal)",
+      "passed": true
+    },
+    {
+      "name": "closing animation is not keyboard interactive (normal)",
+      "passed": true
+    },
+    {
+      "name": "Cancel preserves callbacks (normal)",
+      "passed": true
+    },
+    {
+      "name": "Confirm preserves callbacks (normal)",
+      "passed": true
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (normal)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (normal)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (normal)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (normal)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (normal)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (normal)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (normal)",
+      "passed": true
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (normal)",
+      "passed": true
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (normal)",
+      "passed": true
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (normal)",
+      "passed": true
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (normal)",
+      "passed": true
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (normal)",
+      "passed": true
+    },
+    {
+      "name": "open-shadow opener receives restored focus (normal)",
+      "passed": true
+    },
+    {
+      "name": "compound date preserves native internal Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound date preserves native internal Shift+Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Shift+Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Shift+Tab stops (normal)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (normal)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (normal)",
+      "passed": true
+    },
+    {
+      "name": "initial safe focus (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "",
+          "label": "Close dialog",
+          "inside": true
+        }
+      }
+    },
+    {
+      "name": "idle scope keeps inert and managed styles stable under reduced motion (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "explicit child autoFocus and original return target (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native forward boundary excludes page background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside",
+          "Cancel",
+          "Confirm",
+          "BODY",
+          "Close dialog",
+          "field",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "native backward boundary excludes page background (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ],
+        "modal": [
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside",
+          "field",
+          "Close dialog",
+          "BODY",
+          "Confirm",
+          "Cancel",
+          "inside"
+        ]
+      }
+    },
+    {
+      "name": "single focusable target (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "no focusable target uses dialog fallback (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "disabled and dynamically hidden targets (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "restoration on Escape (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on close button (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": [
+          false
+        ]
+      }
+    },
+    {
+      "name": "restoration on parent (StrictMode)",
+      "passed": true,
+      "observation": {
+        "focus": {
+          "id": "opener",
+          "label": null,
+          "inside": false
+        },
+        "requests": []
+      }
+    },
+    {
+      "name": "return target removed (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "return target disabled (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "return target hidden (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "return target inert (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline Escape and close button (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal in an outer React portal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "contained host excludes local background and leaves the page usable (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "SSR and hydration preserve the contained presentation and focus (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "new background branches become inert and are released on close (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "inert and layer cleanup preserve author state and remove listeners (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "unrelated shared-root and arbitrary consumer portals are not owned (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "backdrop dismissal keeps its existing callback (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "controlled parent can decline backdrop dismissal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "unavailable confirmation stays reachable and rejects activation (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "nested Modal focus ownership and restoration (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (controlled) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "repeated cycles and cleanup (uncontrolled) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "unmount removes listeners and restores once (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "library-owned child portal remains in the focus scope (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "focused child portal removal re-homes focus immediately (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "contained Modal observes dynamic targets in a new child portal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "initially open nested Modal owns Tab (controlled) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "initially open nested Modal owns Tab (defaultOpen) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native summary and closed-details tab order (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native editable host participates in Tab order (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "image-map link follows associated image visibility (visible) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "image-map link follows associated image visibility (hidden) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "later independent Modal is above an existing nested Modal (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native positive tab order after explicit focus (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "radio group retains one sequential stop (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "Tab scrolls long modal content to keep its target visible (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "focusable SVG remains a valid modal Tab target (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "focusable SVG opener receives restored focus (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "closing animation is not keyboard interactive (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "Cancel preserves callbacks (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "Confirm preserves callbacks (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "closing parent with nested Modal restores outer opener (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (display) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (display) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (visibility) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (visibility) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "initially CSS-hidden Modal does not trap (class) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "later CSS hiding releases and revealing restores containment (class) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "non-Modal ancestor becoming hidden (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "non-Modal ancestor becoming inert (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "Escape retains its existing open-prop semantics when CSS-hidden (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (CSS) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "unavailable parent suspends portalled child and preserves state (inert ancestor) (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":-1,\"enterShadow\":true} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowPositive\":true} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open shadow/slot order matches native navigation {\"shadowIndex\":0,\"delegatesFocus\":true} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "open-shadow opener receives restored focus (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "compound date preserves native internal Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound date preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": true,
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "native scroll-pane navigation {} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollFits\":true} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"enabled\"} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"negative\"} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"disabled\"} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollChild\":\"hidden\"} (StrictMode)",
+      "passed": true
+    },
+    {
+      "name": "native scroll-pane navigation {\"scrollOverflow\":\"hidden\"} (StrictMode)",
+      "passed": true
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "153.0.8010.12",
+  "scope": "complete Chromium suite",
+  "passed": true,
+  "summary": {
+    "cases": 158,
+    "passed": 158,
+    "failed": 0
+  },
+  "npm": "11.17.0",
+  "ssr": "plain Node SSR passed; contained HTML used by hydration cases",
+  "sourceHashes": {
+    "src/components/overlays/Modal/Modal.tsx": "3d9b9d15b57809f70fa2accd570a619dc035872bf787b695c2eec2365bb085a5",
+    "src/components/overlays/Modal/Modal.focus.ts": "f1e6c7e974dd8938bf46e7b4105ff0534e334c1cb090f1b3b73f1fa2e200b50a",
+    "src/components/overlays/overlayPortal.tsx": "4adde33e6db861e440049893f5be036bfd077b9e34bfd6753b20de43d175101a",
+    "src/components/overlays/Modal/Modal.css": "57e4672e69b4edc059c5145aaeb015074cc3ab4b1abc07303e81ef8c26af724f"
+  }
+}

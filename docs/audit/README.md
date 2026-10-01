@@ -1,8 +1,19 @@
 # Component-contract audit baseline
 
-This is the first audit pass, not a completed library audit. No reusable component
-behavior, style, public API, dependency version, or release identity changes here.
-The seven outstanding findings are reproduced, not repaired.
+The original first audit pass reproduced seven findings without repairing them.
+It is not a completed library audit. Its beta.1 evidence below remains historical.
+
+## Subsequent scoped repair: F7
+
+The [native Modal repair](../modal-native-focus.md) verifies F7 against the current
+published beta.2 and fixes it in source. Its complete Chromium suite has 158 cases,
+including all 64 curated PR #7 scenario families in normal rendering/StrictMode
+and native date/time/media comparisons. The inventory accepts that fixed status
+only when the saved complete candidate report passes and matches the four runtime
+source hashes. Required validation runs the live suite as well as inventory freshness.
+F1–F6 and every additional source lead remain unchanged. No new version is released;
+the published beta.2 still has the unfixed Modal. Historical coverage counts below
+describe the original audit, not the later repair.
 
 ## Baselines and evidence
 
