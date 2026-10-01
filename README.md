@@ -50,8 +50,9 @@ See the [state and persistence contracts](https://github.com/etleli/agentic-ui/b
 The [component audit baseline](https://github.com/etleli/agentic-ui/blob/main/docs/audit/README.md)
 also confirms the workshop's generated-color control/save defect, controlled
 `DatePicker` values diverging from parent props, and missing modal focus handling.
-All seven findings remain unresolved. The audit documents reproductions and repair
-scopes, not component fixes. These repository updates do not alter the published
+F7 is now repaired in source with [native Modal focus containment](docs/modal-native-focus.md)
+and permanent Chromium regressions. F1–F6 remain unresolved; the published beta.2
+still has the original Modal behavior. These repository updates do not alter the published
 npm README or archive retroactively.
 
 ## Develop locally
@@ -84,8 +85,10 @@ This runs type checking, lint, interaction and consumer contracts, security test
 both builds, an actual tarball installed into a temporary consumer, package dry-run
 inspection, audit inventory freshness, and a whitespace check. The consumer checks ESM/CommonJS imports,
 public types, CSS, and packaged agent guides. It requires npm registry access for
-normal consumer dependency resolution and the `tar` command. The consumer's
+normal consumer dependency resolution, Chromium installation, and the `tar` command. The consumer's
 build/type-check tools use the repository's verified versions.
+The mandatory Modal suite uses native browser references and an installed local
+tarball. `npm run test:modal-focus -- --webkit` is a separate small smoke matrix.
 
 `npm run build` produces `dist/` (workshop) and `dist-library/` (library).
 Neither generated output belongs in Git. CI only validates pull requests and
