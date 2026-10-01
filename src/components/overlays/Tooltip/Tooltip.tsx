@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { useOverlayPresence } from '../overlayPresence';
+import { useOwnedPortalSpace } from '../portalOwnership';
 import './Tooltip.css';
 import type { TooltipPlacement, TooltipProps, TooltipSize, TooltipTone } from './Tooltip.types';
 
@@ -34,6 +35,9 @@ export function Tooltip({
   ...tooltipProps
 }: TooltipProps) {
   const rootRef = useRef<HTMLSpanElement | null>(null);
+  const bubbleRef = useRef<HTMLSpanElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
+  const [resolvedPlacement, setResolvedPlacement] = useState(placement);
   const touchDismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchActive = useRef(false);
   const [bubbleStyle, setBubbleStyle] = useState<CSSProperties>({});
@@ -46,6 +50,11 @@ export function Tooltip({
     const rootRect = rootRef.current?.getBoundingClientRect();
 
     if (!rootRect) {
+      return;
+    }
+    if (portalSpace) {
+      const position = portalSpace.place(rootRect, bubbleRef.current, { side: placement, align: 'center', translated: true, interactive: false }, '--tooltip-left', '--tooltip-top');
+      if (position) { setResolvedPlacement(position.side); setBubbleStyle(position.style); }
       return;
     }
 
@@ -66,7 +75,7 @@ export function Tooltip({
       '--tooltip-left': `${nextPosition.left}px`,
       '--tooltip-top': `${nextPosition.top}px`,
     } as CSSProperties);
-  }, [placement]);
+  }, [placement, portalSpace]);
 
   function updateOpen(nextOpen: boolean) {
     if (!isControlled) {
@@ -174,7 +183,7 @@ export function Tooltip({
       <span className="tooltip__trigger">{children}</span>
       {isPresent && content ? (
         <OverlayPortal>
-          <span className="tooltip__bubble" data-placement={placement} data-size={size} data-state={presenceState} data-tone={tone} role="tooltip" style={bubbleStyle}>
+          <span className="tooltip__bubble" ref={bubbleRef} data-placement={portalSpace ? resolvedPlacement : placement} data-size={size} data-state={presenceState} data-tone={tone} role="tooltip" style={bubbleStyle}>
             {content}
           </span>
         </OverlayPortal>

@@ -363,7 +363,7 @@ export function Toast({
     </div>
   );
 
-  return presentation === 'viewport' ? <OverlayPortal>{toast}</OverlayPortal> : toast;
+  return presentation === 'viewport' ? <OverlayPortal destination="surface">{toast}</OverlayPortal> : toast;
 }
 
 export type { ToastItem, ToastPlacement, ToastPresentation, ToastProps, ToastTone };

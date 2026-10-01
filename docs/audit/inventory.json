@@ -5621,8 +5621,8 @@
       "layout constraint candidate": "3, 11, 12, 13, 22, 27, 45, 53, 63, 76, 80, 84, 112, 118, 119, 127, 134"
     },
     "src/components/overlays/ContextMenu/ContextMenu.tsx": {
-      "effect/state ownership candidate": "2, 69, 97, 106, 118",
-      "browser/lifecycle candidate": "51, 88, 89, 102"
+      "effect/state ownership candidate": "2, 72, 100, 109, 121, 137",
+      "browser/lifecycle candidate": "54, 91, 92, 105"
     },
     "src/components/overlays/ContextMenu/ContextMenu.css": {
       "layout constraint candidate": "6, 14, 24, 44, 54, 60, 70, 71, 90, 138, 143, 144, 158, 163, 171, 188"
@@ -5633,9 +5633,9 @@
       "layout constraint candidate": "3, 12, 13, 14, 23, 28, 72, 73, 81, 88"
     },
     "src/components/forms/DatePicker/DatePicker.tsx": {
-      "prop-to-state synchronization candidate": "74, 81, 133, 140",
-      "effect/state ownership candidate": "2, 73, 77, 85, 113",
-      "browser/lifecycle candidate": "104, 105, 119, 120"
+      "prop-to-state synchronization candidate": "81, 88, 140, 147",
+      "effect/state ownership candidate": "2, 80, 84, 92, 120",
+      "browser/lifecycle candidate": "111, 112, 126, 127"
     },
     "src/components/forms/Forms.css": {
       "layout constraint candidate": "17, 29, 34, 43, 59, 87, 123, 138, 144, 169, 170, 186, 217, 225, 229, 239, 246, 277, 284, 291, 318, 354, 363, 375, 383, 408, 418, 422, 424, 431, 439, 453, 454, 489, 490, 511, 513, 528, 544, 559, 582, 602, 634, 646, 647, 652, 667, 690, 708, 718, 719, 736, 744, 745, 762"
@@ -5674,9 +5674,9 @@
     },
     "src/components/charts/DepthChart/DepthChart.tsx": {},
     "src/components/inputs/Dropdown/Dropdown.tsx": {
-      "prop-to-state synchronization candidate": "158, 235, 243, 275",
-      "effect/state ownership candidate": "3, 150, 156, 162, 183, 211",
-      "browser/lifecycle candidate": "202, 203, 217, 218"
+      "prop-to-state synchronization candidate": "165, 242, 250, 282",
+      "effect/state ownership candidate": "3, 157, 163, 169, 190, 218",
+      "browser/lifecycle candidate": "209, 210, 224, 225"
     },
     "src/components/inputs/Dropdown/Dropdown.css": {
       "layout constraint candidate": "5, 18, 32, 37, 42, 67, 72, 73, 74, 100, 101, 103, 126, 127, 164"
@@ -5763,8 +5763,8 @@
       "layout constraint candidate": "5, 6, 58, 64, 67, 68, 79, 82, 83, 89, 94, 110, 111"
     },
     "src/components/overlays/Modal/Modal.tsx": {
-      "effect/state ownership candidate": "2, 59",
-      "browser/lifecycle candidate": "70"
+      "effect/state ownership candidate": "2, 61",
+      "browser/lifecycle candidate": "72"
     },
     "src/components/overlays/Modal/Modal.css": {
       "layout constraint candidate": "37, 38, 67, 74, 75, 76, 81, 90, 97, 103, 110, 118, 141"
@@ -5823,8 +5823,8 @@
     },
     "src/components/trading/PnLDisplay/PnLDisplay.tsx": {},
     "src/components/overlays/Popover/Popover.tsx": {
-      "effect/state ownership candidate": "2, 103, 131",
-      "browser/lifecycle candidate": "122, 123, 137, 143, 144"
+      "effect/state ownership candidate": "2, 110, 138",
+      "browser/lifecycle candidate": "129, 130, 144, 150, 151"
     },
     "src/components/overlays/Popover/Popover.css": {
       "layout constraint candidate": "5, 13, 14, 24, 57, 76, 110, 116, 124"
@@ -5920,9 +5920,9 @@
     },
     "src/components/charts/TimeSeriesChart/TimeSeriesChart.tsx": {},
     "src/components/forms/TimePicker/TimePicker.tsx": {
-      "prop-to-state synchronization candidate": "28, 56, 107, 133",
-      "effect/state ownership candidate": "2, 55, 59, 87",
-      "browser/lifecycle candidate": "78, 79, 93, 94"
+      "prop-to-state synchronization candidate": "30, 63, 114, 140",
+      "effect/state ownership candidate": "2, 62, 66, 94",
+      "browser/lifecycle candidate": "85, 86, 100, 101"
     },
     "src/components/activity/Timeline/Timeline.tsx": {
       "default allocation candidate": "8"
@@ -5955,8 +5955,8 @@
       "layout constraint candidate": "4, 18, 26, 34, 55, 76, 77, 93, 94, 95, 103, 115, 120, 125, 153, 186, 192, 193, 200, 206, 210, 214, 218, 225"
     },
     "src/components/navigation/UserCard/UserCard.tsx": {
-      "effect/state ownership candidate": "2, 101, 107, 136",
-      "browser/lifecycle candidate": "127, 128, 142, 143"
+      "effect/state ownership candidate": "2, 109, 115, 144",
+      "browser/lifecycle candidate": "135, 136, 150, 151"
     },
     "src/components/navigation/UserCard/UserCard.css": {
       "layout constraint candidate": "16, 22, 23, 57, 58, 65, 70, 77, 82, 83, 91, 97, 105, 171, 177, 191, 212, 213, 214, 235"
@@ -5967,8 +5967,8 @@
       "layout constraint candidate": "3, 13, 18, 43, 48, 50, 51, 56, 70, 75, 76"
     },
     "src/components/overlays/Tooltip/Tooltip.tsx": {
-      "effect/state ownership candidate": "1, 93, 97",
-      "browser/lifecycle candidate": "104, 105"
+      "effect/state ownership candidate": "1, 102, 106",
+      "browser/lifecycle candidate": "113, 114"
     },
     "src/components/overlays/Tooltip/Tooltip.css": {
       "layout constraint candidate": "5, 10, 18, 27, 39, 42"

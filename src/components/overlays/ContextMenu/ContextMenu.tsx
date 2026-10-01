@@ -2,6 +2,7 @@ import { Check, MoreHorizontal } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { useOverlayPresence } from '../overlayPresence';
+import { useOwnedPortalSpace } from '../portalOwnership';
 import './ContextMenu.css';
 import type { ContextMenuActionItem, ContextMenuItem, ContextMenuItemTone, ContextMenuProps } from './ContextMenu.types';
 
@@ -33,6 +34,8 @@ export function ContextMenu({
 }: ContextMenuProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
+  const [ownedStyle, setOwnedStyle] = useState<CSSProperties>({});
   const restoreFocusRef = useRef<HTMLElement | null>(null);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [menuPosition, setMenuPosition] = useState({ source: 'auto' as 'auto' | 'pointer', x: 16, y: 48 });
@@ -116,7 +119,7 @@ export function ContextMenu({
   }, [isOpen, menuPosition.source]);
 
   useLayoutEffect(() => {
-    if (!isOpen || !menuRef.current) {
+    if (!isOpen || !menuRef.current || portalSpace) {
       return;
     }
 
@@ -129,7 +132,13 @@ export function ContextMenu({
     if (nextX !== menuPosition.x || nextY !== menuPosition.y) {
       setMenuPosition((currentPosition) => ({ ...currentPosition, x: nextX, y: nextY }));
     }
-  }, [isOpen, menuPosition.x, menuPosition.y]);
+  }, [isOpen, menuPosition.x, menuPosition.y, portalSpace]);
+
+  useLayoutEffect(() => {
+    if (!isOpen || !portalSpace) return;
+    const position = portalSpace.place(new DOMRect(menuPosition.x, menuPosition.y, 0, 0), menuRef.current, { side: 'bottom', gap: 0 }, '--context-menu-x', '--context-menu-y');
+    if (position) setOwnedStyle(position.style);
+  }, [isOpen, menuPosition.x, menuPosition.y, portalSpace]);
 
   function handleMenuKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
     const focusableItems = getFocusableMenuItems(menuRef.current);
@@ -214,7 +223,7 @@ export function ContextMenu({
             ref={menuRef}
             role="menu"
             aria-label={triggerLabel}
-            style={{ '--context-menu-x': `${menuPosition.x}px`, '--context-menu-y': `${menuPosition.y}px` } as CSSProperties}
+            style={portalSpace ? ownedStyle : { '--context-menu-x': `${menuPosition.x}px`, '--context-menu-y': `${menuPosition.y}px` } as CSSProperties}
             onKeyDown={handleMenuKeyDown}
           >
             {items.length > 0 ? items.map((item) => {

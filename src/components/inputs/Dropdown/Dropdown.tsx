@@ -2,6 +2,7 @@ import './Dropdown.css';
 import { Check, ChevronDown } from 'lucide-react';
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { OverlayPortal } from '../../overlays/overlayPortal';
+import { useOwnedPortalSpace } from '../../overlays/portalOwnership';
 import { getThemeGeneratedColorForKey } from '../../../theme/categoricalColors';
 import type { DropdownOption, DropdownProps, DropdownSize, DropdownValue } from './Dropdown.types';
 
@@ -100,6 +101,7 @@ export function Dropdown({
   const listboxId = `${id}-listbox`;
   const rootRef = useRef<HTMLDivElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
   const [menuStyle, setMenuStyle] = useState<CSSProperties>({});
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuRendered, setIsMenuRendered] = useState(false);
@@ -128,6 +130,11 @@ export function Dropdown({
     if (!triggerRect) {
       return;
     }
+    if (portalSpace) {
+      const position = portalSpace.place(triggerRect, menuRef.current, { side: 'bottom', minimumWidth: triggerRect.width }, '--floating-panel-left', '--floating-panel-top');
+      if (position) setMenuStyle({ ...position.style, '--floating-panel-width': `${triggerRect.width}px` } as CSSProperties);
+      return;
+    }
 
     const gutter = 8;
     const menuWidth = menuRect?.width ?? Math.max(triggerRect.width, 180);
@@ -145,7 +152,7 @@ export function Dropdown({
       '--floating-panel-top': `${top}px`,
       '--floating-panel-width': `${triggerRect.width}px`,
     } as CSSProperties);
-  }, []);
+  }, [portalSpace]);
 
   useEffect(() => {
     if (disabled) {
