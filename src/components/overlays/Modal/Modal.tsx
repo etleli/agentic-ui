@@ -4,6 +4,7 @@ import { OverlayPortal } from '../overlayPortal';
 import { Tooltip } from '../Tooltip';
 import { Button } from '../../inputs/Button';
 import { useOverlayPresence } from '../overlayPresence';
+import { PortalOwnerContext, useModalPortalOwner } from '../portalOwnership';
 import './Modal.css';
 import type { ModalConfirmVariant, ModalPresentation, ModalProps, ModalSize } from './Modal.types';
 
@@ -37,6 +38,7 @@ export function Modal({
   const isControlled = open !== undefined;
   const isOpen = isControlled ? open : internalOpen;
   const { isPresent, presenceState } = useOverlayPresence(isOpen);
+  const portal = useModalPortalOwner(isOpen && isPresent && !modalProps.hidden && !modalProps.inert);
 
   const updateOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {
@@ -83,6 +85,7 @@ export function Modal({
       data-size={size}
       data-state={presenceState}
       role="presentation"
+      ref={portal.setRoot}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           updateOpen(false);
@@ -127,10 +130,12 @@ export function Modal({
           ) : null}
         </footer>
       </section>
+      {portal.layer}
     </div>
   );
 
-  return presentation === 'viewport' ? <OverlayPortal>{overlay}</OverlayPortal> : overlay;
+  const content = <PortalOwnerContext.Provider value={portal.owner}>{overlay}</PortalOwnerContext.Provider>;
+  return presentation === 'viewport' ? <OverlayPortal destination="surface">{content}</OverlayPortal> : content;
 }
 
 export type { ModalConfirmVariant, ModalPresentation, ModalProps, ModalSize };

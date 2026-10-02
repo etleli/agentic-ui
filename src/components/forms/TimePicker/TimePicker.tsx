@@ -1,6 +1,7 @@
 import { Clock } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../../overlays/overlayPortal';
+import { useOwnedPortalSpace } from '../../overlays/portalOwnership';
 import '../Forms.css';
 import { getFormClassName, getTimeDisplayLabel, getTimeOptions, normalizeFormSize, parseTimeValue } from '../Forms.utils';
 import type { TimePickerProps } from '../Forms.types';
@@ -23,6 +24,7 @@ export function TimePicker({
 }: TimePickerProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
   const [popoverStyle, setPopoverStyle] = useState<CSSProperties>({});
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(parseTimeValue(value) ?? '');
@@ -33,6 +35,11 @@ export function TimePicker({
     const popoverRect = popoverRef.current?.getBoundingClientRect();
 
     if (!triggerRect) {
+      return;
+    }
+    if (portalSpace) {
+      const position = portalSpace.place(triggerRect, popoverRef.current, { side: 'bottom' }, '--floating-panel-left', '--floating-panel-top');
+      if (position) setPopoverStyle(position.style);
       return;
     }
 
@@ -50,7 +57,7 @@ export function TimePicker({
       '--floating-panel-left': `${left}px`,
       '--floating-panel-top': `${top}px`,
     } as CSSProperties);
-  }, []);
+  }, [portalSpace]);
 
   useEffect(() => {
     setSelectedValue(parseTimeValue(value) ?? '');

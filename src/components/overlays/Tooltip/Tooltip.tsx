@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { useOverlayPresence } from '../overlayPresence';
+import { useOwnedPortalSpace } from '../portalOwnership';
 import './Tooltip.css';
 import type { TooltipPlacement, TooltipProps, TooltipSize, TooltipTone } from './Tooltip.types';
 
@@ -16,6 +17,7 @@ export function Tooltip({
   disabled = false,
   onBlur,
   onFocus,
+  onKeyDown,
   onMouseEnter,
   onMouseLeave,
   onPointerCancel,
@@ -34,12 +36,19 @@ export function Tooltip({
   ...tooltipProps
 }: TooltipProps) {
   const rootRef = useRef<HTMLSpanElement | null>(null);
+  const bubbleRef = useRef<HTMLSpanElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
+  const [resolvedPlacement, setResolvedPlacement] = useState(placement);
+  const [scrollableExplanation, setScrollableExplanation] = useState(false);
+  const lastTriggerFocus = useRef<HTMLElement | null>(null);
+  const restoringTriggerFocus = useRef(false);
   const touchDismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchActive = useRef(false);
   const [bubbleStyle, setBubbleStyle] = useState<CSSProperties>({});
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
   const isOpen = !disabled && Boolean(content) && (isControlled ? open : internalOpen);
+  const isExplanation = Boolean(portalSpace && scrollableExplanation);
   const { isPresent, presenceState } = useOverlayPresence(isOpen);
 
   const updatePosition = useCallback(() => {
@@ -48,7 +57,13 @@ export function Tooltip({
     if (!rootRect) {
       return;
     }
+    if (portalSpace) {
+      const position = portalSpace.place(rootRect, bubbleRef.current, { side: placement, align: 'center', translated: true, interactive: false }, '--tooltip-left', '--tooltip-top');
+      if (position) { setResolvedPlacement(position.side); setBubbleStyle(position.style); setScrollableExplanation(position.scrollable); }
+      return;
+    }
 
+    setScrollableExplanation(false);
     const centerX = rootRect.left + rootRect.width / 2;
     const centerY = rootRect.top + rootRect.height / 2;
     const gap = 8;
@@ -66,7 +81,7 @@ export function Tooltip({
       '--tooltip-left': `${nextPosition.left}px`,
       '--tooltip-top': `${nextPosition.top}px`,
     } as CSSProperties);
-  }, [placement]);
+  }, [placement, portalSpace]);
 
   function updateOpen(nextOpen: boolean) {
     if (!isControlled) {
@@ -89,6 +104,33 @@ export function Tooltip({
       updateOpen(false);
     }, 1800);
   }
+
+  function closeExplanation() {
+    clearTouchDismiss();
+    updateOpen(false);
+    if (lastTriggerFocus.current?.isConnected) {
+      restoringTriggerFocus.current = true;
+      lastTriggerFocus.current.focus();
+      restoringTriggerFocus.current = false;
+    }
+  }
+
+  useEffect(() => {
+    if (!isExplanation || !isOpen) return undefined;
+    const document = rootRef.current?.ownerDocument;
+    if (!document) return undefined;
+    function outsidePointer(event: PointerEvent) {
+      const target = event.target as Node;
+      if (!rootRef.current?.contains(target) && !bubbleRef.current?.contains(target)) {
+        if (touchDismissTimer.current !== null) clearTimeout(touchDismissTimer.current);
+        touchDismissTimer.current = null;
+        if (!isControlled) setInternalOpen(false);
+        onOpenChange?.(false);
+      }
+    }
+    document.addEventListener('pointerdown', outsidePointer);
+    return () => document.removeEventListener('pointerdown', outsidePointer);
+  }, [isExplanation, isOpen, isControlled, onOpenChange]);
 
   useEffect(() => () => {
     if (touchDismissTimer.current !== null) clearTimeout(touchDismissTimer.current);
@@ -120,20 +162,34 @@ export function Tooltip({
       data-tone={tone}
       ref={rootRef}
       onBlur={(event) => {
+        // The overflow explanation follows this trigger in the owned DOM scope;
+        // let ordinary Tab traverse intervening Modal controls and reach it.
+        if (isExplanation && isOpen && event.relatedTarget instanceof Node && portalSpace?.contains(event.relatedTarget)) {
+          onBlur?.(event);
+          return;
+        }
         clearTouchDismiss();
         updateOpen(false);
         onBlur?.(event);
       }}
       onFocus={(event) => {
-        updateOpen(true);
+        if (event.target instanceof HTMLElement && rootRef.current?.contains(event.target)) lastTriggerFocus.current = event.target;
+        if (!restoringTriggerFocus.current) updateOpen(true);
         onFocus?.(event);
+      }}
+      onKeyDown={(event) => {
+        if (isExplanation && isOpen && event.key === 'Escape') {
+          event.stopPropagation();
+          closeExplanation();
+        }
+        onKeyDown?.(event);
       }}
       onMouseEnter={(event) => {
         if (!touchActive.current) updateOpen(true);
         onMouseEnter?.(event);
       }}
       onMouseLeave={(event) => {
-        if (!touchActive.current) updateOpen(false);
+        if (!touchActive.current && !(isExplanation && isOpen)) updateOpen(false);
         onMouseLeave?.(event);
       }}
       onPointerDownCapture={(event) => {
@@ -149,14 +205,14 @@ export function Tooltip({
       }}
       onPointerDown={onPointerDown}
       onPointerUpCapture={(event) => {
-        if (event.pointerType === 'touch') dismissAfterTouch();
+        if (event.pointerType === 'touch' && !(isExplanation && isOpen)) dismissAfterTouch();
         onPointerUpCapture?.(event);
       }}
       onPointerUp={onPointerUp}
       onPointerCancelCapture={(event) => {
         if (event.pointerType === 'touch') {
           clearTouchDismiss();
-          updateOpen(false);
+          if (!(isExplanation && isOpen)) updateOpen(false);
         }
         onPointerCancelCapture?.(event);
       }}
@@ -174,8 +230,20 @@ export function Tooltip({
       <span className="tooltip__trigger">{children}</span>
       {isPresent && content ? (
         <OverlayPortal>
-          <span className="tooltip__bubble" data-placement={placement} data-size={size} data-state={presenceState} data-tone={tone} role="tooltip" style={bubbleStyle}>
+          <span
+            className="tooltip__bubble"
+            ref={bubbleRef}
+            data-placement={portalSpace ? resolvedPlacement : placement}
+            data-size={size}
+            data-state={presenceState}
+            data-tone={tone}
+            role={isExplanation ? 'dialog' : 'tooltip'}
+            aria-label={isExplanation ? 'Full explanation' : undefined}
+            tabIndex={isExplanation && isOpen ? 0 : undefined}
+            style={isExplanation && !isOpen ? { ...bubbleStyle, pointerEvents: 'none' } : bubbleStyle}
+          >
             {content}
+            {isExplanation ? <button className="tooltip__dismiss" type="button" onClick={closeExplanation}>Close explanation</button> : null}
           </span>
         </OverlayPortal>
       ) : null}

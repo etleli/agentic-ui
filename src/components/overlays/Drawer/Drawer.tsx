@@ -95,7 +95,7 @@ export function Drawer({
     </div>
   );
 
-  return presentation === 'viewport' ? <OverlayPortal>{overlay}</OverlayPortal> : overlay;
+  return presentation === 'viewport' ? <OverlayPortal destination="surface">{overlay}</OverlayPortal> : overlay;
 }
 
 export type { DrawerPlacement, DrawerPresentation, DrawerProps, DrawerSize };

@@ -2,6 +2,7 @@ import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Button } from '../../inputs/Button';
 import { OverlayPortal } from '../../overlays/overlayPortal';
+import { useOwnedPortalSpace } from '../../overlays/portalOwnership';
 import '../Forms.css';
 import {
   addMonths,
@@ -37,6 +38,7 @@ export function DatePicker({
 }: DatePickerProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
   const [popoverStyle, setPopoverStyle] = useState<CSSProperties>({});
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value ?? '');
@@ -51,6 +53,11 @@ export function DatePicker({
     const popoverRect = popoverRef.current?.getBoundingClientRect();
 
     if (!triggerRect) {
+      return;
+    }
+    if (portalSpace) {
+      const position = portalSpace.place(triggerRect, popoverRef.current, { side: 'bottom' }, '--floating-panel-left', '--floating-panel-top');
+      if (position) setPopoverStyle(position.style);
       return;
     }
 
@@ -68,7 +75,7 @@ export function DatePicker({
       '--floating-panel-left': `${left}px`,
       '--floating-panel-top': `${top}px`,
     } as CSSProperties);
-  }, []);
+  }, [portalSpace]);
 
   useEffect(() => {
     setSelectedValue(value ?? '');
