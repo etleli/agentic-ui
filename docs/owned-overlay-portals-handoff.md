@@ -131,6 +131,14 @@ whitespace checks. Latest hosted validation and the distinction
 between the reviewed head and its repair are recorded in PR #11. No additional
 automated review is requested by this continuation.
 
+Hosted run 36988866738 passed the 74 Node tests and package checks for `76fdd24`
+but failed one Chromium layering probe: the newly inserted independent Modal was
+observed at its default order, and that probe did not wait for root registration.
+The fixture now waits for the registration marker before sampling computed z-index. It does
+not wait for the expected order; incorrect registered ordering and the native
+hit-target assertions still fail. The report records late registrations separately.
+This follow-up changes the Chromium probe, not production stacking behavior.
+
 ## Remaining owner review and separate work
 
 1. Verify latest hosted Validate on the exact repair head in PR #11. The one

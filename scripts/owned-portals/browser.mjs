@@ -123,7 +123,13 @@ try {
       o.childScope = await childPopup.evaluate((element) => element.closest('.modal-overlay').querySelector('[aria-label="Nested owner"]') !== null); assert.equal(o.childScope, true);
       const layer = async (dialog) => dialog.locator('..').evaluate((element) => Number(window.getComputedStyle(element).zIndex));
       const parent = page.getByRole('dialog', { name: 'Owned parent', exact: true }); o.parentLayer = await layer(parent); o.childLayer = await layer(child); assert.ok(o.childLayer > o.parentLayer);
-      await page.evaluate(() => window.portalTest.setIndependent(true)); const independent = page.getByRole('dialog', { name: 'Independent owner', exact: true }); await independent.waitFor(); o.independentLayer = await layer(independent); assert.ok(o.independentLayer > o.childLayer);
+      await page.evaluate(() => window.portalTest.setIndependent(true)); const independent = page.getByRole('dialog', { name: 'Independent owner', exact: true }); await independent.waitFor();
+      o.independentRegistrationBefore = await independent.locator('..').evaluate((node) => node.style.getPropertyValue('--modal-portal-order'));
+      // Visibility can become observable before React commits the root ref. Wait
+      // for registration itself, not for a successful layer comparison: a wrong
+      // registered order must still fail the stacking and native hit-target checks.
+      await page.waitForFunction(() => Boolean(document.querySelector('[aria-label="Independent owner"]')?.parentElement?.style.getPropertyValue('--modal-portal-order')));
+      o.independentLayer = await layer(independent); assert.ok(o.independentLayer > o.childLayer);
       const point = await independent.getByRole('button', { name: 'Close dialog', exact: true }).boundingBox();
       o.independentHit = await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('[aria-label="Independent owner"]') !== null, { x: point.x + point.width / 2, y: point.y + point.height / 2 }); assert.equal(o.independentHit, true);
       await page.evaluate(() => { window.portalTest.setIndependent(false); window.portalTest.setNested(false); }); await child.waitFor({ state: 'hidden' }); await independent.waitFor({ state: 'hidden' });
@@ -280,6 +286,6 @@ try {
   await browser?.close(); await server?.close();
   report.summary = { cases: report.cases.length, passed: report.cases.filter((entry) => entry.passed).length, failed: report.cases.filter((entry) => !entry.passed).length };
   writeFileSync('report.json', `${JSON.stringify(report, null, 2)}\n`);
-  console.log(JSON.stringify({ browser: report.browser, summary: report.summary, errors: report.errors, warnings: report.warnings, failures: report.cases.filter((entry) => !entry.passed) }, null, 2));
+  console.log(JSON.stringify({ browser: report.browser, summary: report.summary, lateModalRegistrations: report.cases.filter((entry) => entry.observation?.independentRegistrationBefore === '').length, errors: report.errors, warnings: report.warnings, failures: report.cases.filter((entry) => !entry.passed) }, null, 2));
   if (report.summary.failed || report.errors.length || report.warnings.length) process.exitCode = 1;
 }
