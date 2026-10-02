@@ -5967,11 +5967,11 @@
       "layout constraint candidate": "3, 13, 18, 43, 48, 50, 51, 56, 70, 75, 76"
     },
     "src/components/overlays/Tooltip/Tooltip.tsx": {
-      "effect/state ownership candidate": "1, 102, 106",
-      "browser/lifecycle candidate": "113, 114"
+      "effect/state ownership candidate": "1, 118, 135, 139",
+      "browser/lifecycle candidate": "131, 146, 147"
     },
     "src/components/overlays/Tooltip/Tooltip.css": {
-      "layout constraint candidate": "5, 10, 18, 27, 39, 42"
+      "layout constraint candidate": "5, 10, 18, 27, 61, 64"
     },
     "src/components/inputs/UnavailableAction/UnavailableAction.tsx": {},
     "src/components/inputs/UnavailableAction/UnavailableAction.css": {

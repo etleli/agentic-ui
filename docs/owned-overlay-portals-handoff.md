@@ -104,13 +104,39 @@ ten consumers with no browser errors or warnings. A fresh candidate standalone
 run also passed all ten; every recorded x/y/width/height measurement matched the
 published baseline exactly on this machine.
 
-## Remaining delivery and separate work
+## PR #11 review follow-up
 
-1. Finish hosted Validate on the exact pushed head and request one automated
-   review. Neither hosted success nor a completed automated review is claimed
-   by this checkpoint. Keep any PR draft until these and the support policy are
-   resolved. Creating a PR requires the explicit instruction in AGENTS.md.
-   Do not merge, publish or touch PR #10.
+The owner authorized pushing the continuation, opening a draft PR and requesting
+one automated review after hosted validation. [PR #11](https://github.com/etleli/agentic-ui/pull/11)
+was opened; [hosted Validate 36983477766](https://github.com/etleli/agentic-ui/actions/runs/36983477766)
+passed for `506c93dfcd3d7b23dcbf4c49322f11686863b5fc`, independently confirming all
+74 Node tests, 72 Chromium cases, builds, package consumer and inventory freshness.
+
+That single review completed for the same head and identified one P2: long owned
+tooltips were capped to adjacent space but could not be scrolled. Four new browser
+cases failed against that reviewed implementation. The repair gives fitting
+explanations the whole owner without scrolling; content taller than the owner uses
+a named nonmodal explanation with native scrolling, native Tab access, pointer
+Close, Escape, recorded-trigger focus return and controlled-open authority.
+Touch cancellation/release does not prematurely dismiss that explanation, and
+Escape delegates to Modal again after it closes. Six new normal/StrictMode cases
+cover these paths, including controlled state. Standalone F4 and F1-F7 remain
+unresolved; no production Modal focus guard was added.
+
+The complete final WebKit run passed 36 regular cases plus eight boundary cases
+with no unexpected warnings/errors. Complete final `npm run validate` passed all
+74 Node tests with zero skipped, 70 regular Chromium cases plus eight boundary
+cases, both builds, the unchanged public package consumer checks, inventory and
+whitespace checks. Latest hosted validation and the distinction
+between the reviewed head and its repair are recorded in PR #11. No additional
+automated review is requested by this continuation.
+
+## Remaining owner review and separate work
+
+1. Verify latest hosted Validate on the exact repair head in PR #11. The one
+   authorized automated review is complete; do not request another without new
+   owner instructions. Keep the PR draft for the owner's architecture/merge
+   decision. Do not merge, publish or touch PR #10.
 2. Production focus guards remain a separate task. The fixture uses explicit
    boundary anchors and an exit action; it is not a general endpoint algorithm.
 

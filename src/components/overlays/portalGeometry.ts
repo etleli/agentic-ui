@@ -68,6 +68,13 @@ export function placeOwnedPortal(geometry: PortalGeometry, anchor: Rectangle, pa
       const maximum = parseFloat(panel.ownerDocument.defaultView!.getComputedStyle(panel).maxWidth);
       if (Number.isFinite(maximum)) cssMaxWidth = maximum;
       naturalWidth = panel.offsetWidth || naturalWidth; naturalHeight = panel.offsetHeight || naturalHeight;
+      if (spec.interactive === false) {
+        // Tooltips cannot scroll. Measure their complete text at the final owned
+        // width before deciding whether a separate operable explanation is needed.
+        cssMaxWidth = Math.min(cssMaxWidth, naturalWidth);
+        panel.style.maxWidth = `${Math.min(maxWidth, cssMaxWidth)}px`;
+        naturalHeight = panel.offsetHeight || naturalHeight;
+      }
     } finally {
       panel.style.setProperty('max-width', previousWidth, widthPriority);
       panel.style.setProperty('max-height', previousHeight, heightPriority);
@@ -85,8 +92,12 @@ export function placeOwnedPortal(geometry: PortalGeometry, anchor: Rectangle, pa
   const needed = side === 'top' || side === 'bottom' ? height : width;
   if (room[side] < needed && room[opposite[side]] > room[side]) side = opposite[side];
   const vertical = side === 'top' || side === 'bottom';
-  const availableWidth = vertical ? maxWidth : Math.max(1, Math.min(maxWidth, room[side]));
-  const availableHeight = vertical ? Math.max(1, Math.min(maxHeight, room[side])) : maxHeight;
+  // Noninteractive bubbles may overlap the trigger instead of truncating text to
+  // the adjacent space. Only explanations taller than the whole owner need scroll.
+  const explanation = spec.interactive === false;
+  const scrollable = explanation && naturalHeight > maxHeight;
+  const availableWidth = explanation || vertical ? maxWidth : Math.max(1, Math.min(maxWidth, room[side]));
+  const availableHeight = explanation || !vertical ? maxHeight : Math.max(1, Math.min(maxHeight, room[side]));
   const w = Math.min(width, availableWidth), h = Math.min(height, availableHeight);
   const alignX = align === 'start' ? anchor.left : align === 'end' ? anchor.right - w : (anchor.left + anchor.right - w) / 2;
   const alignY = align === 'start' ? anchor.top : align === 'end' ? anchor.bottom - h : (anchor.top + anchor.bottom - h) / 2;
@@ -98,8 +109,8 @@ export function placeOwnedPortal(geometry: PortalGeometry, anchor: Rectangle, pa
   // common; it never inspects native control types or focus order.
   const fx = spec.translated && spec.translated !== 'vertical' ? vertical ? 0.5 : side === 'left' ? 1 : 0 : 0;
   const fy = spec.translated ? vertical ? side === 'top' ? 1 : 0 : 0.5 : 0;
-  return { side, style: {
-    position: 'absolute', boxSizing: 'border-box', minWidth: 0, maxWidth: Math.min(availableWidth, cssMaxWidth), maxHeight: availableHeight, overflowY: 'auto', pointerEvents: spec.interactive === false ? 'none' : 'auto',
+  return { side, scrollable, style: {
+    position: 'absolute', boxSizing: 'border-box', minWidth: 0, maxWidth: Math.min(availableWidth, cssMaxWidth), maxHeight: explanation && !scrollable ? 'none' : availableHeight, overflowY: explanation && !scrollable ? 'visible' : 'auto', pointerEvents: explanation && !scrollable ? 'none' : 'auto',
     [xProperty]: `${x + fx * w - geometry.x}px`, [yProperty]: `${y + fy * h - geometry.y}px`,
   } as CSSProperties };
 }

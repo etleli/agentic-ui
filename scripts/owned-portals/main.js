@@ -15,7 +15,7 @@ function Widget() {
     case 'date': return h(DatePicker, { ariaLabel: 'Probe Date', value: '2026-09-15', showTodayButton: false, onValueChange: (value) => api.actions.push(value) });
     case 'time': return h(TimePicker, { ariaLabel: 'Probe Time', value: '12:30', onValueChange: (value) => api.actions.push(value) });
     case 'popover': return h(Popover, { triggerLabel: 'Probe Popover', title: 'Probe popup', placement: 'bottom' }, h('input', { id: 'popover-input', 'aria-label': 'Popover input' }), h('button', { id: 'popover-action', onClick: () => api.actions.push('popover') }, 'Synthetic action'));
-    case 'tooltip': return h(Tooltip, { content: 'Probe tooltip', placement: 'bottom' }, h('button', { id: 'tooltip-trigger' }, 'Hint'));
+    case 'tooltip': return h(Tooltip, { content: options.tooltipText ?? 'Probe tooltip', placement: 'bottom', open: options.controlledTooltip ? true : undefined, onOpenChange: options.controlledTooltip ? (value) => api.requests.push(value) : undefined }, h('button', { id: 'tooltip-trigger' }, 'Hint'));
     case 'dropdown': return h(Dropdown, { ariaLabel: 'Probe Dropdown', options: [{ value: 'alpha', label: 'Alpha' }, { value: 'beta', label: 'Beta' }], onChange: (value) => api.actions.push(value) });
     case 'user': return h(UserCard, { user: { name: 'Example User', email: 'example@example.invalid' }, placement: 'bottom-start', onSettings: () => api.actions.push('settings'), onLogOut: () => api.actions.push('logout') });
     case 'menu': return h(ContextMenu, { triggerLabel: 'Probe Menu', items: [{ id: 'alpha', label: 'Alpha action' }, { id: 'beta', label: 'Beta action' }], onSelect: (item) => api.actions.push(item.id) }, h('span', {}, 'Synthetic target'));

@@ -99,7 +99,7 @@ export function useModalPortalOwner(open: boolean) {
 
 export function useOwnedPortalSpace() {
   const context = useContext(PortalOwnerContext);
-  return useMemo(() => context ? { place: (anchor: DOMRect, panel: HTMLElement | null, spec: Parameters<typeof placeOwnedPortal>[3], x: string, y: string) => {
+  return useMemo(() => context ? { contains: (node: Node) => Boolean(context.owner.root?.contains(node)), place: (anchor: DOMRect, panel: HTMLElement | null, spec: Parameters<typeof placeOwnedPortal>[3], x: string, y: string) => {
     const { owner } = context;
     if (!owner.open || !owner.visible || !owner.root || !owner.target?.isConnected || owner.parent?.visible === false) return null;
     try {

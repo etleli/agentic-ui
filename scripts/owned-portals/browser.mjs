@@ -187,6 +187,54 @@ try {
     });
   }
   if (!small && !standaloneOnly) for (const strict of [false, true]) {
+    await extra(`long owned tooltip uses full bounds ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', widget: 'tooltip', strict, tooltipText: 'Additional details explain why this action is unavailable. '.repeat(8) }, async (page, o) => {
+      await page.locator('#opener').click(); await page.locator('#tooltip-trigger').focus();
+      const popup = page.getByRole('tooltip'); await popup.waitFor();
+      o.metrics = await popup.evaluate((node) => ({ height: node.clientHeight, contentHeight: node.scrollHeight, pointer: window.getComputedStyle(node).pointerEvents, overflow: window.getComputedStyle(node).overflowY }));
+      o.popup = await popup.boundingBox(); o.owner = await page.locator('.modal-overlay[data-presentation="contained"]').boundingBox();
+      assert.ok(o.metrics.contentHeight <= o.metrics.height + 1, 'Noninteractive explanation must not hide text behind a scrollbar.');
+      assert.equal(o.metrics.pointer, 'none'); assert.equal(o.metrics.overflow, 'visible');
+      assert.ok(o.popup.y >= o.owner.y && o.popup.y + o.popup.height <= o.owner.y + o.owner.height + 1);
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'tooltip-trigger');
+    });
+    await extra(`oversized owned explanation is operable ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', widget: 'tooltip', strict, tooltipText: 'Additional details explain why this action is unavailable. '.repeat(40) }, async (page, o) => {
+      await page.locator('#opener').click(); await page.locator('#tooltip-trigger').focus();
+      const popup = page.getByRole('dialog', { name: 'Full explanation', exact: true }); await popup.waitFor();
+      assert.equal(await popup.evaluate((node) => Boolean(node.closest('[data-owned-portal]'))), true);
+      assert.equal(await popup.evaluate((node) => window.getComputedStyle(node).pointerEvents), 'auto');
+      let entered = false;
+      for (let index = 0; index < 8; index++) {
+        await page.keyboard.press('Tab');
+        entered = await popup.evaluate((node) => node === document.activeElement);
+        if (entered) break;
+      }
+      assert.equal(entered, true, 'Native Tab from the trigger must reach the explanation.');
+      await page.keyboard.press('ArrowDown');
+      await page.waitForFunction(() => document.querySelector('.tooltip__bubble').scrollTop > 0);
+      o.scrolled = await popup.evaluate((node) => node.scrollTop); assert.ok(o.scrolled > 0);
+      await popup.getByRole('button', { name: 'Close explanation', exact: true }).scrollIntoViewIfNeeded();
+      await popup.getByRole('button', { name: 'Close explanation', exact: true }).click(); await popup.waitFor({ state: 'hidden' });
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'tooltip-trigger');
+      assert.equal(await page.getByRole('dialog', { name: 'Owned parent', exact: true }).isVisible(), true);
+      assert.deepEqual(await page.evaluate(() => window.portalTest.requests), []);
+      await page.locator('#tooltip-trigger').blur(); await page.locator('#tooltip-trigger').focus(); await popup.waitFor();
+      await popup.evaluate((node) => {
+        for (const type of ['pointerdown', 'pointercancel', 'pointerup']) node.dispatchEvent(new window.PointerEvent(type, { bubbles: true, pointerType: 'touch' }));
+      });
+      await page.waitForTimeout(1900); assert.equal(await popup.isVisible(), true, 'A touch scroll must not cancel or time out a long explanation.');
+      await popup.focus(); await page.keyboard.press('Escape'); await popup.waitFor({ state: 'hidden' });
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'tooltip-trigger');
+      assert.deepEqual(await page.evaluate(() => window.portalTest.requests), []);
+      await page.keyboard.press('Escape');
+      assert.deepEqual(await page.evaluate(() => window.portalTest.requests), [false], 'After the explanation closes, Escape belongs to the Modal again.');
+    });
+    await extra(`oversized controlled explanation remains authoritative ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', widget: 'tooltip', strict, controlledTooltip: true, tooltipText: 'Additional details explain why this action is unavailable. '.repeat(40) }, async (page, o) => {
+      await page.locator('#opener').click(); const popup = page.getByRole('dialog', { name: 'Full explanation', exact: true }); await popup.waitFor();
+      await popup.getByRole('button', { name: 'Close explanation', exact: true }).scrollIntoViewIfNeeded();
+      await popup.getByRole('button', { name: 'Close explanation', exact: true }).click();
+      await page.waitForTimeout(200); assert.equal(await popup.isVisible(), true);
+      o.requests = await page.evaluate(() => window.portalTest.requests); assert.equal(o.requests.at(-1), false);
+    });
     await extra(`shared stacking restoration ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', nested: true, strict }, async (page, o) => {
       await page.evaluate(() => {
         const shared = document.createElement('div'); shared.id = 'agentic-ui-overlay-root'; shared.className = 'overlay-root';

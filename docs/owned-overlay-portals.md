@@ -65,3 +65,19 @@ This remains a development checkpoint pending hosted validation and review. See
 browser suite also checks shared-root inline z-index restoration (including an
 external important-priority update), StrictMode cleanup, and growing/shrinking
 scrollable popup content. These are bounded checks, not exhaustive content stress.
+
+## Owned explanation sizing
+
+The PR review found that applying an adjacent-space scroll constraint to a
+noninteractive Tooltip made long explanations unreachable. Owned tooltips now
+measure their full text at the final constrained width and use the whole visible
+owner for placement, allowing overlap with the trigger. When the complete bubble
+fits, it keeps its noninteractive tooltip role and has no vertical scroll cap.
+
+Content taller than the entire owner uses a named, nonmodal **Full explanation**
+dialog in the same owned layer, with native scrolling, a Close button and Escape
+dismissal. Native Tab from the trigger can reach the explanation; closing it returns
+focus to the recorded trigger without reopening it. Pointer dismissal and controlled
+open authority remain supported. Touch cancellation/release does not auto-dismiss
+this operable explanation while scrolling. This is a bounded owned-overflow path,
+not Modal focus containment or a change to standalone Tooltip behavior/F4.
