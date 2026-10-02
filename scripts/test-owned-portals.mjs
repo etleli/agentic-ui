@@ -30,11 +30,22 @@ try {
   if (args.includes('--published')) assert.equal(installed.integrity, 'sha512-xKUkylr5hcZcAE3QdGSs3YmVoUG3VSfEege9Qd4E09r0b3RZ1AXYIYg74wma8cdiG9n++sDUJO0U4NiiLa6Fvw==');
   const result = spawnSync(process.execPath, [args.includes('--boundary') ? 'boundary.mjs' : 'browser.mjs', browser, ...(args.includes('--small') ? ['small'] : []), ...(args.includes('--extras') ? ['extras'] : []), ...(args.includes('--standalone') ? ['standalone'] : [])], { cwd: temporary, encoding: 'utf8', timeout: 360000, maxBuffer: 12 * 1024 * 1024, windowsHide: true });
   assert.ifError(result.error);
-  const report = readFileSync(join(temporary, 'report.json'), 'utf8');
+  let report = readFileSync(join(temporary, 'report.json'), 'utf8');
   const destinationIndex = args.indexOf('--report');
-  if (destinationIndex >= 0) { const destination = resolve(args[destinationIndex + 1]); mkdirSync(dirname(destination), { recursive: true }); writeFileSync(destination, report); }
+  const saveReport = () => {
+    if (destinationIndex >= 0) { const destination = resolve(args[destinationIndex + 1]); mkdirSync(dirname(destination), { recursive: true }); writeFileSync(destination, report); }
+  };
+  saveReport();
   console.log(result.stdout); if (result.stderr) console.error(result.stderr);
   assert.equal(result.status, 0, 'Owned portal browser tests failed.');
+  if (!['--boundary', '--published', '--standalone', '--small', '--extras'].some((option) => args.includes(option))) {
+    const boundary = spawnSync(process.execPath, ['boundary.mjs', browser], { cwd: temporary, encoding: 'utf8', timeout: 120000, maxBuffer: 4 * 1024 * 1024, windowsHide: true });
+    assert.ifError(boundary.error);
+    report = `${JSON.stringify({ ...JSON.parse(report), boundary: JSON.parse(readFileSync(join(temporary, 'report.json'), 'utf8')) }, null, 2)}\n`;
+    saveReport();
+    console.log(boundary.stdout); if (boundary.stderr) console.error(boundary.stderr);
+    assert.equal(boundary.status, 0, 'Owned portal unsupported-geometry recovery tests failed.');
+  }
 } catch (error) { console.error(error); process.exitCode = 1; }
 finally {
   assert.equal(dirname(resolve(temporary)), resolve(tmpdir())); assert.ok(basename(temporary).startsWith('agentic-ui-owned-portals-'));

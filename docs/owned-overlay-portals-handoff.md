@@ -22,7 +22,7 @@ owner/viewport/ancestor clipping intersection; constrained panels can scroll
 internally. This deliberately changes owned popup routing and placement while
 leaving standalone placement intact.
 
-## Verified local evidence
+## Historical checkpoint evidence at f46fc17
 
 Runtime: Node 24.19.0, npm 11.17.0; browser fixtures use React 19.3.0,
 Playwright 1.63.0 and Vite 6.4.3. Chromium 153.0.8010.12 and WebKit 26.6.
@@ -61,26 +61,57 @@ date/time/media/shadow controls in normal and StrictMode runs. It neither
 enumerates tabbable descendants nor implements production guards. This proves
 connected ownership is possible; it does not establish the final F7 solution.
 
-## Remaining decisions and work
+## Continuation on 2026-10-02
 
-1. Review unsupported geometry policy before accepting production architecture.
-   Rotation and skew diagnostics explicitly reject placement and produce a
-   React runtime error/error-boundary warning. An application without an error
-   boundary can unmount. Reflection and perspective are excluded by the proposed
-   contract, not claimed as separately browser-verified support. Do not silently
-   approximate them or fall back to body and lose containment.
-2. Inspect the shared surface stacking registry and lifecycle observers,
-   including preservation/restoration of the shared root's inline z-index.
-   The final root registration is synchronous in its callback ref to remove a
-   transient independent-Modal stacking race.
-3. Review temporary relaxation of panel max constraints during intrinsic-size
-   measurement. Tested scrolling and live updates pass; arbitrary content/scroll
-   stress is not claimed exhaustive.
-4. Finish hosted Validate on the exact pushed head and request one automated
+The owner selected suppression of unsupported owned popups while preserving the
+Modal and application. Unsupported rotation, skew, reflection and projective
+perspective now produce a developer warning and no floating portal. Still-open
+requests recover inside the owner when observed geometry becomes supported.
+No body fallback, coordinate approximation or final focus behavior was added.
+
+The content-growth probe exposed a WebKit regression: temporary intrinsic-size
+measurement reset panel scrolling, leaving the bottom action unreachable. The
+measurement now restores its constraints, CSS priorities and scroll offsets in a
+finally block. The same normal/StrictMode browser cases that failed now pass.
+WebKit hydration also exposed temporarily static probes before ownership CSS
+loads. Such probes are treated as pending layout, with resource-load observation,
+rather than falsely diagnosed as unsupported geometry.
+
+The shared stacking registry passed new normal/StrictMode checks for original
+inline z-index restoration, important priority, an external update during active
+ownership and reopening. No stacking-registry implementation change was needed.
+Popup growth, bottom-action interaction, shrinking and clipping have bounded
+coverage; arbitrary content and continuously animated transforms are not certified.
+
+Complete `npm run validate` passed with Node 24.19.0 / npm 11.17.0: all 74 existing
+Node tests with zero skipped, both builds, the real tarball consumer, package dry
+run, inventory freshness and whitespace checks. The tarball consumer verified 931
+files, 458 declaration maps, five guides, 603 public value/type exports and 155
+runtime exports; package identity, public exports and licensing remain unchanged.
+The existing workshop chunk-size warning remains.
+
+Chromium 153.0.8010.12 passed all 64 regular cases and eight unsupported-geometry
+recovery cases. WebKit 26.6 passed all 30 regular cases and the same eight recovery
+cases with no runtime errors. Supported cases emit no warnings; each unsupported
+interval emits only its expected diagnostic. The regular Chromium suite has four
+additional stacking/content cases. Full candidate runs now also execute all eight
+boundary cases, including CI; focused and published-standalone modes stay distinct.
+
+Both refreshed dependency audits still exit 1 solely for the same pre-existing
+low DOMPurify advisory, GHSA-p98j-92pf-mc4p. Dependency versions and the lockfile
+remain unchanged. The integrity-checked published beta.2 standalone run passed all
+ten consumers with no browser errors or warnings. A fresh candidate standalone
+run also passed all ten; every recorded x/y/width/height measurement matched the
+published baseline exactly on this machine.
+
+## Remaining delivery and separate work
+
+1. Finish hosted Validate on the exact pushed head and request one automated
    review. Neither hosted success nor a completed automated review is claimed
    by this checkpoint. Keep any PR draft until these and the support policy are
-   resolved. Do not merge, publish or touch PR #10.
-5. Production focus guards remain a separate task. The fixture uses explicit
+   resolved. Creating a PR requires the explicit instruction in AGENTS.md.
+   Do not merge, publish or touch PR #10.
+2. Production focus guards remain a separate task. The fixture uses explicit
    boundary anchors and an exit action; it is not a general endpoint algorithm.
 
 ## Continue on another machine
@@ -99,8 +130,9 @@ npm audit --omit=dev
 git diff --check
 ```
 
-The boundary command passes only when the unsupported rotation/skew errors are
-observed; it is not a supported-geometry pass. Reports are optional local output,
+The boundary command passes only when all four unsupported geometries suppress
+popups, preserve Modal actions and recover in normal/StrictMode rendering without
+runtime errors; it does not establish support for those geometries. Reports are optional local output,
 not required tracked files. The test runner builds/packs a real local library,
 installs its separate pinned browser fixture and downloads the selected browser;
 Linux additionally installs Playwright system dependencies. Network access and

@@ -186,6 +186,48 @@ try {
       await page.locator('#opener').click(); popup = await openWidget(page, 'date'); assert.equal(await popup.evaluate((element) => Boolean(element.closest('.modal-overlay'))), true);
     });
   }
+  if (!small && !standaloneOnly) for (const strict of [false, true]) {
+    await extra(`shared stacking restoration ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', nested: true, strict }, async (page, o) => {
+      await page.evaluate(() => {
+        const shared = document.createElement('div'); shared.id = 'agentic-ui-overlay-root'; shared.className = 'overlay-root';
+        shared.style.setProperty('z-index', '123', 'important'); shared.style.setProperty('--fixture-marker', 'retained'); document.body.appendChild(shared);
+      });
+      const style = () => page.locator('#agentic-ui-overlay-root').evaluate((node) => ({ value: node.style.zIndex, priority: node.style.getPropertyPriority('z-index'), marker: node.style.getPropertyValue('--fixture-marker') }));
+      await page.locator('#opener').click();
+      await page.evaluate(() => window.portalTest.setNested(true));
+      await page.getByRole('dialog', { name: 'Nested owner', exact: true }).waitFor();
+      assert.match((await style()).value, /calc/);
+      await page.evaluate(() => window.portalTest.setIndependent(true));
+      await page.getByRole('dialog', { name: 'Independent owner', exact: true }).waitFor();
+      await page.evaluate(() => window.portalTest.setIndependent(false));
+      await page.getByRole('dialog', { name: 'Independent owner', exact: true }).waitFor({ state: 'hidden' });
+      assert.match((await style()).value, /calc/);
+      await page.evaluate(() => window.portalTest.setNested(false));
+      await page.getByRole('dialog', { name: 'Nested owner', exact: true }).waitFor({ state: 'hidden' });
+      o.restored = await style(); assert.deepEqual(o.restored, { value: '123', priority: 'important', marker: 'retained' });
+      await page.evaluate(() => window.portalTest.setIndependent(true));
+      await page.getByRole('dialog', { name: 'Independent owner', exact: true }).waitFor();
+      await page.locator('#agentic-ui-overlay-root').evaluate((node) => node.style.setProperty('z-index', '456', 'important'));
+      await page.evaluate(() => window.portalTest.setIndependent(false));
+      await page.getByRole('dialog', { name: 'Independent owner', exact: true }).waitFor({ state: 'hidden' });
+      o.external = await style(); assert.deepEqual(o.external, { value: '456', priority: 'important', marker: 'retained' });
+    });
+    await extra(`owned content resize and scroll ${strict ? 'StrictMode' : 'normal'}`, { geometry: 'contained', widget: 'popover', strict }, async (page, o) => {
+      await page.locator('#opener').click(); const popup = await openWidget(page, 'popover');
+      o.before = await popup.boundingBox();
+      await popup.locator('.popover__body').evaluate((node) => {
+        const content = document.createElement('div'); content.id = 'stress-content'; content.style.height = '800px'; content.textContent = 'Synthetic growing content'; node.prepend(content);
+      });
+      await page.waitForFunction(() => { const node = document.querySelector('.popover__panel'); return node.scrollHeight > node.clientHeight; });
+      await popup.locator('#popover-action').scrollIntoViewIfNeeded();
+      o.expanded = await popup.boundingBox(); o.root = await page.locator('.modal-overlay[data-presentation="contained"]').boundingBox();
+      assert.ok(o.expanded.y >= o.root.y && o.expanded.y + o.expanded.height <= o.root.y + o.root.height + 1);
+      await popup.locator('#popover-action').click(); assert.deepEqual(await page.evaluate(() => window.portalTest.actions), ['popover']);
+      await page.locator('#stress-content').evaluate((node) => node.remove());
+      await page.waitForFunction((height) => document.querySelector('.popover__panel').getBoundingClientRect().height < height, o.expanded.height);
+      o.shrunk = await popup.boundingBox(); assert.ok(Math.abs(o.shrunk.height - o.before.height) < 2);
+    });
+  }
 } finally {
   await browser?.close(); await server?.close();
   report.summary = { cases: report.cases.length, passed: report.cases.filter((entry) => entry.passed).length, failed: report.cases.filter((entry) => !entry.passed).length };

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { placeOwnedPortal, readPortalGeometry } from './portalGeometry';
+import { placeOwnedPortal, readPortalGeometry, UnsupportedPortalGeometryError } from './portalGeometry';
 import './portalOwnership.css';
 
 type Owner = { parent: Owner | null; root: HTMLElement | null; target: HTMLElement | null; styledTarget: HTMLElement | null; styles: Map<string, string>; probes: HTMLElement[]; regions: Set<HTMLElement>; open: boolean; visible: boolean; error: Error | null; notify: () => void };
@@ -50,9 +50,16 @@ export function useModalPortalOwner(open: boolean) {
       queued = false;
       observer.disconnect();
       let geometry = null;
+      const previousError = owner.error;
       owner.error = null;
       try { geometry = owner.open && (!owner.parent || owner.parent.visible) ? readPortalGeometry(root!, owner.probes) : null; }
-      catch (error) { owner.error = error instanceof Error ? error : new Error(String(error)); }
+      catch (error) {
+        if (!(error instanceof UnsupportedPortalGeometryError)) throw error;
+        owner.error = error;
+        if (previousError?.message !== error.message) {
+          console.warn('Agentic UI: owned popups are suppressed because the Modal host geometry is unsupported. Use positive axis-aligned scale/translation; popups recover when the geometry becomes supported.');
+        }
+      }
       const visible = Boolean(geometry);
       const signature = JSON.stringify([visible, geometry, owner.error?.message]);
       if (geometry) {
@@ -67,8 +74,9 @@ export function useModalPortalOwner(open: boolean) {
     const observer = new view.MutationObserver(schedule);
     const resize = new view.ResizeObserver(schedule); resize.observe(root);
     view.addEventListener('resize', schedule); view.addEventListener('scroll', schedule, true);
+    document.addEventListener('load', schedule, true);
     refresh();
-    return () => { disposed = true; observer.disconnect(); resize.disconnect(); view.removeEventListener('resize', schedule); view.removeEventListener('scroll', schedule, true); };
+    return () => { disposed = true; observer.disconnect(); resize.disconnect(); view.removeEventListener('resize', schedule); view.removeEventListener('scroll', schedule, true); document.removeEventListener('load', schedule, true); };
   }, [root, target, owner, open, parent, parentContext?.revision]);
   const rootRef = useCallback((node: HTMLDivElement | null) => {
     owner.root = node; setRoot(node);
@@ -94,8 +102,15 @@ export function useOwnedPortalSpace() {
   return useMemo(() => context ? { place: (anchor: DOMRect, panel: HTMLElement | null, spec: Parameters<typeof placeOwnedPortal>[3], x: string, y: string) => {
     const { owner } = context;
     if (!owner.open || !owner.visible || !owner.root || !owner.target?.isConnected || owner.parent?.visible === false) return null;
-    const geometry = readPortalGeometry(owner.root, owner.probes);
-    return geometry ? placeOwnedPortal(geometry, anchor, panel, spec, x, y) : null;
+    try {
+      const geometry = readPortalGeometry(owner.root, owner.probes);
+      return geometry ? placeOwnedPortal(geometry, anchor, panel, spec, x, y) : null;
+    } catch (error) {
+      // A scroll/resize handler may run before the owner's geometry observer.
+      // Preserve the owned scope and let that observer suppress/recover popups.
+      if (error instanceof UnsupportedPortalGeometryError) return null;
+      throw error;
+    }
   } } : null, [context]);
 }
 

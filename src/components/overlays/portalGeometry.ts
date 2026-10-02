@@ -4,12 +4,22 @@ export type PortalSide = 'top' | 'bottom' | 'left' | 'right';
 type Rectangle = { left: number; top: number; right: number; bottom: number; width: number; height: number };
 export type PortalGeometry = { x: number; y: number; scaleX: number; scaleY: number; bounds: Rectangle };
 
+export class UnsupportedPortalGeometryError extends Error {
+  constructor() {
+    super('Owned portal geometry is not positive axis-aligned affine geometry (rotation/skew/reflection/perspective requires a separate support contract).');
+    this.name = 'UnsupportedPortalGeometryError';
+  }
+}
+
 export function composedParent(element: Element): Element | null {
   return element.assignedSlot ?? element.parentElement ?? (element.getRootNode() instanceof element.ownerDocument.defaultView!.ShadowRoot ? (element.getRootNode() as ShadowRoot).host : null);
 }
 export function readPortalGeometry(root: HTMLElement, probes: HTMLElement[]): PortalGeometry | null {
   if (!root.isConnected || !root.getClientRects().length || probes.length !== 4 || probes.some((probe) => !probe.isConnected || !probe.getClientRects().length)) return null;
   const view = root.ownerDocument.defaultView!;
+  // Hydration can run before the imported ownership stylesheet is applied.
+  // Static probes all share an origin; that is pending layout, not a transform.
+  if (probes.some((probe) => view.getComputedStyle(probe).position !== 'absolute')) return null;
   const rect = root.getBoundingClientRect();
   let left = Math.max(0, rect.left), top = Math.max(0, rect.top);
   let right = Math.min(view.innerWidth, rect.right), bottom = Math.min(view.innerHeight, rect.bottom);
@@ -33,7 +43,7 @@ export function readPortalGeometry(root: HTMLElement, probes: HTMLElement[]): Po
   const scaleX = (horizontal.left - origin.left) / 100, scaleY = (vertical.top - origin.top) / 100;
   if (scaleX <= 0 || scaleY <= 0 || Math.abs(horizontal.top - origin.top) > 0.01 || Math.abs(vertical.left - origin.left) > 0.01
     || Math.abs(diagonal.left - horizontal.left - vertical.left + origin.left) > 0.01 || Math.abs(diagonal.top - horizontal.top - vertical.top + origin.top) > 0.01) {
-    throw new Error('Owned portal geometry is not positive axis-aligned affine geometry (rotation/skew/reflection/perspective requires a separate support contract).');
+    throw new UnsupportedPortalGeometryError();
   }
   if (right <= left || bottom <= top) return null;
   return { x: origin.left, y: origin.top, scaleX, scaleY, bounds: { left, top, right, bottom, width: right - left, height: bottom - top } };
@@ -51,11 +61,20 @@ export function placeOwnedPortal(geometry: PortalGeometry, anchor: Rectangle, pa
   let naturalWidth = 280, naturalHeight = 40, cssMaxWidth = Infinity;
   if (panel) {
     const previousWidth = panel.style.maxWidth, previousHeight = panel.style.maxHeight;
-    panel.style.maxWidth = ''; panel.style.maxHeight = '';
-    const maximum = parseFloat(panel.ownerDocument.defaultView!.getComputedStyle(panel).maxWidth);
-    if (Number.isFinite(maximum)) cssMaxWidth = maximum;
-    naturalWidth = panel.offsetWidth || naturalWidth; naturalHeight = panel.offsetHeight || naturalHeight;
-    panel.style.maxWidth = previousWidth; panel.style.maxHeight = previousHeight;
+    const widthPriority = panel.style.getPropertyPriority('max-width'), heightPriority = panel.style.getPropertyPriority('max-height');
+    const scrollLeft = panel.scrollLeft, scrollTop = panel.scrollTop;
+    try {
+      panel.style.maxWidth = ''; panel.style.maxHeight = '';
+      const maximum = parseFloat(panel.ownerDocument.defaultView!.getComputedStyle(panel).maxWidth);
+      if (Number.isFinite(maximum)) cssMaxWidth = maximum;
+      naturalWidth = panel.offsetWidth || naturalWidth; naturalHeight = panel.offsetHeight || naturalHeight;
+    } finally {
+      panel.style.setProperty('max-width', previousWidth, widthPriority);
+      panel.style.setProperty('max-height', previousHeight, heightPriority);
+      // Intrinsic measurement can clamp scrolling to zero when the panel grows.
+      // Restore its constrained layout and scroll position before returning.
+      panel.scrollLeft = scrollLeft; panel.scrollTop = scrollTop;
+    }
   }
   const width = Math.min(maxWidth, Math.max(spec.minimumWidth ?? 0, naturalWidth));
   const height = Math.min(maxHeight, naturalHeight);

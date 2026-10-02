@@ -29,7 +29,6 @@ export function OverlayPortal({ children, destination = 'floating' }: { children
   }, [overlayRoot, globalDestination]);
 
   if (destination === 'floating' && owner) {
-    if (owner.error && owner.open) throw owner.error;
     return owner.target && owner.open && owner.visible ? createPortal(<div data-owned-portal="" ref={ref} style={ownedRegionStyle()}>{children}</div>, owner.target) : null;
   }
   return overlayRoot ? createPortal(destination === 'surface' ? <PortalOwnerContext.Provider value={null}>{children}</PortalOwnerContext.Provider> : children, overlayRoot) : null;

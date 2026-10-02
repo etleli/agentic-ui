@@ -44,9 +44,24 @@ not per-component ancestor arithmetic. Local placement uses the visible owner/
 viewport/scroll-clip intersection, a common placement policy and scrollable bounds.
 Standalone components keep their legacy placement calculations and CSS unchanged.
 
-The supported matrix passes locally. This remains a development checkpoint,
-pending hosted validation and review. See `owned-overlay-portals-handoff.md` for
-the evidence and continuation steps. Rotation and skew explicitly reject owned
-placement; reflection and perspective are also outside the proposed support
-contract. The resulting runtime error can unmount an application without an error
-boundary. That failure policy requires review before this architecture is accepted.
+Positive axis-aligned scale and translation are the supported owned-placement
+contract. Rotation, skew, reflection and projective perspective remain unsupported.
+On 2026-10-02 the owner selected popup suppression as the failure policy: preserve
+the Modal and its ordinary controls, render no owned floating popup, and emit one
+developer warning per unsupported interval. Do not approximate the coordinates or
+move the popup to the shared root. When observed geometry becomes supported again,
+still-open popup requests render inside their original owner; existing outside-click
+and controlled-open semantics continue to apply. Only the specific unsupported
+geometry diagnostic is handled; unrelated runtime errors remain errors.
+
+The measured four-probe check evaluates the resulting plane, not every CSS
+transform declaration. A perspective declaration whose resulting plane is still
+positive axis-aligned affine does not fail that check. The projective perspective
+fixture verifies rejection; arbitrary 3D transforms and continuously animated
+transforms are not certified by these bounded cases.
+
+This remains a development checkpoint pending hosted validation and review. See
+`owned-overlay-portals-handoff.md` for the evidence and continuation steps. The
+browser suite also checks shared-root inline z-index restoration (including an
+external important-priority update), StrictMode cleanup, and growing/shrinking
+scrollable popup content. These are bounded checks, not exhaustive content stress.
