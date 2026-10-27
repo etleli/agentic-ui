@@ -1,5 +1,10 @@
 # Agentic UI
 
+The local `0.1.0-beta.3` security candidate updates the bundled and declared
+DOMPurify to 3.4.17. It remains unpublished until its exact archive is validated
+and explicitly approved. Public exports, sizing and interaction contracts are
+unchanged; the publication record below continues to describe beta.2.
+
 A React 19 / TypeScript component library with a local workshop for browsing
 components, editing preview parameters and content, resizing previews, and
 adjusting theme tokens. The library includes controls, layouts, tables, content
