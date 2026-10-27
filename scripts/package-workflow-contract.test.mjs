@@ -43,7 +43,7 @@ test('activated beta metadata preserves the approved publication settings and pa
   assert.equal(manifest.private, false);
   assert.equal(manifest.license, 'SEE LICENSE IN LICENSE');
   assert.equal(manifest.name, '@etleli/agentic-ui');
-  assert.equal(manifest.version, '0.1.0-beta.2');
+  assert.equal(manifest.version, '0.1.0-beta.3');
   assert.deepEqual(manifest.author, { name: 'Elias Etl', url: 'https://github.com/etleli' });
   assert.equal(lock.name, manifest.name);
   assert.equal(lock.version, manifest.version);
@@ -52,9 +52,9 @@ test('activated beta metadata preserves the approved publication settings and pa
   assert.equal(manifest.license, lock.packages[''].license);
   assert.equal(manifest.repository.url, 'https://github.com/etleli/agentic-ui.git');
   assert.deepEqual(manifest.publishConfig, { registry: 'https://registry.npmjs.org/', access: 'public', tag: 'beta' });
-  assert.equal(manifest.dependencies.dompurify, '3.4.14');
-  assert.equal(lock.packages[''].dependencies.dompurify, '3.4.14');
-  assert.equal(lock.packages['node_modules/dompurify'].version, '3.4.14');
+  assert.equal(manifest.dependencies.dompurify, '3.4.17');
+  assert.equal(lock.packages[''].dependencies.dompurify, '3.4.17');
+  assert.equal(lock.packages['node_modules/dompurify'].version, '3.4.17');
   assert.deepEqual(manifest.files, ['dist-library', 'src/theme/theme.css', 'README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md']);
   assert.deepEqual(manifest.sideEffects, ['**/*.css']);
   const license = await readFile(new URL('LICENSE', root), 'utf8');

@@ -1,17 +1,17 @@
 # Third-party notices
 
-Reviewed against the locked dependency tree on 2026-09-22. The first-party
+Reviewed against the locked dependency tree on 2026-10-27. The first-party
 Agentic UI license does not replace or restrict the independent rights below.
 
 ## Bundled code
 
-DOMPurify 3.4.14 is bundled into the ESM and CommonJS library files. Upstream
+DOMPurify 3.4.17 is bundled into the ESM and CommonJS library files. Upstream
 offers MPL-2.0 OR Apache-2.0; this distribution uses the Apache-2.0 option.
 The complete Apache license shipped in its LICENSE file is reproduced below.
 No upstream NOTICE file was present. The existing compiled license header is
 retained: (c) Cure53 and other contributors. DOMPurify is transformed by the
 library bundler; no intentional upstream source modification is made here.
-Source: https://github.com/cure53/DOMPurify/tree/3.4.14
+Source: https://github.com/cure53/DOMPurify/tree/3.4.17
 
 ## Separately installed dependencies and peers
 
@@ -45,7 +45,7 @@ attribution when reviewing the distribution. This does not relicense them.
 | @marijn/find-cluster-break | 1.0.3 | MIT |
 | @types/trusted-types | 2.0.7 | MIT |
 | crelt | 1.0.7 | MIT |
-| dompurify | 3.4.14 | (MPL-2.0 OR Apache-2.0) |
+| dompurify | 3.4.17 | (MPL-2.0 OR Apache-2.0) |
 | lucide-react | 0.468.0 | ISC |
 | react | 19.2.7 | MIT |
 | react-dom | 19.2.7 | MIT |
@@ -320,7 +320,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-### dompurify 3.4.14
+### dompurify 3.4.17
 
 Source files: `node_modules/dompurify/LICENSE`.
 

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import { JSDOM } from 'jsdom';
@@ -17,6 +18,14 @@ Object.assign(globalThis, {
 });
 
 const { RichTextViewer } = await import('../dist-library/agentic-ui.js');
+
+test('both library formats embed the patched sanitizer instead of a stale bundled copy', async () => {
+  for (const format of ['agentic-ui.js', 'agentic-ui.cjs']) {
+    const source = await readFile(new URL(`../dist-library/${format}`, import.meta.url), 'utf8');
+    assert.match(source, /DOMPurify 3\.4\.17\b/);
+    assert.doesNotMatch(source, /DOMPurify 3\.4\.(?:14|15|16)\b/);
+  }
+});
 
 const activeHtml = [
   '<img src="x" onerror="globalThis.exploited=true">',
@@ -39,4 +48,13 @@ test('RichTextViewer sanitizes explicitly enabled HTML without a bypass', () => 
   assert.doesNotMatch(markup, /onerror/i);
   assert.doesNotMatch(markup, /javascript:/i);
   assert.doesNotMatch(markup, /<script\b/i);
+});
+
+test('the sanitizer update preserves benign rich formatting and HTTPS links', () => {
+  const markup = renderToStaticMarkup(createElement(RichTextViewer, {
+    html: '<p><strong>Safe text</strong> <a href="https://example.test/docs">Documentation</a></p>',
+    trusted: true,
+  }));
+  assert.match(markup, /<strong>Safe text<\/strong>/);
+  assert.match(markup, /href="https:\/\/example\.test\/docs"/);
 });

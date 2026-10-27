@@ -1,5 +1,18 @@
 # Release status
 
+## Unpublished beta.3 security candidate
+
+The current source candidate updates DOMPurify from 3.4.14 to 3.4.17 in the
+dependency lock and both bundled library formats. Artifact checks reject stale
+embedded sanitizer copies, and rich-text tests retain plain-text defaults,
+active-HTML sanitization and benign formatting. Compatible development-only Vite,
+source-map-js and undici patches keep the full candidate audit clear. No public component API, license,
+interaction or sizing contract changes. This entry does not authorize or claim
+publication, staging, Git tags, account changes or deployment. Record validation
+and obtain explicit approval of the exact immutable archive before release.
+
+## Current published release
+
 **Published: @etleli/agentic-ui@0.1.0-beta.2.** The repository is public.
 The [GitHub prerelease](https://github.com/etleli/agentic-ui/releases/tag/v0.1.0-beta.2)
 and npm registry both expose this exact version. The `beta` tag points to beta.2;
