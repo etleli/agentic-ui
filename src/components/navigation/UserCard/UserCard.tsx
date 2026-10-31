@@ -2,6 +2,7 @@ import { ChevronRight, CircleHelp, Gauge, LogOut, PawPrint, Settings } from 'luc
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../../overlays/overlayPortal';
 import { useOverlayPresence } from '../../overlays/overlayPresence';
+import { useOwnedPortalSpace } from '../../overlays/portalOwnership';
 import './UserCard.css';
 import type { UserCardPlacement, UserCardProps } from './UserCard.types';
 
@@ -63,6 +64,8 @@ export function UserCard({
 }: UserCardProps) {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
+  const [resolvedPlacement, setResolvedPlacement] = useState(placement);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [panelStyle, setPanelStyle] = useState<CSSProperties>({});
   const isControlled = open !== undefined;
@@ -86,6 +89,11 @@ export function UserCard({
     if (!triggerRect) {
       return;
     }
+    if (portalSpace) {
+      const position = portalSpace.place(triggerRect, panelRef.current, { side: isTopPlacement(placement) ? 'top' : 'bottom', align: isEndPlacement(placement) ? 'end' : 'start', translated: 'vertical' }, '--user-card-panel-left', '--user-card-panel-top');
+      if (position) { setResolvedPlacement(`${position.side}-${isEndPlacement(placement) ? 'end' : 'start'}` as UserCardPlacement); setPanelStyle(position.style); }
+      return;
+    }
 
     const proposedLeft = isEndPlacement(placement) ? triggerRect.right - PANEL_WIDTH : triggerRect.left;
     const maxLeft = Math.max(VIEWPORT_GUTTER, window.innerWidth - PANEL_WIDTH - VIEWPORT_GUTTER);
@@ -96,7 +104,7 @@ export function UserCard({
       '--user-card-panel-left': `${left}px`,
       '--user-card-panel-top': `${top}px`,
     } as CSSProperties);
-  }, [placement]);
+  }, [placement, portalSpace]);
 
   useEffect(() => {
     if (disabled && isOpen) {
@@ -191,7 +199,7 @@ export function UserCard({
           <div
             aria-label="Account menu"
             className="user-card__panel"
-            data-placement={placement}
+            data-placement={portalSpace ? resolvedPlacement : placement}
             data-state={presenceState}
             data-variant={variant}
             ref={panelRef}

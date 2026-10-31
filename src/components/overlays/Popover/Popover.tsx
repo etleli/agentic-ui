@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { OverlayPortal } from '../overlayPortal';
 import { useOverlayPresence } from '../overlayPresence';
+import { useOwnedPortalSpace } from '../portalOwnership';
 import './Popover.css';
 import type { PopoverPlacement, PopoverProps, PopoverSize } from './Popover.types';
 
@@ -27,6 +28,7 @@ export function Popover({
 }: PopoverProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const portalSpace = useOwnedPortalSpace();
   const [panelStyle, setPanelStyle] = useState<CSSProperties>({});
   const [resolvedPlacement, setResolvedPlacement] = useState<PopoverPlacement>(placement);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -38,6 +40,11 @@ export function Popover({
     const rootRect = rootRef.current?.getBoundingClientRect();
 
     if (!rootRect) {
+      return;
+    }
+    if (portalSpace) {
+      const position = portalSpace.place(rootRect, panelRef.current, { side: placement, align: 'center', padding: 12, translated: true }, '--popover-left', '--popover-top');
+      if (position) { setResolvedPlacement(position.side); setPanelStyle(position.style); }
       return;
     }
 
@@ -90,7 +97,7 @@ export function Popover({
       '--popover-left': `${nextPosition.left}px`,
       '--popover-top': `${nextPosition.top}px`,
     } as CSSProperties);
-  }, [placement]);
+  }, [placement, portalSpace]);
 
   const updateOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {
