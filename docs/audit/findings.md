@@ -2,7 +2,8 @@
 
 All seven are **confirmed** on the stated baseline. See the
 [machine-readable observations](evidence/published-beta.1.json) and
-[environment/coverage limits](README.md). No fixes are included. Review comments
+[environment/coverage limits](README.md). The subsequent F7 source repair is recorded
+below; F1–F6 remain unfixed. Review comments
 are evidence to test, not a substitute for testing.
 
 ## F1 — controlled DataTable selection
@@ -118,7 +119,14 @@ separate controlled display from internal fallback and keep visible-month/open
 state independent. Promote declining/accepting/uncontrolled tests, including empty
 values, bounds, keyboard and parent updates while disabled/read-only.
 
-## F7 — Modal keyboard focus
+## F7 — Modal keyboard focus — fixed in source
+
+The [native focus repair and evidence](../modal-native-focus.md) passes 158 Chromium
+regressions against an installed candidate tarball; the same contract suite fails
+against published beta.2. This changes only F7's source status. The original
+beta.1 observation below remains intact, and beta.2 remains affected until a
+separately authorized release. Ordinary Tab follows native browser boundaries;
+contained mode blocks its immediate host and omits a document-wide aria-modal claim.
 
 [Original comment](https://github.com/etleli/agentic-ui/pull/1#discussion_r4069848746).
 [Implementation](../../src/components/overlays/Modal/Modal.tsx).

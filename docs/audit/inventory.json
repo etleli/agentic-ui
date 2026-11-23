@@ -11,7 +11,7 @@
     "componentsWithExamples": 119,
     "componentsWithGuides": 5,
     "sourceReviewed": 10,
-    "findingConfirmedComponents": 5,
+    "findingConfirmedComponents": 4,
     "establishedProtectionComponents": 3
   },
   "workshopOnlyEntries": [
@@ -3781,6 +3781,7 @@
         "scripts/interaction-contracts.test.mjs",
         "scripts/package-consumer-import.test.mjs",
         "scripts/rich-text-security.test.mjs",
+        "scripts/test-modal-focus.mjs",
         "scripts/touch-controls.test.mjs"
       ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
@@ -4245,17 +4246,23 @@
         "docs/interaction-contract-matrix.md",
         "docs/ui-generation-rulebook.md"
       ],
-      "testReferences": [],
+      "testReferences": [
+        "scripts/test-modal-focus.mjs"
+      ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "source reviewed",
-      "runtimeVerification": "finding confirmed",
+      "runtimeVerification": "finding fixed (native focus regression cases verified)",
       "findings": [
         "F7"
       ],
       "diagnosticFixtures": [
         "scripts/audit/fixture/main.js",
         "scripts/audit/browser-diagnostics.mjs",
-        "docs/audit/evidence/published-beta.1.json"
+        "docs/audit/evidence/published-beta.1.json",
+        "scripts/test-modal-focus.mjs",
+        "scripts/modal-focus/browser.mjs",
+        "docs/audit/evidence/modal-native-beta2.json",
+        "docs/audit/evidence/modal-native-candidate.json"
       ],
       "exceptions": "Viewport-constrained overlay/menu; verify geometry and focus rather than remove all limits.",
       "firstPass": {
@@ -5763,11 +5770,11 @@
       "layout constraint candidate": "5, 6, 58, 64, 67, 68, 79, 82, 83, 89, 94, 110, 111"
     },
     "src/components/overlays/Modal/Modal.tsx": {
-      "effect/state ownership candidate": "2, 59",
-      "browser/lifecycle candidate": "70"
+      "effect/state ownership candidate": "2, 68",
+      "browser/lifecycle candidate": "79"
     },
     "src/components/overlays/Modal/Modal.css": {
-      "layout constraint candidate": "37, 38, 67, 74, 75, 76, 81, 90, 97, 103, 110, 118, 141"
+      "layout constraint candidate": "37, 38, 72, 79, 80, 81, 86, 95, 102, 108, 115, 123, 146"
     },
     "src/components/content/ObsidianGraphView/ObsidianGraphView.tsx": {},
     "src/components/content/ObsidianGraphView/ObsidianGraphView.css": {

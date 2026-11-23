@@ -1,0 +1,479 @@
+{
+  "mode": "historical",
+  "packageVersion": "0.1.0-beta.1",
+  "integrity": "sha512-wQBKFhAHmJ/uaoFzuxeeUJ8AkhNT9G6zjMQkOOWSgVwPxApRdiMPUjgk0fVeY/t/KFtxzu/dh4rQ1K3PJgRC8w==",
+  "node": "v24.19.0",
+  "react": "19.3.0",
+  "playwright": "1.63.0",
+  "cases": [
+    {
+      "name": "compound date preserves native internal Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound date preserves native internal Shift+Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Shift+Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Shift+Tab stops (normal)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound date preserves native internal Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound date preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound time preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "Cancel"
+          ],
+          "events": [
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "compound audio preserves native internal Shift+Tab stops (StrictMode)",
+      "passed": false,
+      "failure": "Expected values to be strictly deep-equal:",
+      "observation": {
+        "native": {
+          "values": [
+            "compound",
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": false
+            },
+            {
+              "prevented": false
+            }
+          ]
+        },
+        "modal": {
+          "values": [
+            "compound",
+            "inside"
+          ],
+          "events": [
+            {
+              "prevented": true
+            },
+            {
+              "prevented": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "browser": "153.0.8010.12",
+  "scope": "compound comparisons only",
+  "passed": false,
+  "summary": {
+    "cases": 12,
+    "passed": 0,
+    "failed": 12
+  },
+  "ssr": "plain Node SSR passed; contained HTML used by hydration cases",
+  "sourceHead": "9496bb03f9218ce168172ed2d9945d55b610f2c6",
+  "provenance": "Read-only archive of the historical PR head; not the current npm baseline. Only the test harness was ported. Current validation does not access this commit or branch."
+}
