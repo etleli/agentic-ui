@@ -3,13 +3,13 @@
   "baseline": "d9795c190c79266f96cc3b196b0d6a2e0335d225",
   "generatedBy": "npm run audit:inventory; do not hand-edit this derived file",
   "coverage": {
-    "publicComponents": 122,
+    "publicComponents": 127,
     "otherRuntimeExports": 33,
-    "typeExports": 448,
-    "registryEntries": 119,
-    "componentsWithExactRegistryEntry": 118,
-    "componentsWithExamples": 119,
-    "componentsWithGuides": 5,
+    "typeExports": 462,
+    "registryEntries": 124,
+    "componentsWithExactRegistryEntry": 123,
+    "componentsWithExamples": 124,
+    "componentsWithGuides": 11,
     "sourceReviewed": 10,
     "findingConfirmedComponents": 5,
     "establishedProtectionComponents": 3
@@ -3065,13 +3065,62 @@
       }
     },
     {
+      "component": "DockablePanel",
+      "group": "layout",
+      "implementation": [
+        "src/components/layout/DockablePanel/DockablePanel.tsx"
+      ],
+      "styles": [
+        "src/components/layout/DockablePanel/DockablePanel.css"
+      ],
+      "styleDelegation": null,
+      "types": [
+        "src/components/layout/DockablePanel/DockablePanel.types.ts"
+      ],
+      "previews": [
+        {
+          "id": "dockable-panel",
+          "group": "Layout / App Shell",
+          "name": "DockablePanel"
+        }
+      ],
+      "examples": [
+        "src/components/layout/DockablePanel/DockablePanel.examples.tsx"
+      ],
+      "guides": [
+        "src/components/layout/DockablePanel/AGENT.md"
+      ],
+      "contracts": [
+        "docs/consumer-hardening.md",
+        "docs/interaction-contract-matrix.md",
+        "docs/ui-generation-rulebook.md"
+      ],
+      "testReferences": [
+        "scripts/package-consumer-import.test.mjs"
+      ],
+      "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
+      "sourceReview": "not reviewed",
+      "runtimeVerification": "not reviewed",
+      "findings": [],
+      "diagnosticFixtures": [],
+      "exceptions": null,
+      "firstPass": {
+        "status": "mechanical source leads only; unvalidated",
+        "files": [
+          "src/components/layout/DockablePanel/DockablePanel.tsx",
+          "src/components/layout/DockablePanel/DockablePanel.css"
+        ]
+      }
+    },
+    {
       "component": "PageHeader",
       "group": "layout",
       "implementation": [
         "src/components/layout/PageHeader/PageHeader.tsx"
       ],
       "styles": [
-        "src/components/layout/Layout.css"
+        "src/components/layout/Layout.css",
+        "src/components/layout/PageHeader/RecordHeader.css"
       ],
       "styleDelegation": null,
       "types": [
@@ -3085,15 +3134,20 @@
         }
       ],
       "examples": [
-        "src/components/layout/PageHeader/PageHeader.examples.tsx"
+        "src/components/layout/PageHeader/PageHeader.examples.tsx",
+        "src/components/layout/PageHeader/RecordHeader.examples.tsx"
       ],
-      "guides": [],
+      "guides": [
+        "src/components/layout/PageHeader/AGENT.md"
+      ],
       "contracts": [
         "docs/consumer-hardening.md",
         "docs/interaction-contract-matrix.md",
         "docs/ui-generation-rulebook.md"
       ],
-      "testReferences": [],
+      "testReferences": [
+        "scripts/package-consumer-import.test.mjs"
+      ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "not reviewed",
       "runtimeVerification": "not reviewed",
@@ -3104,7 +3158,8 @@
         "status": "mechanical source leads only; unvalidated",
         "files": [
           "src/components/layout/PageHeader/PageHeader.tsx",
-          "src/components/layout/Layout.css"
+          "src/components/layout/Layout.css",
+          "src/components/layout/PageHeader/RecordHeader.css"
         ]
       }
     },
@@ -3235,7 +3290,8 @@
       ],
       "testReferences": [
         "scripts/component-blockers-worker.mjs",
-        "scripts/component-blockers.test.mjs"
+        "scripts/component-blockers.test.mjs",
+        "scripts/package-consumer-import.test.mjs"
       ],
       "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
       "sourceReview": "not reviewed",
@@ -3384,6 +3440,54 @@
         "files": [
           "src/components/lists/ListView/ListView.tsx",
           "src/components/lists/ListView/ListView.css"
+        ]
+      }
+    },
+    {
+      "component": "LocationMap",
+      "group": "maps",
+      "implementation": [
+        "src/components/maps/LocationMap/LocationMap.tsx"
+      ],
+      "styles": [
+        "src/components/maps/LocationMap/LocationMap.css"
+      ],
+      "styleDelegation": null,
+      "types": [
+        "src/components/maps/LocationMap/LocationMap.types.ts"
+      ],
+      "previews": [
+        {
+          "id": "location-map",
+          "group": "Maps",
+          "name": "LocationMap"
+        }
+      ],
+      "examples": [
+        "src/components/maps/LocationMap/LocationMap.examples.tsx"
+      ],
+      "guides": [
+        "src/components/maps/LocationMap/AGENT.md"
+      ],
+      "contracts": [
+        "docs/consumer-hardening.md",
+        "docs/interaction-contract-matrix.md",
+        "docs/ui-generation-rulebook.md"
+      ],
+      "testReferences": [
+        "scripts/package-consumer-import.test.mjs"
+      ],
+      "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
+      "sourceReview": "not reviewed",
+      "runtimeVerification": "not reviewed",
+      "findings": [],
+      "diagnosticFixtures": [],
+      "exceptions": null,
+      "firstPass": {
+        "status": "mechanical source leads only; unvalidated",
+        "files": [
+          "src/components/maps/LocationMap/LocationMap.tsx",
+          "src/components/maps/LocationMap/LocationMap.css"
         ]
       }
     },
@@ -4441,6 +4545,151 @@
         "files": [
           "src/components/overlays/Tooltip/Tooltip.tsx",
           "src/components/overlays/Tooltip/Tooltip.css"
+        ]
+      }
+    },
+    {
+      "component": "CalendarTimeGrid",
+      "group": "scheduling",
+      "implementation": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.tsx"
+      ],
+      "styles": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.css"
+      ],
+      "styleDelegation": null,
+      "types": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.types.ts"
+      ],
+      "previews": [
+        {
+          "id": "calendar-time-grid",
+          "group": "Scheduling",
+          "name": "CalendarTimeGrid"
+        }
+      ],
+      "examples": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.examples.tsx"
+      ],
+      "guides": [
+        "src/components/scheduling/CalendarTimeGrid/AGENT.md"
+      ],
+      "contracts": [
+        "docs/consumer-hardening.md",
+        "docs/interaction-contract-matrix.md",
+        "docs/ui-generation-rulebook.md"
+      ],
+      "testReferences": [
+        "scripts/package-consumer-import.test.mjs"
+      ],
+      "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
+      "sourceReview": "not reviewed",
+      "runtimeVerification": "not reviewed",
+      "findings": [],
+      "diagnosticFixtures": [],
+      "exceptions": null,
+      "firstPass": {
+        "status": "mechanical source leads only; unvalidated",
+        "files": [
+          "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.tsx",
+          "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.css"
+        ]
+      }
+    },
+    {
+      "component": "ScheduleTimeline",
+      "group": "scheduling",
+      "implementation": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.tsx"
+      ],
+      "styles": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.css"
+      ],
+      "styleDelegation": null,
+      "types": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.types.ts"
+      ],
+      "previews": [
+        {
+          "id": "schedule-timeline",
+          "group": "Scheduling",
+          "name": "ScheduleTimeline"
+        }
+      ],
+      "examples": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.examples.tsx"
+      ],
+      "guides": [
+        "src/components/scheduling/ScheduleTimeline/AGENT.md"
+      ],
+      "contracts": [
+        "docs/consumer-hardening.md",
+        "docs/interaction-contract-matrix.md",
+        "docs/ui-generation-rulebook.md"
+      ],
+      "testReferences": [
+        "scripts/package-consumer-import.test.mjs"
+      ],
+      "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
+      "sourceReview": "not reviewed",
+      "runtimeVerification": "not reviewed",
+      "findings": [],
+      "diagnosticFixtures": [],
+      "exceptions": null,
+      "firstPass": {
+        "status": "mechanical source leads only; unvalidated",
+        "files": [
+          "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.tsx",
+          "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.css"
+        ]
+      }
+    },
+    {
+      "component": "Avatar",
+      "group": "surfaces",
+      "implementation": [
+        "src/components/surfaces/Avatar/Avatar.tsx"
+      ],
+      "styles": [
+        "src/components/surfaces/Avatar/Avatar.css"
+      ],
+      "styleDelegation": null,
+      "types": [
+        "src/components/surfaces/Avatar/Avatar.types.ts"
+      ],
+      "previews": [
+        {
+          "id": "avatar",
+          "group": "Surfaces",
+          "name": "Avatar"
+        }
+      ],
+      "examples": [
+        "src/components/surfaces/Avatar/Avatar.examples.tsx"
+      ],
+      "guides": [
+        "src/components/surfaces/Avatar/AGENT.md"
+      ],
+      "contracts": [
+        "docs/consumer-hardening.md",
+        "docs/interaction-contract-matrix.md",
+        "docs/ui-generation-rulebook.md"
+      ],
+      "testReferences": [
+        "scripts/consumer-hardening-contract.test.mjs",
+        "scripts/package-consumer-import.test.mjs"
+      ],
+      "testReferenceMeaning": "Textual references only; generic export checks and source assertions are not component behavior coverage.",
+      "sourceReview": "not reviewed",
+      "runtimeVerification": "not reviewed",
+      "findings": [],
+      "diagnosticFixtures": [],
+      "exceptions": null,
+      "firstPass": {
+        "status": "mechanical source leads only; unvalidated",
+        "files": [
+          "src/components/surfaces/Avatar/Avatar.tsx",
+          "src/components/surfaces/Avatar/Avatar.css"
         ]
       }
     },
@@ -5546,6 +5795,37 @@
     }
   ],
   "sourceLeads": {
+    "src/components/surfaces/Avatar/Avatar.tsx": {},
+    "src/components/surfaces/Avatar/Avatar.css": {
+      "layout constraint candidate": "9, 11, 20, 22"
+    },
+    "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.tsx": {
+      "effect/state ownership candidate": "1, 31, 36",
+      "layout constraint candidate": "77"
+    },
+    "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.css": {
+      "layout constraint candidate": "1, 2, 4, 8, 10, 12, 13, 15"
+    },
+    "src/components/layout/DockablePanel/DockablePanel.tsx": {
+      "effect/state ownership candidate": "2, 39, 43, 58, 70",
+      "browser/lifecycle candidate": "60, 92"
+    },
+    "src/components/layout/DockablePanel/DockablePanel.css": {
+      "layout constraint candidate": "1, 7, 12, 13, 15, 18, 20"
+    },
+    "src/components/maps/LocationMap/LocationMap.tsx": {
+      "prop-to-state synchronization candidate": "97",
+      "effect/state ownership candidate": "4, 23, 52, 53, 54, 94"
+    },
+    "src/components/maps/LocationMap/LocationMap.css": {
+      "layout constraint candidate": "1, 5, 9"
+    },
+    "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.tsx": {
+      "default allocation candidate": "16"
+    },
+    "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.css": {
+      "layout constraint candidate": "1, 2, 3, 5, 9, 16, 18, 20, 21, 25"
+    },
     "src/components/inputs/Button/Button.tsx": {},
     "src/components/inputs/Button/Button.css": {
       "layout constraint candidate": "8, 9, 10, 27, 32, 37, 44, 45, 46, 186, 187, 216, 230, 255, 273, 274, 275"
@@ -5682,8 +5962,8 @@
       "layout constraint candidate": "5, 18, 32, 37, 42, 67, 72, 73, 74, 100, 101, 103, 126, 127, 164"
     },
     "src/components/overlays/Drawer/Drawer.tsx": {
-      "effect/state ownership candidate": "2, 41",
-      "browser/lifecycle candidate": "52"
+      "effect/state ownership candidate": "2, 42",
+      "browser/lifecycle candidate": "53"
     },
     "src/components/overlays/Drawer/Drawer.css": {
       "layout constraint candidate": "49, 54, 80, 109, 117, 123, 131, 139"
@@ -5815,7 +6095,10 @@
       "default allocation candidate": "35"
     },
     "src/components/layout/PageHeader/PageHeader.tsx": {
-      "default allocation candidate": "7"
+      "default allocation candidate": "8"
+    },
+    "src/components/layout/PageHeader/RecordHeader.css": {
+      "layout constraint candidate": "6, 9, 15, 17, 18, 19, 20, 21, 22, 23"
     },
     "src/components/surfaces/Panel/Panel.tsx": {},
     "src/components/surfaces/Panel/Panel.css": {
@@ -5889,9 +6172,9 @@
       "default allocation candidate": "10"
     },
     "src/components/layout/SplitPane/SplitPane.tsx": {
-      "prop-to-state synchronization candidate": "59",
-      "effect/state ownership candidate": "1, 35, 41",
-      "browser/lifecycle candidate": "53, 78, 105, 106"
+      "prop-to-state synchronization candidate": "55, 72",
+      "effect/state ownership candidate": "1, 53",
+      "browser/lifecycle candidate": "13, 75, 102, 103"
     },
     "src/components/feedback/StatusBadge/StatusBadge.tsx": {},
     "src/components/feedback/StatusBadge/StatusBadge.css": {
@@ -6243,6 +6526,90 @@
     }
   ],
   "typeExports": [
+    {
+      "name": "AvatarProps",
+      "locations": [
+        "src/components/surfaces/Avatar/Avatar.types.ts"
+      ]
+    },
+    {
+      "name": "AvatarSize",
+      "locations": [
+        "src/components/surfaces/Avatar/Avatar.types.ts"
+      ]
+    },
+    {
+      "name": "CalendarTimeGridEvent",
+      "locations": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.types.ts"
+      ]
+    },
+    {
+      "name": "CalendarTimeGridEventContext",
+      "locations": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.types.ts"
+      ]
+    },
+    {
+      "name": "CalendarTimeGridProps",
+      "locations": [
+        "src/components/scheduling/CalendarTimeGrid/CalendarTimeGrid.types.ts"
+      ]
+    },
+    {
+      "name": "DockablePanelMode",
+      "locations": [
+        "src/components/layout/DockablePanel/DockablePanel.types.ts"
+      ]
+    },
+    {
+      "name": "DockablePanelProps",
+      "locations": [
+        "src/components/layout/DockablePanel/DockablePanel.types.ts"
+      ]
+    },
+    {
+      "name": "LocationMapCoordinates",
+      "locations": [
+        "src/components/maps/LocationMap/LocationMap.types.ts"
+      ]
+    },
+    {
+      "name": "LocationMapMarker",
+      "locations": [
+        "src/components/maps/LocationMap/LocationMap.types.ts"
+      ]
+    },
+    {
+      "name": "LocationMapProps",
+      "locations": [
+        "src/components/maps/LocationMap/LocationMap.types.ts"
+      ]
+    },
+    {
+      "name": "PageHeaderRecord",
+      "locations": [
+        "src/components/layout/Layout.types.ts"
+      ]
+    },
+    {
+      "name": "ScheduleTimelineGroup",
+      "locations": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.types.ts"
+      ]
+    },
+    {
+      "name": "ScheduleTimelineItem",
+      "locations": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.types.ts"
+      ]
+    },
+    {
+      "name": "ScheduleTimelineProps",
+      "locations": [
+        "src/components/scheduling/ScheduleTimeline/ScheduleTimeline.types.ts"
+      ]
+    },
     {
       "name": "GeneratedColorRepeatRisk",
       "locations": [

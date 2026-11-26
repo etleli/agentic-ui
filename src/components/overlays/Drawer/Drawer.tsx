@@ -12,6 +12,7 @@ function getDrawerClassName(className: DrawerProps['className']) {
 
 export function Drawer({
   children,
+  closeOnEscape = true,
   className,
   defaultOpen = false,
   description,
@@ -39,7 +40,7 @@ export function Drawer({
   }, [isControlled, onOpenChange]);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !closeOnEscape) {
       return undefined;
     }
 
@@ -51,7 +52,7 @@ export function Drawer({
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, updateOpen]);
+  }, [closeOnEscape, isOpen, updateOpen]);
 
   if (!isPresent) {
     return null;

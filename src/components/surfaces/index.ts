@@ -25,3 +25,5 @@ export type {
   ToolbarProps,
   ToolbarVariant,
 } from './Toolbar';
+export { Avatar } from './Avatar';
+export type { AvatarProps, AvatarSize } from './Avatar';

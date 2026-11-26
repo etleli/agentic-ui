@@ -1,8 +1,22 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import '../Layout.css';
 import '../../surfaces/BrandWatermark/BrandWatermark.css';
 import { clampLayoutValue, getLayoutClassName, getPointerPercent } from '../Layout.utils';
 import type { SplitPaneProps } from '../Layout.types';
+
+const subscribeToInitialSize = () => () => undefined;
+const serverSize = () => undefined;
+
+function readPersistedSize(key: string | undefined) {
+  if (!key || typeof window === 'undefined') return undefined;
+  try {
+    const stored = window.localStorage.getItem(`agentic-ui:split-pane:${key}`);
+    const value = stored?.trim() ? Number(stored) : Number.NaN;
+    return Number.isFinite(value) ? value : undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 export function SplitPane({
   brandWatermark = false,
@@ -23,41 +37,24 @@ export function SplitPane({
   ...paneProps
 }: SplitPaneProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const [internalSplitPercent, setInternalSplitPercent] = useState(splitPercent ?? defaultSplitPercent);
-  const restoredPersistKey = useRef<string | undefined>(undefined);
+  const [initialDefault] = useState(defaultSplitPercent);
+  const [requestedSize, setRequestedSize] = useState<{ key?: string; value: number }>();
+  // Client mounts read storage immediately. Hydration uses the server snapshot first.
+  const persistedSize = useSyncExternalStore(subscribeToInitialSize,
+    () => splitPercent === undefined ? readPersistedSize(persistKey) : undefined, serverSize);
   const [isDragging, setIsDragging] = useState(false);
-  const currentSplitPercent = clampLayoutValue(splitPercent ?? internalSplitPercent, minSplitPercent, maxSplitPercent);
+  const currentRequest = requestedSize?.key === persistKey ? requestedSize?.value : undefined;
+  const currentSplitPercent = clampLayoutValue(splitPercent ?? currentRequest ?? persistedSize ?? (persistKey ? defaultSplitPercent : initialDefault), minSplitPercent, maxSplitPercent);
   const paneStyle = {
     ...style,
     '--split-pane-percent': `${currentSplitPercent}%`,
   } as CSSProperties;
 
   useEffect(() => {
-    if (splitPercent !== undefined) {
-      setInternalSplitPercent(splitPercent);
+    if (splitPercent !== undefined && !persistKey) {
+      setRequestedSize({ value: splitPercent });
     }
-  }, [splitPercent]);
-
-  useEffect(() => {
-    if (splitPercent !== undefined || !persistKey) {
-      restoredPersistKey.current = undefined;
-      return;
-    }
-    if (restoredPersistKey.current === persistKey) {
-      return;
-    }
-    restoredPersistKey.current = persistKey;
-
-    let restoredValue = defaultSplitPercent;
-    try {
-      const saved = window.localStorage.getItem(`agentic-ui:split-pane:${persistKey}`);
-      const parsed = saved?.trim() ? Number(saved) : Number.NaN;
-      if (Number.isFinite(parsed)) restoredValue = parsed;
-    } catch {
-      // Persistence is optional when browser storage is unavailable or denied.
-    }
-    setInternalSplitPercent(clampLayoutValue(restoredValue, minSplitPercent, maxSplitPercent));
-  }, [defaultSplitPercent, maxSplitPercent, minSplitPercent, persistKey, splitPercent]);
+  }, [persistKey, splitPercent]);
 
   function updateSplitFromPointer(clientX: number, clientY: number) {
     const rect = rootRef.current?.getBoundingClientRect();
@@ -72,7 +69,7 @@ export function SplitPane({
         : getPointerPercent(clientY, rect.top, rect.height);
     const nextSplitPercent = clampLayoutValue(rawPercent, minSplitPercent, maxSplitPercent);
 
-    setInternalSplitPercent(nextSplitPercent);
+    setRequestedSize({ key: persistKey, value: nextSplitPercent });
     if (persistKey) {
       try {
         window.localStorage.setItem(`agentic-ui:split-pane:${persistKey}`, String(nextSplitPercent));

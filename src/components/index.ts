@@ -846,3 +846,9 @@ export type {
   ListViewProps,
   ListViewVerticalAlign,
 } from './lists';
+export { Avatar } from './surfaces';
+export type { AvatarProps, AvatarSize } from './surfaces';
+export { DockablePanel } from './layout';
+export type { DockablePanelMode, DockablePanelProps, PageHeaderRecord } from './layout';
+export * from './scheduling';
+export * from './maps';

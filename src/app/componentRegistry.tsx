@@ -1,4 +1,10 @@
 import { lazy, Suspense, type ReactElement } from 'react';
+import { AvatarExample, type AvatarExampleProps } from '../components/surfaces/Avatar/Avatar.examples';
+import { RecordHeaderExample } from '../components/layout/PageHeader/RecordHeader.examples';
+import { DockablePanelExample } from '../components/layout/DockablePanel/DockablePanel.examples';
+import { CalendarTimeGridExample } from '../components/scheduling/CalendarTimeGrid/CalendarTimeGrid.examples';
+import { ScheduleTimelineExample } from '../components/scheduling/ScheduleTimeline/ScheduleTimeline.examples';
+import { LocationMapExample } from '../components/maps/LocationMap/LocationMap.examples';
 import {
   ButtonExample,
   CheckboxExample,
@@ -723,6 +729,114 @@ const tagVariantOptions = [
 ];
 
 export const componentPreviews: ComponentPreviewDefinition[] = [
+  {
+    id: 'avatar', group: 'Surfaces', name: 'Avatar', status: 'Ready',
+    description: 'A person or group image with an initials or icon fallback.',
+    parameters: [
+      { id: 'size', type: 'select', label: 'Size', description: 'Sets the avatar dimensions.', options: layoutDensityOptions },
+      { id: 'shape', type: 'select', label: 'Shape', description: 'Applies to photos and fallbacks.', options: [
+        { label: 'Circle', value: 'circle' }, { label: 'Rounded square', value: 'rounded' },
+      ] },
+      { id: 'fallback', type: 'select', label: 'Fallback', description: 'Shown when a photo is missing or cannot load.', options: [
+        { label: 'Name initials', value: 'initials' }, { label: 'Person icon', value: 'person' }, { label: 'Group icon', value: 'group' },
+      ] },
+      { id: 'fit', type: 'select', label: 'Image fit', description: 'Sets how the uploaded photo fills the avatar.', options: [
+        { label: 'Cover', value: 'cover' }, { label: 'Contain', value: 'contain' },
+      ] },
+    ],
+    defaultParameters: { size: 'comfortable', shape: 'circle', fallback: 'initials', fit: 'cover' },
+    contentControls: [{ id: 'name', type: 'text', label: 'Name', description: 'Used for initials and the accessible name.' }],
+    defaultContentValues: { name: 'Jamie Reed' },
+    renderPreview: (parameters, values) => <AvatarExample
+      size={parameters.size as AvatarExampleProps['size']}
+      shape={parameters.shape as AvatarExampleProps['shape']}
+      fallback={parameters.fallback as AvatarExampleProps['fallback']}
+      fit={parameters.fit as AvatarExampleProps['fit']}
+      name={String(values.name ?? '').trim() || undefined} />,
+  },
+  {
+    id: 'dockable-panel', group: 'Layout / App Shell', name: 'DockablePanel', status: 'Ready',
+    description: 'Open a side panel as an overlay and pin it when the workspace is wide enough.',
+    parameters: [
+      { id: 'side', type: 'select', label: 'Side', description: 'Chooses the edge of the panel.', options: [
+        { label: 'Right', value: 'right' }, { label: 'Left', value: 'left' },
+      ] },
+      { id: 'mode', type: 'select', label: 'Panel mode', description: 'Sets how the panel opens. The pin button can still switch modes.', options: [
+        { label: 'Overlay', value: 'overlay' }, { label: 'Docked', value: 'docked' },
+      ] },
+      { id: 'minDockWidth', type: 'select', label: 'Minimum docking width', description: 'Below this workspace width the panel opens as an overlay.', options: [
+        { label: '560 px', value: '560' }, { label: '720 px', value: '720' }, { label: '960 px', value: '960' },
+      ] },
+      { id: 'count', type: 'select', label: 'Launcher count', description: 'Shows a count on the closed panel’s launcher.', options: [
+        { label: 'Hidden', value: '0' }, { label: '2', value: '2' }, { label: '99+', value: '100' },
+      ] },
+    ],
+    defaultParameters: { side: 'right', mode: 'overlay', minDockWidth: '560', count: '2' },
+    contentControls: [
+      { id: 'title', type: 'text', label: 'Title', description: 'Heading and accessible name of the panel.' },
+      { id: 'description', type: 'text', label: 'Description', description: 'Optional text below the panel title.' },
+    ],
+    defaultContentValues: { title: 'Preparation notes', description: '' },
+    renderPreview: (parameters, values) => <DockablePanelExample side={parameters.side === 'left' ? 'left' : 'right'}
+      mode={parameters.mode === 'docked' ? 'docked' : 'overlay'} minDockWidth={getNumberParameter(parameters.minDockWidth, 560)}
+      count={getNumberParameter(parameters.count, 2)} title={String(values.title ?? '').trim() || 'Panel'} description={String(values.description ?? '')} />,
+  },
+  {
+    id: 'calendar-time-grid', group: 'Scheduling', name: 'CalendarTimeGrid', status: 'Ready',
+    description: 'Day and week calendar with timed events, all-day entries, and reminders.',
+    parameters: [
+      { id: 'view', type: 'select', label: 'View', description: 'Displays the selected day or its week.', options: [
+        { label: 'Week', value: 'week' }, { label: 'Day', value: 'day' },
+      ] },
+      { id: 'weekStartsOn', type: 'select', label: 'Start of week', description: 'Sets the first day in week view.',
+        visibleWhen: { parameterId: 'view', value: 'week' }, options: [
+          { label: 'Monday', value: '1' }, { label: 'Sunday', value: '0' }, { label: 'Saturday', value: '6' },
+        ] },
+      { id: 'hourHeight', type: 'select', label: 'Hour height', description: 'Changes the vertical space between hours.', options: [
+        { label: 'Compact · 36 px', value: '36' }, { label: 'Comfortable · 56 px', value: '56' }, { label: 'Spacious · 76 px', value: '76' },
+      ] },
+      { ...selectableParameter, description: 'Allows event cards to be selected.' },
+    ],
+    defaultParameters: { view: 'week', weekStartsOn: '1', hourHeight: '56', selectable: true },
+    renderPreview: (parameters) => <CalendarTimeGridExample view={parameters.view === 'day' ? 'day' : 'week'}
+      weekStartsOn={parameters.weekStartsOn === '0' ? 0 : parameters.weekStartsOn === '6' ? 6 : 1}
+      hourHeight={getNumberParameter(parameters.hourHeight, 56)} selectable={Boolean(parameters.selectable)} />,
+  },
+  {
+    id: 'schedule-timeline', group: 'Scheduling', name: 'ScheduleTimeline', status: 'Ready',
+    description: 'A time axis for milestones and intervals with collapsible groups.',
+    parameters: [
+      { id: 'range', type: 'select', label: 'Time range', description: 'Fits the dated items or focuses on the workshop day.', options: [
+        { label: 'Fit all dates', value: 'auto' }, { label: 'Workshop day', value: 'day' },
+      ] },
+      { id: 'showNow', type: 'boolean', label: 'Show time marker', description: 'Marks the current time within the displayed range.' },
+      { ...selectableParameter, description: 'Allows timeline rows to be selected.' },
+    ],
+    defaultParameters: { range: 'auto', showNow: true, selectable: true },
+    renderPreview: (parameters) => <ScheduleTimelineExample
+      range={parameters.range === 'day' ? { start: '2026-11-27T06:00', end: '2026-11-28T00:00' } : undefined}
+      now={parameters.showNow ? '2026-11-27T09:00' : undefined} selectable={Boolean(parameters.selectable)} />,
+  },
+  {
+    id: 'location-map', group: 'Maps', name: 'LocationMap', status: 'Ready',
+    description: 'An interactive MapLibre map with caller-supplied markers and selection.',
+    parameters: [
+      { id: 'mapStyle', type: 'select', label: 'Basemap style', description: 'Changes the sample OpenFreeMap style.', options: [
+        { label: 'Liberty', value: 'liberty' }, { label: 'Dark', value: 'dark' },
+      ] },
+      { id: 'zoom', type: 'select', label: 'Overview zoom', description: 'Sets the zoom when no marker is selected.', options: [
+        { label: '13', value: '13' }, { label: '15', value: '15' }, { label: '16', value: '16' },
+      ] },
+      { ...selectableParameter, description: 'Allows map markers to be selected.' },
+      { id: 'selectionZoom', type: 'select', label: 'Selection zoom', description: 'Sets the zoom used when selecting a marker.',
+        visibleWhen: selectableVisibleWhen, options: [
+          { label: '15', value: '15' }, { label: '16', value: '16' }, { label: '17', value: '17' },
+        ] },
+    ],
+    defaultParameters: { mapStyle: 'liberty', zoom: '15', selectable: true, selectionZoom: '16' },
+    renderPreview: (parameters) => <LocationMapExample mapStyle={`https://tiles.openfreemap.org/styles/${parameters.mapStyle === 'dark' ? 'dark' : 'liberty'}`}
+      zoom={getNumberParameter(parameters.zoom, 15)} selectionZoom={getNumberParameter(parameters.selectionZoom, 16)} selectable={Boolean(parameters.selectable)} />,
+  },
   {
     id: 'button',
     group: 'Inputs',
@@ -1902,20 +2016,35 @@ export const componentPreviews: ComponentPreviewDefinition[] = [
     id: 'page-header',
     group: 'Layout / App Shell',
     name: 'PageHeader',
-    description: 'Page-level heading block with eyebrow, description, metadata, and action slots.',
+    description: 'Page and record headings with metadata, actions, and optional record tabs.',
     status: 'Ready',
     parameters: [
+      { id: 'layout', type: 'select', label: 'Layout', description: 'Use a page heading or fill the record slots for a detail view.', options: [
+        { label: 'Page', value: 'page' }, { label: 'Record', value: 'record' },
+      ] },
       { id: 'density', type: 'select', label: 'Density', description: 'Changes header spacing.', options: layoutDensityOptions },
       { id: 'variant', type: 'select', label: 'Variant', description: 'Sets header surface treatment.', options: layoutVariantOptions },
+      { id: 'showActions', type: 'boolean', label: 'Actions', description: 'Shows the header’s action buttons.' },
+      { id: 'showBack', type: 'boolean', label: 'Back button', description: 'Shows the back control beside the record identifier.', visibleWhen: { parameterId: 'layout', value: 'record' } },
+      { id: 'showBadges', type: 'boolean', label: 'Badges', description: 'Shows the status badges below the record heading.', visibleWhen: { parameterId: 'layout', value: 'record' } },
+      { id: 'showMedia', type: 'boolean', label: 'Media', description: 'Shows a sample avatar beside the record metadata.', visibleWhen: { parameterId: 'layout', value: 'record' } },
+      { id: 'showTabs', type: 'boolean', label: 'Tabs', description: 'Shows the record’s navigation tabs.', visibleWhen: { parameterId: 'layout', value: 'record' } },
     ],
     defaultParameters: {
       density: 'comfortable',
+      layout: 'page',
+      showActions: true,
+      showBack: true,
+      showBadges: true,
+      showMedia: true,
+      showTabs: true,
       variant: 'default',
     },
     contentTitle: 'Header Content',
     contentDescription: 'Text slots used by the page heading.',
     contentControls: [
-      { id: 'eyebrow', type: 'text', label: 'Eyebrow', description: 'Small context label.', placeholder: 'Portfolio control' },
+      { id: 'eyebrow', type: 'text', label: 'Eyebrow', description: 'Small context label.', placeholder: 'Portfolio control', visibleWhen: { parameterId: 'layout', value: 'page' } },
+      { id: 'recordId', type: 'text', label: 'Record identifier', description: 'Short reference beside the record title.', placeholder: 'PLAN-026', visibleWhen: { parameterId: 'layout', value: 'record' } },
       { id: 'title', type: 'text', label: 'Title', description: 'Main page title.', placeholder: 'Demo workspace overview' },
       { id: 'description', type: 'text', label: 'Description', description: 'Supporting copy.', placeholder: 'Monitor generated strategies.' },
       { id: 'meta', type: 'text', label: 'Meta', description: 'Small update/status text.', placeholder: 'Updated 14:08:12' },
@@ -1924,18 +2053,24 @@ export const componentPreviews: ComponentPreviewDefinition[] = [
       description: 'Monitor generated strategies, active positions, and runtime health in one workspace.',
       eyebrow: 'Portfolio control',
       meta: 'Updated 14:08:12',
+      recordId: 'PLAN-026',
       title: 'Demo workspace overview',
     },
-    renderPreview: (parameters, contentValues) => (
-      <PageHeaderExample
-        density={parameters.density as LayoutDensity}
-        description={String(contentValues.description ?? '')}
-        eyebrow={String(contentValues.eyebrow ?? '')}
-        meta={String(contentValues.meta ?? '')}
-        title={String(contentValues.title ?? '')}
-        variant={parameters.variant as LayoutSurfaceVariant}
-      />
-    ),
+    renderPreview: (parameters, contentValues) => {
+      const header = {
+        density: parameters.density as LayoutDensity,
+        description: String(contentValues.description ?? ''),
+        meta: String(contentValues.meta ?? ''),
+        showActions: Boolean(parameters.showActions),
+        title: String(contentValues.title ?? ''),
+        variant: parameters.variant as LayoutSurfaceVariant,
+      };
+      return parameters.layout === 'record' ? (
+        <RecordHeaderExample {...header} recordId={String(contentValues.recordId ?? '')}
+          showBack={Boolean(parameters.showBack)} showBadges={Boolean(parameters.showBadges)}
+          showMedia={Boolean(parameters.showMedia)} showTabs={Boolean(parameters.showTabs)} />
+      ) : <PageHeaderExample {...header} eyebrow={String(contentValues.eyebrow ?? '')} />;
+    },
   },
   {
     id: 'split-pane',
@@ -1950,7 +2085,7 @@ export const componentPreviews: ComponentPreviewDefinition[] = [
         id: 'splitPercent',
         type: 'select',
         label: 'Split',
-        description: 'Sets the initial split from code.',
+        description: 'Sets the default split before any saved size exists.',
         options: [
           { label: '30%', value: '30' },
           { label: '42%', value: '42' },
@@ -1973,7 +2108,7 @@ export const componentPreviews: ComponentPreviewDefinition[] = [
         orientation={parameters.orientation as LayoutOrientation}
         persistKey={parameters.persistSize ? 'workbench-split-pane' : undefined}
         resizable={Boolean(parameters.resizable)}
-        splitPercent={getNumberParameter(parameters.splitPercent, 42)}
+        defaultSplitPercent={getNumberParameter(parameters.splitPercent, 42)}
         variant={parameters.variant as LayoutSurfaceVariant}
       />
     ),

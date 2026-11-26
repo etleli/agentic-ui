@@ -52,12 +52,23 @@ export type SidebarNavProps = Omit<HTMLAttributes<HTMLElement>, 'children' | 'on
   onSelectedIdChange?: (itemId: string) => void;
 };
 
+export type PageHeaderRecord = {
+  id?: ReactNode;
+  back?: ReactNode;
+  badges?: ReactNode;
+  media?: ReactNode;
+  actionContent?: ReactNode;
+  tabs?: ReactNode;
+  headingLevel?: 1 | 2 | 3;
+};
+
 export type PageHeaderProps = Omit<HTMLAttributes<HTMLElement>, 'children'> & {
   actions?: LayoutAction[];
   density?: LayoutDensity;
   description?: ReactNode;
   eyebrow?: ReactNode;
   meta?: ReactNode;
+  record?: PageHeaderRecord;
   title?: ReactNode;
   variant?: LayoutSurfaceVariant;
   onActionSelect?: (actionId: string) => void;

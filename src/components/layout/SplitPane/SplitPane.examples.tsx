@@ -61,7 +61,7 @@ export function SplitPaneExample({
           variant="panel"
         />
       }
-      splitPercent={activeSplitPercent}
+      splitPercent={persistKey ? undefined : activeSplitPercent}
       variant={variant}
       onSplitPercentChange={setActiveSplitPercent}
     />

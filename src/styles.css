@@ -1664,3 +1664,6 @@
     justify-self: start;
   }
 }
+.workspace-examples__stack { display: grid; align-content: start; gap: var(--space-3); min-width: 0; }
+.workspace-examples__stack p { margin: 0; }
+.workspace-examples__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); min-width: 0; }

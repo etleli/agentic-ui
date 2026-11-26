@@ -1,0 +1,21 @@
+.dockable-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: var(--space-3); min-width: 0; }
+.dockable-panel[data-side='left'] { grid-template-columns: auto minmax(0, 1fr); }
+.dockable-panel[data-side='left'] > .dockable-panel__main { grid-column: 2; grid-row: 1; }
+.dockable-panel[data-side='left'] > :is(.dockable-panel__launcher, .dockable-panel__dock) { grid-column: 1; grid-row: 1; }
+.dockable-panel[data-mode='docked'] { grid-template-columns: minmax(0, 1fr) minmax(0, min(38%, var(--dockable-panel-width, 21rem))); }
+.dockable-panel[data-mode='docked'][data-side='left'] { grid-template-columns: minmax(0, min(38%, var(--dockable-panel-width, 21rem))) minmax(0, 1fr); }
+.dockable-panel__main { min-width: 0; }
+.dockable-panel__launcher { display: grid; position: relative; }
+.dockable-panel__launcher[hidden] { display: none; }
+.dockable-panel__count { position: absolute; top: calc(var(--space-1) * -1); right: calc(var(--space-1) * -1); padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--color-accent); color: var(--color-background); font-size: var(--type-label-small-size); pointer-events: none; }
+.dockable-panel__tools { display: flex; gap: var(--space-1); flex: 0 0 auto; }
+.dockable-panel__dock { display: flex; flex-direction: column; align-self: stretch; min-width: 0; min-height: 0; max-height: var(--dockable-panel-max-height, 72dvh); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-raised); }
+.dockable-panel__dock > header { display: flex; justify-content: space-between; align-items: start; gap: var(--space-2); padding: var(--space-4); overflow-wrap: anywhere; }
+.dockable-panel__dock > header p { margin: var(--space-1) 0 0; color: var(--color-muted); }
+.dockable-panel__content { flex: 1 1 auto; min-width: 0; min-height: 0; overflow: auto; overflow-wrap: anywhere; }
+.dockable-panel__dock .dockable-panel__content { padding: 0 var(--space-4) var(--space-4); }
+.dockable-panel__overlay.drawer-overlay { background: color-mix(in srgb, var(--color-background) 16%, transparent); backdrop-filter: none; }
+.dockable-panel__overlay .drawer-overlay__panel { box-sizing: border-box; position: relative; width: min(var(--dockable-panel-width, 25rem), 94vw); overflow: hidden; }
+.dockable-panel__overlay .drawer-overlay__header { padding-inline-end: 5rem; }
+.dockable-panel__overlay .drawer-overlay__body { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.dockable-panel__overlay .dockable-panel__tools { position: absolute; top: var(--space-3); right: var(--space-3); }

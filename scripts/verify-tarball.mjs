@@ -98,7 +98,7 @@ try {
   if (packed) assert.equal(entries.length, packed.files.length);
   assert.equal(new Set(entries).size, entries.length, 'Archive entries must be unique.');
   for (const entry of entries) {
-    assert.match(entry, /^package\/(?:package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|src\/theme\/theme\.css|dist-library\/(?:agentic-ui\.(?:js|cjs|css)|types\/.+\.d\.ts(?:\.map)?|agent-guides\/.+\.(?:md|json)))$/);
+    assert.match(entry, /^package\/(?:package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|src\/theme\/theme\.css|dist-library\/(?:agentic-ui\.(?:js|cjs|css)|assets\/maplibre-gl-worker-[\w-]+\.js|types\/.+\.d\.ts(?:\.map)?|agent-guides\/.+\.(?:md|json)))$/);
     assert.ok(!entry.split('/').includes('..'), `Unsafe archive path: ${entry}`);
   }
 
@@ -190,7 +190,7 @@ console.log('ESM/CommonJS exports and rendered button passed: ' + Object.keys(li
   const source = ts.createSourceFile('index.ts', readFileSync(join(root, 'src/index.ts'), 'utf8'), ts.ScriptTarget.Latest);
   const publicNames = source.statements.filter(ts.isExportDeclaration).flatMap((statement) => statement.exportClause && ts.isNamedExports(statement.exportClause) ? statement.exportClause.elements.map((element) => element.name.text) : []);
   write('public-api.ts', `export { ${publicNames.join(', ')} } from '${manifest.name}';\n`);
-  write('main.tsx', `import { createRoot } from 'react-dom/client';\nimport { Button } from '${manifest.name}';\nimport type { ButtonProps, NodeCanvasProps } from '${manifest.name}';\nimport '${manifest.name}/style.css';\nimport '${manifest.name}/theme.css';\nconst props: ButtonProps = { children: 'Tarball consumer' };\nexport type CanvasContract = NodeCanvasProps;\ncreateRoot(document.getElementById('root')!).render(<Button {...props} />);\n`);
+  write('main.tsx', `import { createRoot } from 'react-dom/client';\nimport { Button, LocationMap } from '${manifest.name}';\nimport type { ButtonProps, NodeCanvasProps } from '${manifest.name}';\nimport '${manifest.name}/style.css';\nimport '${manifest.name}/theme.css';\nconst props: ButtonProps = { children: 'Tarball consumer' };\nexport type CanvasContract = NodeCanvasProps;\ncreateRoot(document.getElementById('root')!).render(<>\n  <Button {...props} />\n  <LocationMap center={[0, 0]} mapStyle={{ version: 8, sources: {}, layers: [] }} markers={[]} />\n</>);\n`);
   write('css.d.ts', "declare module '*.css';\n");
   write('tsconfig.json', JSON.stringify({ compilerOptions: { target: 'ES2020', module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', strict: true, noEmit: true, skipLibCheck: false, lib: ['ES2020', 'DOM', 'DOM.Iterable'] }, include: ['*.ts', '*.tsx'] }));
   write('index.html', '<!doctype html><html><head><title>Local package consumer</title></head><body><div id="root"></div><script type="module" src="/main.tsx"></script></body></html>');
@@ -199,6 +199,7 @@ console.log('ESM/CommonJS exports and rendered button passed: ' + Object.keys(li
   const cssFiles = readdirSync(join(temporary, 'dist/assets')).filter((name) => name.endsWith('.css'));
   assert.ok(cssFiles.length > 0, 'Consumer build must emit packaged CSS.');
   assert.ok(cssFiles.some((name) => readFileSync(join(temporary, 'dist/assets', name), 'utf8').includes('--color-foreground')));
+  assert.ok(readdirSync(join(temporary, 'dist/assets')).some((name) => /^maplibre-gl-worker-[\w-]+\.js$/.test(name)), 'Consumer build must emit the packaged map worker.');
   assert.equal(archiveIntegrity(archive), integrity, 'Verification must not modify the archive.');
   const consumerDependencies = JSON.parse(npm(['ls', '--omit=dev', '--all', '--json']));
   const verification = {

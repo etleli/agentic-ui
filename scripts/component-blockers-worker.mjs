@@ -294,6 +294,7 @@ try {
     } else if (scenario === 'persistence') {
       stored.set(key, String(savedSize));
       await mount({ persistKey: 'saved' }); assert.equal(readSize(), savedSize);
+      if (isSplit) assert.equal(observedSizes[0], savedSize, 'Client mounts should use the saved width on the first commit');
       assert.deepEqual(writes, []); assert.deepEqual(calls, []);
       await resize(changedSize); assert.equal(readSize(), changedSize);
       assert.equal(stored.get(key), String(changedSize));

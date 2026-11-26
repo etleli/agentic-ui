@@ -1,0 +1,28 @@
+.page-header.page-header--record {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  container: record-header / inline-size;
+}
+.page-header__record-main { display: grid; gap: var(--space-2); min-width: 0; }
+.page-header__record-title, .page-header__record-badges, .page-header__record-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-width: 0;
+}
+.page-header__record-title > .page-header__title { flex: 1 1 16rem; min-width: 0; overflow-wrap: anywhere; }
+.page-header__record-title > .page-header__eyebrow { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.page-header__record-detail { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); max-width: 20rem; min-width: 0; }
+.page-header__record-meta { display: grid; gap: var(--space-1); min-width: 0; text-align: end; overflow-wrap: anywhere; }
+.page-header__record-actions, .page-header__record-tabs { grid-column: 1 / -1; min-width: 0; }
+.page-header__record-actions .button, .page-header__record-tabs > * { min-width: 0; max-width: 100%; }
+.page-header__record-actions .button__label { white-space: normal; overflow-wrap: anywhere; }
+@container record-header (width < 44rem) {
+  .page-header__record-main, .page-header__record-detail { grid-column: 1 / -1; }
+  .page-header__record-detail { justify-self: start; }
+  .page-header__record-meta { text-align: start; }
+}

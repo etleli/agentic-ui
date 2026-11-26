@@ -1,0 +1,11 @@
+.location-map { position: relative; isolation: isolate; min-width: 0; height: var(--location-map-height, 26rem); overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-muted); }
+.location-map__surface { position: absolute; inset: 0; }
+.location-map__tools { position: absolute; inset-block-start: var(--space-3); inset-inline-start: var(--space-3); }
+.location-map__status { position: absolute; inset-inline-start: var(--space-3); inset-block-end: var(--space-3); margin: 0; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); background: var(--color-surface-raised); color: var(--color-muted); pointer-events: none; }
+.location-map__marker { display: flex; align-items: center; gap: var(--space-2); max-width: 14rem; min-height: var(--space-8); padding: var(--space-1) var(--space-2); border: 2px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface-raised); color: var(--color-foreground); box-shadow: var(--shadow-sm); font: inherit; text-align: start; overflow-wrap: anywhere; }
+button.location-map__marker { cursor: pointer; }
+.location-map__marker:is([aria-pressed='true'], [data-selected='true']) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.location-map__marker:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.location-map__marker-badge { display: inline-grid; place-items: center; flex: 0 0 auto; min-width: var(--space-6); min-height: var(--space-6); padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--color-surface-muted); }
+.location-map__marker-copy { display: grid; gap: 2px; }
+.location-map__marker-copy small { color: var(--color-muted); }

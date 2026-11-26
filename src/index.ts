@@ -1,5 +1,10 @@
 import './theme/theme.css';
 
+export { Avatar, CalendarTimeGrid, DockablePanel, LocationMap, ScheduleTimeline } from './components';
+export type { AvatarProps, AvatarSize, CalendarTimeGridEvent, CalendarTimeGridEventContext, CalendarTimeGridProps,
+  DockablePanelMode, DockablePanelProps, LocationMapCoordinates, LocationMapMarker, LocationMapProps, PageHeaderRecord,
+  ScheduleTimelineGroup, ScheduleTimelineItem, ScheduleTimelineProps } from './components';
+
 export {
   CATEGORICAL_HUE_STEP,
   DEFAULT_GENERATED_COLOR_SETTINGS,

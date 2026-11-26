@@ -39,6 +39,7 @@ const rootWidthConstraintAllowlist = new Map([
   ['node-system/NodeSystem.css:.node-system-node', 'Node width is a documented graph-model property, not a page or surface width cap.'],
   ['node-system/NodeSystem.css:.node-system-port', 'NodePort has a deliberate accessible hit-target size.'],
   ['surfaces/Divider/Divider.css:.surface-divider[data-orientation=\'vertical\']', 'A vertical Divider is an intrinsically one-dimensional separator.'],
+  ['surfaces/Avatar/Avatar.css:.avatar', 'Avatar has square dimensions determined by its public size variants.'],
 ]);
 
 function getRootSelector(selector) {

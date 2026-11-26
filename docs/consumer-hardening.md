@@ -44,6 +44,7 @@ The width-contract test has a deliberately small exception list:
   its host viewport.
 - `HealthMeter` and `TrendSparkIndicator`: intentionally compact status
   visualizations with documented size variants.
+- `Avatar`: a square image or initials frame sized through the `size` prop.
 - `Node`: its width comes from the graph model; `NodePort` and vertical
   `Divider` retain intrinsic accessible hit-target or separator dimensions.
 

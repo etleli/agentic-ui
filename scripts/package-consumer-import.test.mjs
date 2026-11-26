@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import test from 'node:test';
 import { pathToFileURL } from 'node:url';
@@ -9,6 +9,17 @@ import { createRoot } from 'react-dom/client';
 
 const libraryRoot = resolve(process.cwd(), 'dist-library');
 const library = await import(pathToFileURL(resolve(libraryRoot, 'agentic-ui.js')).href);
+
+test('the package exports the workspace components and emits the map worker', async () => {
+  for (const name of ['Avatar', 'PageHeader', 'DockablePanel', 'CalendarTimeGrid', 'ScheduleTimeline', 'LocationMap', 'SplitPane']) {
+    assert.equal(typeof library[name], 'function', `${name} must be a public package export.`);
+  }
+  const assets = await readdir(resolve(libraryRoot, 'assets'));
+  const worker = assets.find((asset) => /^maplibre-gl-worker-.*\.js$/.test(asset));
+  assert.ok(worker, 'LocationMap needs a packaged worker asset.');
+  const entry = await readFile(resolve(libraryRoot, 'agentic-ui.js'), 'utf8');
+  assert.ok(entry.includes(worker), 'The JavaScript entry must reference the emitted worker.');
+});
 
 const publicGraphHelpers = [
   'createNodeCanvasInteractionController',

@@ -1,17 +1,11 @@
 # Agentic UI
 
-The local `0.1.0-beta.3` security candidate updates the bundled and declared
-DOMPurify to 3.4.17. It remains unpublished until its exact archive is validated
-and explicitly approved. Public exports, sizing and interaction contracts are
-unchanged; the publication record below continues to describe beta.2.
-
 A React 19 / TypeScript component library with a local workshop for browsing
 components, editing preview parameters and content, resizing previews, and
 adjusting theme tokens. The library includes controls, layouts, tables, content
 viewers, charts, graph helpers, and reusable domain presentation components.
 
-The current published beta is **`@etleli/agentic-ui@0.1.0-beta.2`**, by
-[Elias Etl](https://github.com/etleli). The first published beta was `0.1.0-beta.1`.
+Agentic UI is maintained by [Elias Etl](https://github.com/etleli).
 This is beta software, not a stable or fully
 audited component library. Observed registry availability and release evidence
 belong in the [release record](https://github.com/etleli/agentic-ui/blob/main/docs/release-status.md).
@@ -26,10 +20,10 @@ controls the terms. See the [licensing explanation](https://github.com/etleli/ag
 
 ## Install the beta
 
-Install the published beta.2 version:
+Install the version on npm’s `beta` tag:
 
 ```sh
-npm install @etleli/agentic-ui@0.1.0-beta.2
+npm install @etleli/agentic-ui@beta
 ```
 
 React and React DOM 19 are peer dependencies. The [launch record in PR #5](https://github.com/etleli/agentic-ui/pull/5)
@@ -109,7 +103,7 @@ temporary directory outside this repository, then run:
 ```sh
 npm pack --pack-destination /absolute/path/to/temporary-directory
 # In a separate React consumer:
-npm install /absolute/path/to/temporary-directory/etleli-agentic-ui-0.1.0-beta.2.tgz
+npm install /absolute/path/to/temporary-directory/etleli-agentic-ui-0.1.0-beta.4.tgz
 ```
 
 The `beta` distribution tag is intended for this release; verify its actual

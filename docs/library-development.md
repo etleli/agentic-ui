@@ -30,13 +30,16 @@ without preloading them; only build/type-check tools use verified lockfile versi
 `src/index.ts` defines the root API. The package exposes ESM/CommonJS JavaScript,
 types, `style.css`, `theme.css`, and `agent-guides/`. Keep examples in the workshop;
 registration alone never makes a component public. React and React DOM are peers;
-CodeMirror, Lezer, Lucide, and DOMPurify remain required by reusable components.
+CodeMirror, Lezer, Lucide, DOMPurify, and MapLibre GL are used by reusable components.
+`LocationMap` loads the MapLibre renderer on mount and accepts the consumer’s map style.
+The bundled worker resolves relative to the library’s ESM entry. In Vite development,
+exclude `@etleli/agentic-ui` from `optimizeDeps` to keep the entry beside its worker,
+or provide a separately hosted `workerUrl`.
 
-The current published release is `@etleli/agentic-ui@0.1.0-beta.2`; the
-component audit keeps beta.1 as its historical baseline. The package has
+See the [release record](release-status.md) for the current published version.
+The component audit keeps beta.1 as its historical baseline. The package has
 `private: false`. The custom LICENSE is
-owner-approved and finalized. See the [release record](release-status.md)
-for observed registry status and [licensing](licensing.md) for usage conditions.
+owner-approved and finalized. See [licensing](licensing.md) for usage conditions.
 Publication and repository visibility require the explicit owner checkpoint.
 
 For manual inspection, choose an empty directory outside the repository:

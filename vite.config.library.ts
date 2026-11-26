@@ -5,9 +5,10 @@ import react from '@vitejs/plugin-react';
 
 const workspaceRoot = path.dirname(fileURLToPath(import.meta.url));
 
-const externalPackages = [/^react($|\/)/, /^react-dom($|\/)/, /^lucide-react($|\/)/, /^@codemirror\//, /^@lezer\//];
+const externalPackages = [/^react($|\/)/, /^react-dom($|\/)/, /^lucide-react($|\/)/, /^@codemirror\//, /^@lezer\//, /^maplibre-gl$/];
 
 export default defineConfig({
+  base: './',
   build: {
     copyPublicDir: false,
     emptyOutDir: true,

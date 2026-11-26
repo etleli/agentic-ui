@@ -24,11 +24,13 @@ while the picker is disabled, without user-action notifications.
 
 ## SplitPane and ResizablePanel
 
-Server output and the first client render use the controlled value when supplied,
+Server output and the first hydration commit use the controlled value when supplied,
 otherwise `defaultSplitPercent` (42) or `defaultSize` (360). Existing bounds apply.
-Rendering and state initialization never read browser storage.
+An uncontrolled SplitPane reads its saved width on a client-only first render.
+After hydration it switches to the browser value once React has matched the server
+markup. ResizablePanel restores its value after mount.
 
-After mount, an uncontrolled instance with a nonempty `persistKey` restores storage:
+An uncontrolled instance with a nonempty `persistKey` uses these storage keys:
 - SplitPane: `agentic-ui:split-pane:<persistKey>`, percent, default bounds 18–82.
 - ResizablePanel: `agentic-ui:resizable-panel:<persistKey>`, pixels, default bounds 220–680.
 - Missing, empty, whitespace-only, invalid, or non-finite values use the configured
@@ -39,8 +41,7 @@ After mount, an uncontrolled instance with a nonempty `persistKey` restores stor
 - Controlled `splitPercent` / `size` takes precedence over saved data.
 
 Restoration does not write defaults to storage or emit user-change callbacks.
-Only resize interactions write sizes. Restoration runs once per active persistence
-key for an uncontrolled instance; StrictMode and ordinary parent rerenders do not
+Only resize interactions write sizes. StrictMode and ordinary parent rerenders do not
 reset a later resize. Changing the key restores its saved value, or the configured
 default if unavailable, without writing the previous key's size. Remounting restores
 the most recently saved resize.

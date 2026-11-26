@@ -1,0 +1,17 @@
+.calendar-time-grid { height: var(--calendar-grid-height, 30rem); min-width: 0; overflow: auto; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-raised); }
+.calendar-time-grid__header, .calendar-time-grid__body { display: grid; grid-template-columns: var(--calendar-columns); min-width: min-content; }
+.calendar-time-grid__header { position: sticky; inset-block-start: 0; z-index: 2; background: var(--color-surface-raised); box-shadow: var(--shadow-sm); }
+.calendar-time-grid__time-cell { position: sticky; inset-inline-start: 0; z-index: 1; min-width: 0; padding: var(--space-1); background: var(--color-surface-raised); color: var(--color-muted); overflow-wrap: anywhere; font-size: var(--type-label-small-size); }
+.calendar-time-grid__header > *, .calendar-time-grid__day { border-inline-start: 1px solid var(--color-border); }
+.calendar-time-grid__header > * { border-block-end: 1px solid var(--color-border); padding: var(--space-1); }
+.calendar-time-grid__day-label { display: grid; place-items: center; font-size: var(--type-label-medium-size); }
+.calendar-time-grid__day-label button { width: 100%; min-height: var(--space-7); border: 1px solid transparent; border-radius: var(--radius-sm); background: transparent; color: inherit; cursor: pointer; font: inherit; }
+.calendar-time-grid__day-label button[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-surface-muted); }
+.calendar-time-grid__chips { display: grid; align-content: start; gap: var(--space-1); min-width: 0; max-height: 8rem; overflow: auto; }
+.calendar-time-grid__body > .calendar-time-grid__time-cell { padding-block: 0; }
+.calendar-time-grid__hour { box-sizing: border-box; height: var(--calendar-hour-height); border-block-end: 1px solid var(--color-border); }
+.calendar-time-grid__day { position: relative; height: calc(var(--calendar-hour-height) * 24); min-width: 0; background: repeating-linear-gradient(to bottom, transparent 0 calc(var(--calendar-hour-height) - 1px), var(--color-border) calc(var(--calendar-hour-height) - 1px) var(--calendar-hour-height)); }
+.calendar-time-grid__slot { box-sizing: border-box; position: absolute; padding: 0 2px 2px; }
+.calendar-time-grid__event { box-sizing: border-box; display: grid; align-content: start; width: 100%; height: 100%; min-width: 0; padding: 2px var(--space-1); overflow: hidden; border: 1px solid var(--color-border); border-inline-start: 3px solid var(--calendar-event-color, var(--color-accent)); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--calendar-event-color, var(--color-accent)) 13%, var(--color-surface-raised)); color: var(--color-foreground); font: inherit; font-size: var(--type-label-small-size); text-align: start; overflow-wrap: anywhere; }
+button.calendar-time-grid__event { cursor: pointer; }
+.calendar-time-grid button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }

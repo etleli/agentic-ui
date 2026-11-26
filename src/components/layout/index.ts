@@ -20,4 +20,7 @@ export type {
   LayoutShellPreset,
   LayoutStatusTone,
   LayoutSurfaceVariant,
+  PageHeaderRecord,
 } from './Layout.types';
+export { DockablePanel } from './DockablePanel';
+export type { DockablePanelMode, DockablePanelProps } from './DockablePanel';

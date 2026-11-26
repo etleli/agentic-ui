@@ -6,6 +6,7 @@ export type DrawerSize = 'compact' | 'comfortable' | 'spacious';
 
 export type DrawerProps = Omit<HTMLAttributes<HTMLDivElement>, 'title'> & {
   children?: ReactNode;
+  closeOnEscape?: boolean;
   defaultOpen?: boolean;
   description?: ReactNode;
   footer?: ReactNode;
